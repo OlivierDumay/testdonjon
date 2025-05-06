@@ -10,7 +10,7 @@ package dnd
     {
         class Personnage
         {
-            - m_nom
+            - m_nom : String
             ' Race : mettre une composition
             ' Classe : mettre une composition
             ' Inventaire d'équipements : mettre une composition
