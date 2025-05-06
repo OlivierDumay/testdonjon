@@ -1,0 +1,57 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam style strictuml hide empty members
+
+package dnd
+{
+    package personnage
+    {
+        class Personnage
+        {
+            - m_nom
+            ' Race : mettre une composition
+            ' Classe : mettre une composition
+            ' Inventaire d'équipements : mettre une composition
+            ' Équipements : mettre une composition
+        }
+
+        ' Début classes personnages
+
+        class Race
+        {
+
+        }
+
+        class Classe
+        {
+
+        }
+
+        class Inventaire
+        {
+
+        }
+
+        class EquipementPersonnage
+        {
+
+        }
+
+        class Caracteristiques
+        {
+
+        }
+
+    }
+
+    package objet
+    {
+                   
+    }
+}
+
+Caracteristiques --|> Volant
+
+@enduml
