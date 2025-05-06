@@ -19,39 +19,145 @@ package dnd
 
         ' Début classes personnages
 
-        class Race
-        {
 
-        }
 
-        class Classe
-        {
-
-        }
 
         class Inventaire
         {
-
+            -m_inventaire : ArrayList<ObjetDeJeu>
         }
 
         class EquipementPersonnage
         {
-
+            -m_equipement : ArrayList<ObjetDeJeu>
         }
 
         class Caracteristiques
         {
+            m_pv : int
+            m_force : int
+            m_dexterite : int
+            m_vitesse : int
+            m_initiative : int
+        }
 
+
+        Personnage "*" *--> "1" race.Race
+        Personnage "*" *--> classe.Classe
+        Personnage "*" *--> "1" Caracteristiques : possède
+        Personnage "1" o--> "est équipé de" EquipementPersonnage
+        Personnage "1" o--> "possède" Inventaire
+        package race
+        {
+             abstract class Race <<abstract>>
+                {
+
+                }
+
+            class Humain
+            {
+
+            }
+
+            class Elfe
+            {
+
+            }
+
+            class Nain
+            {
+
+            }
+
+            class Halflin
+            {
+
+            }
+
+            Race "*" *--> "Peut être" Humain
+            Race "*" *--> "Peut être" Elfe
+            Race "*" *--> "Peut être" Nain
+            Race "*" *--> "Peut être" Halflin
+        }
+
+        package classe
+        {
+
+            abstract class Classe <<abstract>>
+            {
+
+            }
+
+            class Guerrier
+                {
+
+                }
+
+                class Clerc
+                {
+
+                }
+
+                class Magiciens
+                {
+
+                }
+
+                class Roublard
+                {
+
+                }
+
+            Classe "*" *--> "1" Guerrier : peut être
+            Classe "*" *--> "1" Clerc : peut être
+            Classe "*" *--> "1" Magiciens : peut être
+            Classe "*" *--> "1" Roublard : peut être
         }
 
     }
 
     package objet
     {
-                   
+
+        class ObjetDeJeu
+        {
+        -m_nom :String
+        }
+
+        class ArmeCourante
+        {
+
+        }
+
+        class ArmeDeGuerre
+        {
+
+        }
+
+        class ArmeADistance
+        {
+
+        }
+        class ArmureLegere
+        {
+
+        }
+
+        class ArmureLourde
+        {
+
+        }
+
+
+    ObjetDeJeu "*" o--> "-m_degat : (int, int)\n-m_portee : int" ArmeCourante: contient des
+    ObjetDeJeu "*" o--> "-m_degat : (int, int)\n-m_portee : int" ArmeDeGuerre: contient des
+    ObjetDeJeu "*" o--> "-m_degat : (int, int)\n-m_portee : int" ArmeADistance: contient des
+    ObjetDeJeu "*" o--> "-m_armure : int" ArmureLegere: contient des
+    ObjetDeJeu "*" o--> "-m_armure : int" ArmureLourde: contient des
+
     }
 }
 
-Caracteristiques --|> Volant
+
 
 @enduml
