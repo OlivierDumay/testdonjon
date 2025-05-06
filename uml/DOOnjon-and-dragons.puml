@@ -12,10 +12,13 @@ package dnd
         {
             +<<create>> Personnage(race : Race, classe : Classe)
             - m_nom : String
+            - m_etat : Boolean
             ' Race : mettre une composition
             ' Classe : mettre une composition
             ' Inventaire d'équipements : mettre une composition
             ' Équipements : mettre une composition
+            + getNom() : String
+            + getEtat() : Boolean
             + toString() : String
         }
 
@@ -26,13 +29,13 @@ package dnd
 
         class Inventaire
         {
-            - m_inventaire : ObjetDeJeu[*]
+            - m_inventaire : Item[*]
             + toString() : String
         }
 
         class EquipementPersonnage
         {
-            - m_equipement : ObjetDeJeu[*]
+            - m_equipement : Item[*]
             + toString() : String
         }
 
@@ -61,8 +64,10 @@ package dnd
         Personnage "*" *--> "1" race.Race
         Personnage "*" *--> classe.Classe
         Personnage "*" *--> "1" Caracteristiques : possède
-        Personnage "1" o--> "est équipé de" EquipementPersonnage
-        Personnage "1" o--> "possède" Inventaire
+        Personnage "1" *--> "est équipé de" EquipementPersonnage
+        Personnage "1" *--> "possède" Inventaire : possède
+        Inventaire "*" o-- "- m_items[*] : Objets du personnage" dnd.objet.Item : possède
+        EquipementPersonnage "1" o-- "- m_arme_equipee : Arme\n - m_armure_equipee : Armure" dnd.objet.Item
 
         package race
         {
