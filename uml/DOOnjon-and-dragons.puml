@@ -10,6 +10,7 @@ package dnd
     {
         class Personnage
         {
+            +<<create>> Personnage(race : Race, classe : Classe)
             - m_nom : String
             - m_etat : Boolean
             ' Race : mettre une composition
@@ -70,29 +71,30 @@ package dnd
 
         package race
         {
-             abstract class Race <<abstract>>
-             {
-
-             }
+            abstract class Race <<abstract>>
+            {
+                +{abstract} bonusCreation()
+                +{abstract} toString()
+            }
 
             class Humain
             {
-
+                +<<create>> Humain()
             }
 
             class Elfe
             {
-
+                +<<create>> Elfe()
             }
 
             class Nain
             {
-
+                +<<create>> Nain()
             }
 
             class Halflin
             {
-
+                +<<create>> Halflin()
             }
 
             Race "*" *--> "Peut être" Humain
@@ -106,27 +108,28 @@ package dnd
 
             abstract class Classe <<abstract>>
             {
-
+            +{abstract} bonusCreation()
+            +{abstract} toString()
             }
 
             class Guerrier
             {
-
+                +<<create>>  Guerrier()
             }
 
             class Clerc
             {
-
+                +<<create>> Clerc()
             }
 
             class Magiciens
             {
-
+                +<<create>> Magiciens()
             }
 
             class Roublard
             {
-
+                +<<create>> Roublard()
             }
 
             Classe "*" *--> "1" Guerrier : peut être
