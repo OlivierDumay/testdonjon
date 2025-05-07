@@ -11,9 +11,14 @@ class Main
 
 package dnd
 {
+
+    Interface Initiative <<Interface>>
+            {
+                 +getInitiative()
+            }
     package personnage
     {
-        class Personnage
+        class Personnage implements dnd.Initiative
         {
             +<<create>> Personnage(race : Race, classe : Classe)
             - m_nom : String
@@ -204,6 +209,19 @@ package dnd
         class Carte
         {
             +<<create>> Carte
+            ' un choix de carte par défaut
+            ' instancie     taille de la carte
+            '               position des obstacle
+            '               creer les monstre
+            '               positionne monstre et personnage
+            '               positionne equipement
+            '               phrases de contexte
+
+
+
+
+
+
             -m_listeMonstrePosition : [*]
             -m_listePositionMonstre : [*]
             -m_listePersonnagePosition : [*]
@@ -227,13 +245,15 @@ package dnd
 
     package ennemi
     {
-        class Monstre
+        class Monstre implements dnd.Initiative
         {
         +<<create>> Monstre
         + {static} m_id : Integer
         - m_espece : String
         - m_attaque :
         ' Objet caractérisitique
+
+        ' Faire une énumeration des especes pour acceder à leurs caractéristique
         }
     }
 
@@ -243,6 +263,17 @@ package dnd
         {
 
         }
+
+        class Tour
+        {
+            -m_numeroDuTour : Integer
+            ' methode déroulement du tour
+            -m_ordre : [*] 'contient les monstres et personnages dans l'ordre de leur initiative
+            'methode qui enleve un monstre ou personnage mort de m_ordre
+
+        }
+
+
 
         class seDeplacer extends Action
         {
