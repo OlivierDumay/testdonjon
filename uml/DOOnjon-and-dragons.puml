@@ -4,6 +4,11 @@ skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
 skinparam style strictuml hide empty members
 
+class Main
+{
+
+}
+
 package dnd
 {
     package personnage
