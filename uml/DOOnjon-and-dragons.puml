@@ -198,6 +198,68 @@ package dnd
     ' Item "*" *--> "- " ArmureLourde: contient des
 
     }
+
+    package donjon
+    {
+        class Carte
+        {
+            +<<create>> Carte
+            -m_listeMonstrePosition : [*]
+            -m_listePositionMonstre : [*]
+            -m_listePersonnagePosition : [*]
+            -m_listePositionPersonnage : [*]
+            -m_listeObjetPosition : [*]
+            -m_listePositionObjet : [*]
+            -m_listeObstaclePosition : [*]
+            -m_listePositionObstacle : [*]
+
+            ' methode getQuoiEstIci (position)
+            ' methode getOuEsTruc (truc)
+
+        }
+
+        class Position
+       {
+            -m_x : Integer
+            -m_y : Integer
+       }
+    }
+
+    package ennemi
+    {
+        class Monstre
+        {
+        +<<create>> Monstre
+        + {static} m_id : Integer
+        - m_espece : String
+        - m_attaque :
+        ' Objet caractérisitique
+        }
+    }
+
+    package tourDeJeu
+    {
+        class Action
+        {
+
+        }
+
+        class seDeplacer extends Action
+        {
+
+        }
+
+        class Attaquer extends Action
+        {
+
+        }
+
+        class sEquiper extends Action
+        {
+
+        }
+
+    }
 }
 
 
