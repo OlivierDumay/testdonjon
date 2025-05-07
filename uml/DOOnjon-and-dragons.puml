@@ -231,10 +231,13 @@ package dnd
             -m_listeObstaclePosition : [*]
             -m_listePositionObstacle : [*]
 
-            ' methode getQuoiEstIci (position)
+            + getQuoiEstIci(position : Position) : Entite ?
+            ' ici le type, je ne sais pas, car ça peut tout retourner, j'aurais mis Object mais il faudrait utiliser getClass() dans le code (interdit); solution possible : créer une classe "Entité" qui est implémentée par Monstre, Personnage, etc pour plus de flexibilité.
             ' methode getOuEsTruc (truc)
 
         }
+
+        Carte "*" *--> "- m_listeMonstrePosition[*] : Position selon le monstre (hashmap)" dnd.ennemi.Monstre : possède
 
         class Position
        {
