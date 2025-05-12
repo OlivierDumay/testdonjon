@@ -11,6 +11,27 @@ class Main
 
 package dnd
 {
+    class Caracteristiques
+    {
+        ' Membres de la classe
+        - m_pv : Integer
+        - m_force : Integer
+        - m_dexterite : Integer
+        - m_vitesse : Integer
+        - m_initiative : Integer
+        ' Ctor
+        + <<create>> Caracteristiques(pv : Integer, force : Integer, dexterite : Integer, vitesse : Integer, initiative : Integer)
+        ' Getters
+        + getPV() : Integer
+        + getForce() : Integer
+        + getDexterite() : Integer
+        + getVitese() : Integer
+        + getInitiative() : Integer
+        ' Setters
+        + setPV(pv : Integer)
+        + toString() : String
+    }
+
     package personnage
     {
         class Personnage
@@ -43,28 +64,6 @@ package dnd
             - m_equipement : Item[*]
             + toString() : String
         }
-
-        class Caracteristiques
-        {
-            ' Membres de la classe
-            - m_pv : Integer
-            - m_force : Integer
-            - m_dexterite : Integer
-            - m_vitesse : Integer
-            - m_initiative : Integer
-            ' Ctor
-            + <<create>> Caracteristiques(pv : Integer, force : Integer, dexterite : Integer, vitesse : Integer, initiative : Integer)
-            ' Getters
-            + getPV() : Integer
-            + getForce() : Integer
-            + getDexterite() : Integer
-            + getVitese() : Integer
-            + getInitiative() : Integer
-            ' Setters
-            + setPV(pv : Integer)
-            + toString() : String
-        }
-
 
         Personnage "*" *--> "1" race.Race
         Personnage "*" *--> classe.Classe
