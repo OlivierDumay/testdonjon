@@ -11,6 +11,7 @@ class Main
 
 package dnd
 {
+<<<<<<< HEAD
     class Caracteristiques
     {
         ' Membres de la classe
@@ -32,9 +33,16 @@ package dnd
         + toString() : String
     }
 
+=======
+
+    Interface Initiative <<Interface>>
+            {
+                 +getInitiative()
+            }
+>>>>>>> b555ba0a91a0f4a327a51ef112f6fc4f784f7edb
     package personnage
     {
-        class Personnage
+        class Personnage implements dnd.Initiative
         {
             +<<create>> Personnage(race : Race, classe : Classe)
             - m_nom : String
@@ -203,6 +211,19 @@ package dnd
         class Carte
         {
             +<<create>> Carte
+            ' un choix de carte par défaut
+            ' instancie     taille de la carte
+            '               position des obstacle
+            '               creer les monstre
+            '               positionne monstre et personnage
+            '               positionne equipement
+            '               phrases de contexte
+
+
+
+
+
+
             -m_listeMonstrePosition : [*]
             -m_listePositionMonstre : [*]
             -m_listePersonnagePosition : [*]
@@ -212,10 +233,13 @@ package dnd
             -m_listeObstaclePosition : [*]
             -m_listePositionObstacle : [*]
 
-            ' methode getQuoiEstIci (position)
+            + getQuoiEstIci(position : Position) : Entite ?
+            ' ici le type, je ne sais pas, car ça peut tout retourner, j'aurais mis Object mais il faudrait utiliser getClass() dans le code (interdit); solution possible : créer une classe "Entité" qui est implémentée par Monstre, Personnage, etc pour plus de flexibilité.
             ' methode getOuEsTruc (truc)
 
         }
+
+        Carte "*" *--> "- m_listeMonstrePosition[*] : Position selon le monstre (hashmap)" dnd.ennemi.Monstre : possède
 
         class Position
        {
@@ -226,13 +250,15 @@ package dnd
 
     package ennemi
     {
-        class Monstre
+        class Monstre implements dnd.Initiative
         {
         +<<create>> Monstre
         + {static} m_id : Integer
         - m_espece : String
         - m_attaque :
         ' Objet caractérisitique
+
+        ' Faire une énumeration des especes pour acceder à leurs caractéristique
         }
     }
 
@@ -242,6 +268,17 @@ package dnd
         {
 
         }
+
+        class Tour
+        {
+            -m_numeroDuTour : Integer
+            ' methode déroulement du tour
+            -m_ordre : [*] 'contient les monstres et personnages dans l'ordre de leur initiative
+            'methode qui enleve un monstre ou personnage mort de m_ordre
+
+        }
+
+
 
         class seDeplacer extends Action
         {

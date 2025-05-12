@@ -31,7 +31,7 @@ De plus, il y aura un rendu hebdomadaire avant chaque **dimanche, minuit**.
 
 ## Le jeu
 
-Il s'agit d'un jeu avec plusieurs joueurs humains face à des monstres contrôlés par le maître du jeu, qui se joue **au tour par tour**. Les joueurs incarnant les personnages doivent éliminer les monstres de trois donjons successifs. Un autre joueur est Maître du Jeu et a pour rôle de narrer l'histoire et expliquer le contexte aux joueurs. Si un seul joueur est éliminé par un monstre dans un des donjons, l'équipe a perdu.
+Il s'agit d'un jeu avec plusieurs joueurs face à des monstres contrôlés par le maître du jeu, qui se joue **au tour par tour**. Les joueurs incarnant les personnages doivent éliminer les monstres de trois donjons successifs. Un autre joueur est Maître du Jeu et a pour rôle de narrer l'histoire et expliquer le contexte aux joueurs. Si un seul joueur est éliminé par un monstre dans un des donjons, l'équipe a perdu.
 
  Le jeu se base sur des jets de dés désignés par <nombre de dés>d<nombre de faces des dés>.
  Par exemple, 3d4 désigne le jet de 3 dés à 4 faces.
@@ -58,7 +58,7 @@ Chaque personnage est défini par:
   - sa dextérité
   - sa vitesse
   - son initiative
-- son inventaires d'équipements en armes et armures
+- son inventaire d'équipements en armes et armures (n'est pas limité en nombre d'équipements)
 - les équipements qu'il porte (limité à une arme et une armure)
 
 #### Les caractéristiques
@@ -86,7 +86,7 @@ Chaque personnage est défini par:
   - fronde, dégât 1d4, portée 6 cases
   - arc court, dégât 1d6, portée 16 cases
 
-Les armes lourdes lorsqu'elles sont équipées par un personnage diminuent de 2 points leur vitesse et augmente de 4 leur force.
+Les armes de guerre lorsqu'elles sont équipées par un personnage diminuent de 2 points leur vitesse et augmente de 4 leur force.
 Les armures lourdes lorsqu'elles sont équipées par un personnage diminuent de 4 point leur vitesse.
 
 #### Les races
@@ -141,6 +141,7 @@ Un monstre est défini par:
     - les dégâts de l'attaque (choix du jet de dés)
 - ses caractéristiques
   - ses points de vie
+  - sa vitesse
   - sa force (0 s'il attaque à distance)
   - sa dextérité (0 s'il attaque au corps à corps)
   - sa classe d'armure
@@ -181,7 +182,7 @@ A la fin de chaque action le joueur ou le maître du jeu peut commenter l'action
 ##### S'équiper *(uniquement pour les personnages)*
 Un joueur peut équiper une arme ou une armure de son inventaire.
 (L'arme ou l'armure précédemment équipée retourne dans l'inventaire)
-Penser à mettre à jour la valeur de vitesse de personnage s'il s'agit d'une arme lourde ou d'une armure lourde.
+Ne pas oublier de prendre alors en compte l'éventuel modificateur de vitesse dû à l'arme de guerre ou l'armure lourde lors des futurs déplacements du personnage.
 
 ##### Se Déplacer
 Un joueur ou un monstre peut de déplacer d'une distance égale à sa caractéristique de vitesse divisée par 3 sur une case sans monstre, joueur ou obstacle.
@@ -190,11 +191,11 @@ L'évitement d'obstacles n'est pas pris en compte pour le calcul de la distance 
 ##### Attaquer
 L'attaquant attaque avec l'arme  qu'il porte.
 - L'attaquant choisit la cible de son attaque(monstre dans le cas d'un attaquant personnage et personnage dans le cas d'un attaquant monstre). La cible de l'attaque  doit être à portée du joueur donnée par l'arme (les armes au corps-à-corps ont une portée d'une seule case). Les obstacles ne bloquent pas les attaques des armes à distance.
-- Le joueur commence par faire un jet d'attaque (1d20). Il ajoute ensuite au résultat du dé sa caractéristique de Dextérité s'il s'agit d'une attaque avec arme à distance et sa caractéristique de Force s'il s'agit d'une attaque avec arme au corps-à-corps.
-- Si la somme est supérieur à la classe d'armure du monstre ciblé, le joueur lance le dé de dégât de l'arme et le monstre perd en point de vies le résultat du jet de dé. Dans le cas contraire, le joueur finit son action sans infliger de dégâts au monstre.
+- L'attaquant commence par faire un jet d'attaque (1d20). Il ajoute ensuite au résultat du dé sa caractéristique de Dextérité s'il s'agit d'une attaque avec arme à distance et sa caractéristique de Force s'il s'agit d'une attaque avec arme au corps-à-corps.
+- Si la somme est supérieur à la classe d'armure de la cible, l'attaquant lance le dé de dégât de l'arme et la cible perd en point de vies le résultat du jet de dé. Dans le cas contraire, l'attaquant finit son action sans infliger de dégâts à la cible.
 
 #### Ramasser un équipement *(uniquement pour les personnages)*
-Si un joueur est sur une case contenant un équipement, il peut prendre l'équipement pour l'ajouter à son inventaire (l'équipement disparaît de la carte)
+Si un joueur est sur une case contenant un équipement (une arme ou une armure), il peut prendre l'équipement pour l'ajouter à son inventaire (l'équipement disparaît de la carte)
 
 #### Fin d'un donjon
 Un donjon se termine lorsqu'un joueur est tué (défaite) ou lorsque tous les monstres sont éliminés (victoire).
