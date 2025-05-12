@@ -107,10 +107,10 @@ package dnd
                 +<<create>> Halflin()
             }
 
-            Race "*" *--> "Peut être" Humain
-            Race "*" *--> "Peut être" Elfe
-            Race "*" *--> "Peut être" Nain
-            Race "*" *--> "Peut être" Halflin
+            Race <-- Humain
+            Race <-- Elfe
+            Race <-- Nain
+            Race <-- Halflin
         }
 
         package classe
@@ -280,12 +280,25 @@ package dnd
 
         class seDeplacer extends Action
         {
+            +void deplacement (entitée : ""Objet monstre ou personnage"", destination : Position )
+            ' deplacement(): 2 choix:
+            ' soit un par appel par case, comme si on déplacait l'entitée case par case, donc:
+            '                                   test si destination est adjacent
+            '                                   puis test si case destination est libre
+            '                                   puis test si il reste des point de mouvement à l'entité
+            '                                   puis déplacement
+            '
+            ' soit un appel pour tout le déplacement, plus en accord avec le sujet;
+            '                                   test si case destination est libre
+            '                                   test si distance inférieure à  vitesse/3
+            '                                   déplacement
+
 
         }
 
         class Attaquer extends Action
         {
-
+            +void attaque ()
         }
 
         class sEquiper extends Action
