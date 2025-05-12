@@ -313,7 +313,10 @@ package dnd
 
         class sEquiper extends Action
         {
-
+            +void prendre(personnage : Personnage)
+            ' test si un equipement présent sur la position du personnage
+            ' personnage.m_Inventaire(ajoutEquipement(carte.getQuoiEstIci)
+            ' supprimer l'objet de la map
         }
 
     }
