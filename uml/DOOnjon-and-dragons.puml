@@ -11,143 +11,163 @@ class Main
 
 package dnd
 {
-
-    Interface Initiative <<Interface>>
-            {
-                 +getInitiative()
-            }
-    package personnage
+    package entite
     {
-        class Personnage implements dnd.Initiative
+        class Entite
         {
-            +<<create>> Personnage(race : Race, classe : Classe)
-            - m_nom : String
-            - m_etat : Boolean
-            ' Race : mettre une composition
-            ' Classe : mettre une composition
-            ' Inventaire d'équipements : mettre une composition
-            ' Équipements : mettre une composition
-            + getNom() : String
-            + getEtat() : Boolean
-            + toString() : String
-        }
-
-        ' Début classes personnages
-
-
-
-
-        class Inventaire
-        {
-            - m_inventaire : Item[*]
-            + toString() : String
-        }
-
-        class EquipementPersonnage
-        {
-            - m_equipement : Item[*]
-            + toString() : String
         }
 
         class Caracteristiques
-        {
-            ' Membres de la classe
-            - m_pv : Integer
-            - m_force : Integer
-            - m_dexterite : Integer
-            - m_vitesse : Integer
-            - m_initiative : Integer
-            ' Ctor
-            + <<create>> Caracteristiques(pv : Integer, force : Integer, dexterite : Integer, vitesse : Integer, initiative : Integer)
-            ' Getters
-            + getPV() : Integer
-            + getForce() : Integer
-            + getDexterite() : Integer
-            + getVitese() : Integer
-            + getInitiative() : Integer
-            ' Setters
-            + setPV(pv : Integer)
-            + toString() : String
-        }
-
-
-        Personnage "*" *--> "1" race.Race
-        Personnage "*" *--> classe.Classe
-        Personnage "*" *--> "1" Caracteristiques : possède
-        Personnage "1" *--> "est équipé de" EquipementPersonnage
-        Personnage "1" *--> "possède" Inventaire : possède
-        Inventaire "*" o-- "- m_items[*] : Objets du personnage" dnd.objet.Item : possède
-        EquipementPersonnage "1" o-- "- m_arme_equipee : Arme\n - m_armure_equipee : Armure" dnd.objet.Item
-
-        package race
-        {
-            abstract class Race <<abstract>>
             {
-                +{abstract} bonusCreation()
-                +{abstract} toString()
+                ' Membres de la classe
+                - m_pv : Integer
+                - m_force : Integer
+                - m_dexterite : Integer
+                - m_vitesse : Integer
+                - m_initiative : Integer
+                ' Ctor
+                + <<create>> Caracteristiques(pv : Integer, force : Integer, dexterite : Integer, vitesse : Integer, initiative : Integer)
+                ' Getters
+                + getPV() : Integer
+                + getForce() : Integer
+                + getDexterite() : Integer
+                + getVitese() : Integer
+                + getInitiative() : Integer
+                ' Setters
+                + setPV(pv : Integer)
+                + toString() : String
             }
 
-            class Humain
+            Interface Initiative <<Interface>>
             {
-                +<<create>> Humain()
+                +getInitiative()
             }
 
-            class Elfe
+            package personnage
             {
-                +<<create>> Elfe()
+                class Personnage implements dnd.entite.Initiative, dnd.entite.Entite
+                {
+                    +<<create>> Personnage(race : Race, classe : Classe)
+                    - m_nom : String
+                    - m_etat : Boolean
+                    ' Race : mettre une composition
+                    ' Classe : mettre une composition
+                    ' Inventaire d'équipements : mettre une composition
+                    ' Équipements : mettre une composition
+                    + getNom() : String
+                    + getEtat() : Boolean
+                    + toString() : String
+                }
+
+                ' Début classes personnages
+
+                class Inventaire
+                {
+                    - m_inventaire : Item[*]
+                    + toString() : String
+                }
+
+                class EquipementPersonnage
+                {
+                    - m_equipement : Item[*]
+                    + toString() : String
+                }
+
+                Personnage "*" *--> "1" race.Race
+                Personnage "*" *--> classe.Classe
+                Personnage "*" *--> "1" Caracteristiques : possède
+                Personnage "1" *--> "est équipé de" EquipementPersonnage
+                Personnage "1" *--> "possède" Inventaire : possède
+                Inventaire "*" o-- "- m_items[*] : Objets du personnage" dnd.objet.Item : possède
+                EquipementPersonnage "1" o-- "- m_arme_equipee : Arme\n - m_armure_equipee : Armure" dnd.objet.Item
+
+                package race
+                {
+                    abstract class Race <<abstract>>
+                    {
+                        +{abstract} bonusCreation()
+                        +{abstract} toString()
+                    }
+
+                    class Humain
+                    {
+                        +<<create>> Humain()
+                    }
+
+                    class Elfe
+                    {
+                        +<<create>> Elfe()
+                    }
+
+                    class Nain
+                    {
+                        +<<create>> Nain()
+                    }
+
+                    class Halflin
+                    {
+                        +<<create>> Halflin()
+                    }
+
+                    Race "*" *--> "Peut être" Humain
+                    Race "*" *--> "Peut être" Elfe
+                    Race "*" *--> "Peut être" Nain
+                    Race "*" *--> "Peut être" Halflin
+                }
+
+                package classe
+                {
+                    abstract class Classe <<abstract>>
+                    {
+                        +{abstract} bonusCreation()
+                        +{abstract} toString()
+                    }
+
+                    class Guerrier
+                    {
+                        +<<create>>  Guerrier()
+                    }
+
+                    class Clerc
+                    {
+                        +<<create>> Clerc()
+                    }
+
+                    class Magiciens
+                    {
+                        +<<create>> Magiciens()
+                    }
+
+                    class Roublard
+                    {
+                        +<<create>> Roublard()
+                    }
+
+                    Classe "*" *--> "1" Guerrier : peut être
+                    Classe "*" *--> "1" Clerc : peut être
+                    Classe "*" *--> "1" Magiciens : peut être
+                    Classe "*" *--> "1" Roublard : peut être
+                }
             }
 
-            class Nain
+            package ennemi
             {
-                +<<create>> Nain()
+                class Monstre implements dnd.entite.Initiative, dnd.entite.Entite
+                {
+                    +<<create>> Monstre
+                    + {static} m_id : Integer
+                    - m_espece : String
+                    - m_attaque :
+                    ' Objet caractérisitique
+
+                    ' Faire une énumeration des especes pour acceder à leurs caractéristique
+                }
             }
-
-            class Halflin
-            {
-                +<<create>> Halflin()
-            }
-
-            Race "*" *--> "Peut être" Humain
-            Race "*" *--> "Peut être" Elfe
-            Race "*" *--> "Peut être" Nain
-            Race "*" *--> "Peut être" Halflin
-        }
-
-        package classe
-        {
-
-            abstract class Classe <<abstract>>
-            {
-            +{abstract} bonusCreation()
-            +{abstract} toString()
-            }
-
-            class Guerrier
-            {
-                +<<create>>  Guerrier()
-            }
-
-            class Clerc
-            {
-                +<<create>> Clerc()
-            }
-
-            class Magiciens
-            {
-                +<<create>> Magiciens()
-            }
-
-            class Roublard
-            {
-                +<<create>> Roublard()
-            }
-
-            Classe "*" *--> "1" Guerrier : peut être
-            Classe "*" *--> "1" Clerc : peut être
-            Classe "*" *--> "1" Magiciens : peut être
-            Classe "*" *--> "1" Roublard : peut être
-        }
     }
+
+
+
+
 
     package objet
     {
@@ -216,47 +236,20 @@ package dnd
             '               positionne monstre et personnage
             '               positionne equipement
             '               phrases de contexte
-
-
-
-
-
-
-            -m_listeMonstrePosition : [*]
-            -m_listePositionMonstre : [*]
-            -m_listePersonnagePosition : [*]
-            -m_listePositionPersonnage : [*]
-            -m_listeObjetPosition : [*]
-            -m_listePositionObjet : [*]
-            -m_listeObstaclePosition : [*]
-            -m_listePositionObstacle : [*]
-
             + getQuoiEstIci(position : Position) : Entite ?
             ' ici le type, je ne sais pas, car ça peut tout retourner, j'aurais mis Object mais il faudrait utiliser getClass() dans le code (interdit); solution possible : créer une classe "Entité" qui est implémentée par Monstre, Personnage, etc pour plus de flexibilité.
             ' methode getOuEsTruc (truc)
+            ' EDIT : du coup ici bah c'est "bon" on verra comment ça rend dans le code
 
         }
 
-        Carte "*" *--> "- m_listeMonstrePosition[*] : Position selon le monstre (hashmap)" dnd.ennemi.Monstre : possède
+        Carte "*" *--> "- m_listeEntitePosition[*] : Position selon l'Entite (hashmap)" dnd.entite.Entite : possède
+        Carte "*" *--> "- m_listPositionEntite[*] : L'Entite selon la Position (hashmap)" dnd.entite.Entite : possède
 
         class Position
-       {
+        {
             -m_x : Integer
             -m_y : Integer
-       }
-    }
-
-    package ennemi
-    {
-        class Monstre implements dnd.Initiative
-        {
-        +<<create>> Monstre
-        + {static} m_id : Integer
-        - m_espece : String
-        - m_attaque :
-        ' Objet caractérisitique
-
-        ' Faire une énumeration des especes pour acceder à leurs caractéristique
         }
     }
 
