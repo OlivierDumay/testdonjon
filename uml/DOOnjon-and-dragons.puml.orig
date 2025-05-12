@@ -11,6 +11,7 @@ class Main
 
 package dnd
 {
+<<<<<<< HEAD
     class Caracteristiques
     {
         ' Membres de la classe
@@ -31,11 +32,14 @@ package dnd
         + setPV(pv : Integer)
         + toString() : String
     }
-    
+
+=======
+
     Interface Initiative <<Interface>>
             {
                  +getInitiative()
             }
+>>>>>>> b555ba0a91a0f4a327a51ef112f6fc4f784f7edb
     package personnage
     {
         class Personnage implements dnd.Initiative
