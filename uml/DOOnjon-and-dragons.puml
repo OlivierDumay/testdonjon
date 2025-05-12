@@ -298,7 +298,17 @@ package dnd
 
         class Attaquer extends Action
         {
-            +void attaque ()
+            +void attaque (attaquant : Entité, defenseur : Entité)
+            '   test que personnage n'attaque pas personnage et monstre n'attaque pas monstre
+            '   test portée (faut il une méthode de calcul de distance?)
+            '   jet d'attaque : 1d20 + attaquant.m_equipement(getCaractéristiqueAttaque())
+            '                   (dans classe arme, il faut une méthode qui cherche la force ou la dex de l'entité pour l'additionner
+            '                                       et une pour lancer le dé de dégat careespondant)
+            '   test si jet d'attaque > defenseur.m_equipement(getArmure())
+            '   degat: entitée.m_equipement(jetDeDégat())
+            '           defenseur.setPV(getPV()-degat)
+            '           test état du défenseur
+
         }
 
         class sEquiper extends Action
