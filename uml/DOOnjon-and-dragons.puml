@@ -253,19 +253,7 @@ package dnd
         }
     }
 
-    package ennemi
-    {
-        class Monstre implements dnd.Initiative
-        {
-        +<<create>> Monstre
-        + {static} m_id : Integer
-        - m_espece : String
-        - m_attaque :
-        ' Objet caractérisitique
 
-        ' Faire une énumeration des especes pour acceder à leurs caractéristique
-        }
-    }
 
     package tourDeJeu
     {
