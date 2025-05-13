@@ -13,7 +13,7 @@ package dnd
 {
     package entite
     {
-        class Entite <<Interface>>
+        interface GameObject <<Interface>>
         {
         }
 
