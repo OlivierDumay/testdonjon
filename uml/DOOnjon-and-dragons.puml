@@ -253,6 +253,20 @@ package dnd
         }
     }
 
+    package ennemi
+    {
+        class Monstre implements dnd.Initiative
+        {
+        +<<create>> Monstre
+        + {static} m_id : Integer
+        - m_espece : String
+        - m_attaque :
+        ' Objet caractérisitique
+
+        ' Faire une énumeration des especes pour acceder à leurs caractéristique
+        }
+    }
+
     package tourDeJeu
     {
         class Action
@@ -273,17 +287,43 @@ package dnd
 
         class seDeplacer extends Action
         {
+            +void deplacement (entitée : ""Objet monstre ou personnage"", destination : Position )
+            ' deplacement(): 2 choix:
+            ' soit un par appel par case, comme si on déplacait l'entitée case par case, donc:
+            '                                   test si destination est adjacent
+            '                                   puis test si case destination est libre
+            '                                   puis test si il reste des point de mouvement à l'entité
+            '                                   puis déplacement
+            '
+            ' soit un appel pour tout le déplacement, plus en accord avec le sujet;
+            '                                   test si case destination est libre
+            '                                   test si distance inférieure à  vitesse/3
+            '                                   déplacement
+
 
         }
 
         class Attaquer extends Action
         {
+            +void attaque (attaquant : Entité, defenseur : Entité)
+            '   test que personnage n'attaque pas personnage et monstre n'attaque pas monstre
+            '   test portée (faut il une méthode de calcul de distance?)
+            '   jet d'attaque : 1d20 + attaquant.m_equipement(getCaractéristiqueAttaque())
+            '                   (dans classe arme, il faut une méthode qui cherche la force ou la dex de l'entité pour l'additionner
+            '                                       et une pour lancer le dé de dégat careespondant)
+            '   test si jet d'attaque > defenseur.m_equipement(getArmure())
+            '   degat: entitée.m_equipement(jetDeDégat())
+            '           defenseur.setPV(getPV()-degat)
+            '           test état du défenseur
 
         }
 
         class sEquiper extends Action
         {
-
+            +void prendre(personnage : Personnage)
+            ' test si un equipement présent sur la position du personnage
+            ' personnage.m_Inventaire(ajoutEquipement(carte.getQuoiEstIci)
+            ' supprimer l'objet de la map
         }
 
     }
