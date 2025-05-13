@@ -63,13 +63,11 @@ package dnd
 
                 class Inventaire
                 {
-                    - m_inventaire : Item[*]
                     + toString() : String
                 }
 
                 class EquipementPersonnage
                 {
-                    - m_equipement : Item[*]
                     + toString() : String
                 }
 
@@ -79,7 +77,7 @@ package dnd
                 Personnage "1" *--> "est équipé de" EquipementPersonnage
                 Personnage "1" *--> "possède" Inventaire : possède
                 Inventaire "*" o-- "- m_items[*] : Objets du personnage" dnd.objet.Item : possède
-                EquipementPersonnage "1" o-- "- m_arme_equipee : Arme\n - m_armure_equipee : Armure" dnd.objet.Item
+                EquipementPersonnage "1" o-- "- m_arme_equipee : Arme\n - m_armure_equipee : Armure" dnd.objet.Item : est équipé de
 
                 package race
                 {
@@ -253,19 +251,6 @@ package dnd
         }
     }
 
-    package ennemi
-    {
-        class Monstre implements dnd.Initiative
-        {
-        +<<create>> Monstre
-        + {static} m_id : Integer
-        - m_espece : String
-        - m_attaque :
-        ' Objet caractérisitique
-
-        ' Faire une énumeration des especes pour acceder à leurs caractéristique
-        }
-    }
 
     package tourDeJeu
     {
