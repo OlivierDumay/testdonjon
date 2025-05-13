@@ -13,7 +13,7 @@ package dnd
 {
     package entite
     {
-        class Entite
+        class Entite <<Interface>>
         {
         }
 
