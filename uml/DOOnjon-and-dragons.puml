@@ -11,7 +11,7 @@ class Main
 
 package dnd
 {
-    package GameObject
+    package gameObject
     {
         interface GameObject <<Interface>>
         {
@@ -154,7 +154,7 @@ package dnd
 
             package ennemi
             {
-                class Monstre implements dnd.GameObject.GameObject
+                class Monstre implements dnd.gameObject.GameObject
                 {
                     +<<create>> Monstre
                     + {static} m_id : Integer
@@ -262,7 +262,7 @@ package dnd
     }
 
 
-    package Partie
+    package partie
     {
         package tourDeJeu
         {
