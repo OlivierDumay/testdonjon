@@ -15,7 +15,7 @@ package dnd
     {
         interface GameObject <<Interface>>
         {
-            +getEtiquette()
+            +getEtiquette(objet : GameObject)
         }
 
         class Caracteristiques
@@ -39,14 +39,9 @@ package dnd
                 + toString() : String
             }
 
-            Interface Initiative <<Interface>>
-            {
-                +getInitiative()
-            }
-
             package personnage
             {
-                class Personnage implements dnd.GameObject.Initiative, dnd.GameObject.GameObject
+                class Personnage implements  dnd.GameObject.GameObject
                 {
                     +<<create>> Personnage(race : Race, classe : Classe)
                     - m_nom : String
@@ -152,7 +147,7 @@ package dnd
 
             package ennemi
             {
-                class Monstre implements dnd.GameObject.Initiative, dnd.GameObject.GameObject
+                class Monstre implements dnd.GameObject.GameObject
                 {
                     +<<create>> Monstre
                     + {static} m_id : Integer
@@ -246,13 +241,14 @@ package dnd
 
         }
 
-        Carte "*" *--> "- m_listeGameObjectPosition[*] : Position selon l'GameObject (hashmap)" dnd.GameObject.GameObject : possède
-        Carte "*" *--> "- m_listPositionGameObject[*] : L'GameObject selon la Position (hashmap)" dnd.GameObject.GameObjectGameObject : possède
+        Carte "*" *--> "- m_listeGameObjectPosition[*] : Position selon GameObject (hashmap)" dnd.GameObject.GameObject : possède
+        Carte "*" *--> "- m_listPositionGameObject[*] : GameObject selon la Position (hashmap)" dnd.GameObject.GameObject : possède
 
         class Position
         {
             -m_x : Integer
             -m_y : Integer
+            +calculDistance(origine : GameObject, destination : Position)
         }
     }
 
@@ -317,6 +313,14 @@ package dnd
             ' supprimer l'objet de la map
         }
 
+    }
+
+    package des
+    {
+        class Des
+        {
+            +Integer lancerDes (nombreDeDes : Integer, nombreDeFace : Integer)
+        }
     }
 }
 
