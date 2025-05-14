@@ -9,6 +9,7 @@
 - [x] : methode getEtiqeutte() dans en  tité
 - [ ] : 
 
+
 ## Code
 - [ ] : creer le string de l'affichage, map + info
 - [x] : methode calcul distance
