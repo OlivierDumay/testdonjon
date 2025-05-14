@@ -11,10 +11,11 @@ class Main
 
 package dnd
 {
-    package entite
+    package GameObject
     {
         interface GameObject <<Interface>>
         {
+            +getEtiquette(objet : GameObject)
         }
 
         class Caracteristiques
@@ -38,18 +39,14 @@ package dnd
                 + toString() : String
             }
 
-            Interface Initiative <<Interface>>
-            {
-                +getInitiative()
-            }
-
             package personnage
             {
-                class Personnage implements dnd.entite.Initiative, dnd.entite.Entite
+                class Personnage implements  dnd.GameObject.GameObject
                 {
                     +<<create>> Personnage(race : Race, classe : Classe)
                     - m_nom : String
                     - m_etat : Boolean
+                    - m_etiquette : String
                     ' Race : mettre une composition
                     ' Classe : mettre une composition
                     ' Inventaire d'équipements : mettre une composition
@@ -63,13 +60,11 @@ package dnd
 
                 class Inventaire
                 {
-                    - m_inventaire : Item[*]
                     + toString() : String
                 }
 
                 class EquipementPersonnage
                 {
-                    - m_equipement : Item[*]
                     + toString() : String
                 }
 
@@ -79,7 +74,7 @@ package dnd
                 Personnage "1" *--> "est équipé de" EquipementPersonnage
                 Personnage "1" *--> "possède" Inventaire : possède
                 Inventaire "*" o-- "- m_items[*] : Objets du personnage" dnd.objet.Item : possède
-                EquipementPersonnage "1" o-- "- m_arme_equipee : Arme\n - m_armure_equipee : Armure" dnd.objet.Item
+                EquipementPersonnage "1" o-- "- m_arme_equipee : Arme\n - m_armure_equipee : Armure" dnd.objet.Item : est équipé de
 
                 package race
                 {
@@ -152,12 +147,13 @@ package dnd
 
             package ennemi
             {
-                class Monstre implements dnd.entite.Initiative, dnd.entite.Entite
+                class Monstre implements dnd.GameObject.GameObject
                 {
                     +<<create>> Monstre
                     + {static} m_id : Integer
                     - m_espece : String
                     - m_attaque :
+                    - m_etiquette : String
                     ' Objet caractérisitique
 
                     ' Faire une énumeration des especes pour acceder à leurs caractéristique
@@ -174,8 +170,10 @@ package dnd
         class Item
         {
             - m_nom : String
+            - m_etiquette : String
             + <<create>> Item(name : String)
             + getName() : String
+
         }
 
         class Arme extends Item
@@ -236,20 +234,21 @@ package dnd
             '               positionne monstre et personnage
             '               positionne equipement
             '               phrases de contexte
-            + getQuoiEstIci(position : Position) : Entite ?
+            + getQuoiEstIci(position : Position) : GameObject ?
             ' ici le type, je ne sais pas, car ça peut tout retourner, j'aurais mis Object mais il faudrait utiliser getClass() dans le code (interdit); solution possible : créer une classe "Entité" qui est implémentée par Monstre, Personnage, etc pour plus de flexibilité.
             ' methode getOuEsTruc (truc)
             ' EDIT : du coup ici bah c'est "bon" on verra comment ça rend dans le code
 
         }
 
-        Carte "*" *--> "- m_listeEntitePosition[*] : Position selon l'Entite (hashmap)" dnd.entite.Entite : possède
-        Carte "*" *--> "- m_listPositionEntite[*] : L'Entite selon la Position (hashmap)" dnd.entite.Entite : possède
+        Carte "*" *--> "- m_listeGameObjectPosition[*] : Position selon GameObject (hashmap)" dnd.GameObject.GameObject : possède
+        Carte "*" *--> "- m_listPositionGameObject[*] : GameObject selon la Position (hashmap)" dnd.GameObject.GameObject : possède
 
         class Position
         {
             -m_x : Integer
             -m_y : Integer
+            +calculDistance(origine : GameObject, destination : Position)
         }
     }
 
@@ -314,6 +313,14 @@ package dnd
             ' supprimer l'objet de la map
         }
 
+    }
+
+    package des
+    {
+        class Des
+        {
+            +Integer lancerDes (nombreDeDes : Integer, nombreDeFace : Integer)
+        }
     }
 }
 
