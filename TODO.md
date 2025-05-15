@@ -12,6 +12,12 @@
 - [ ] : signature de methode d'interface dans classe interface?
 - [ ] : mettre en static plein de truc, quoiestqui, quiestla, 
 - [ ] : changer nom package objet par objetDeJeu
+- [ ] : faire des classes pour l'affichage, pour les différentes partie de l'affichage
+- [ ] : refaire les relation au propre
+- [ ] : comment on recupere les bonus des classes/race
+- [ ] : faire une mehose prendre et un s'équiper
+- [ ] : 
+
 
 ## Code
 - [ ] : creer le string de l'affichage, map + info

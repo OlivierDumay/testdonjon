@@ -80,7 +80,7 @@ package dnd
                 Personnage "*" *--> "1" Caracteristiques : possède
                 Personnage "1" *--> "est équipé de" EquipementPersonnage
                 Personnage "1" *--> "possède" Inventaire : possède
-                Inventaire "*" o-- "- m_items[*] : Objets du personnage" dnd.objet.Item : possède
+                Inventaire "*" o--  "*\n- m_items : Objets du personnage" dnd.objet.Item : possède
                 EquipementPersonnage "1" o-- "- m_arme_equipee : Arme\n - m_armure_equipee : Armure" dnd.objet.Item : est équipé de
 
                 package race
