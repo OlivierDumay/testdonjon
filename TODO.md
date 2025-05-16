@@ -19,7 +19,8 @@
 - [ ] : creer le string de l'affichage, map + info
 - [x] : methode calcul distance
 
-
+## Problèmes
+- [ ] : Implémenter une classe intermédiaire à stocker dans Case parce qu'actuellement on ne peut pas stocker deux GameObject dans UNE case (i.e un joueur personnage + un item doivent être sur la même case pour pouvoir ramassser).
 
 
 demarrerPartie(carteParDefaut, 15)

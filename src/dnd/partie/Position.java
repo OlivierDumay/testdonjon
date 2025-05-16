@@ -44,4 +44,10 @@ public class Position
         Position other = (Position)obj;
         return this.m_x == other.getX() && this.m_y == other.getY();
     }
+
+    @Override
+    public int hashCode()
+    {
+        return 25 * this.m_x + this.m_y;
+    }
 }
