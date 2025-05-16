@@ -12,6 +12,8 @@
 - [ ] : signature de methode d'interface dans classe interface?
 - [ ] : mettre en static plein de truc, quoiestqui, quiestla, 
 - [ ] : changer nom package objet par objetDeJeu
+- [ ] : remplacer tous les membres "m_etiquette" des classes par une méthode getEtiquette()
+- [ ] : ajouter une enum pour les Monstre
 
 ## Code
 - [ ] : creer le string de l'affichage, map + info
