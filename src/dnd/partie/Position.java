@@ -29,7 +29,7 @@ public class Position
     {
         if (this.equals(pos))
             return 0;
-        // TODO : olivier fait ça
+        // TODO : olivier fait ça nb : oui oui aller king kong
         return 0;
     }
 
@@ -38,7 +38,7 @@ public class Position
     {
         if (this == obj)
             return true;
-        if (this == null || getClass() != obj.getClass())
+        if (obj == null || getClass() != obj.getClass())
             return false;
 
         Position other = (Position)obj;
