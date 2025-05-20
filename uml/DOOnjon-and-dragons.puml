@@ -33,13 +33,10 @@ package dnd
         }
     }
 
-
-
     package partie
     {
         package tourDeJeu
         {
-
             class Tour
             {
                 -m_numeroDuTour : Integer
@@ -79,135 +76,68 @@ package dnd
                 -m_y : Integer
                 +calculDistance(origine : GameObject, destination : Position)
             }
-
         }
     }
 
-    package gameObject
+package gameObject
+{
+    package personnage
     {
-        package personnage
+        package race
         {
-            package race
+            abstract class Race <<abstract>>
             {
-                abstract class Race <<abstract>>
-                {
-                    +{abstract} bonusCreation()
-                    +{abstract} toString()
-                }
-
-                class Humain
-                {
-                    +<<create>> Humain()
-                }
-
-                class Elfe
-                {
-                    +<<create>> Elfe()
-                }
-
-                class Nain
-                {
-                    +<<create>> Nain()
-                }
-
-                class Halflin
-                {
-                    +<<create>> Halflin()
-                }
+            +{abstract} bonusCreation()
+            +{abstract} toString()
             }
 
-            package classe
+            class Humain
             {
-                abstract class Classe <<abstract>>
-                {
-                    +{abstract} bonusCreation()
-                    +{abstract} toString()
-                }
-
-                class Guerrier
-                {
-                    +<<create>>  Guerrier()
-                }
-
-                class Clerc
-                {
-                    +<<create>> Clerc()
-                }
-
-                class Magiciens
-                {
-                    +<<create>> Magiciens()
-                }
-
-                class Roublard
-                {
-                    +<<create>> Roublard()
-                }
+            +<<create>> Humain()
             }
 
-        package ennemi
-        {
-            class Monstre implements dnd.gameObject.GameObject
+            class Elfe
             {
-                +<<create>> Monstre
-                + {static} m_id : Integer
-                - m_espece : String
-                - m_attaque :
-                - m_etiquette : String
-                ' Objet caractérisitique
+            +<<create>> Elfe()
+            }
 
-                ' Faire une énumeration des especes pour acceder à leurs caractéristique
-                +void deplacement (destination : Position )
-                +void attaque (defenseur : GameObject)
+            class Nain
+            {
+            +<<create>> Nain()
+            }
+
+            class Halflin
+            {
+            +<<create>> Halflin()
             }
         }
 
-        package objet
+        package classe
         {
-            class Item
+            abstract class Classe <<abstract>>
             {
-                - m_nom : String
-                - m_etiquette : String
-                + <<create>> Item(name : String)
-                + getName() : String
-
+            +{abstract} bonusCreation()
+            +{abstract} toString()
             }
 
-            class Arme extends Item
+            class Guerrier
             {
-                - m_degat : Integer
-                + <<create>> Arme(name : String, degat : Integer)
+            +<<create>>  Guerrier()
             }
 
-            class Armure extends Item
+            class Clerc
             {
-                - m_armure : Integer
-                + <<create>> Armure(name : String, armure : Integer)
+            +<<create>> Clerc()
             }
 
-            class ArmeCourante extends Arme
+            class Magiciens
             {
-
+            +<<create>> Magiciens()
             }
 
-            class ArmeGuerre extends Arme
+            class Roublard
             {
-
-            }
-
-            class ArmeDistance extends Arme
-            {
-
-            }
-
-            class ArmureLegere extends Armure
-            {
-
-            }
-
-            class ArmureLourde extends Armure
-            {
-
+            +<<create>> Roublard()
             }
         }
 
@@ -241,36 +171,119 @@ package dnd
         }
     }
 
-        interface GameObject <<Interface>>
+    package ennemi
+    {
+        class Monstre implements dnd.gameObject.GameObject
         {
+            +<<create>> Monstre
+            + {static} m_id : Integer
+            - m_espece : String
+            - m_attaque :
+            - m_etiquette : String
+            ' Objet caractérisitique
+
+            ' Faire une énumeration des especes pour acceder à leurs caractéristique
             +void deplacement (destination : Position )
             +void attaque (defenseur : GameObject)
-            +void prendre(personnage : GameObject)
-            +getEtiquette(objet : GameObject)
+        }
+    }
+
+    package objet
+    {
+        class Item
+        {
+            - m_nom : String
+            - m_etiquette : String
+            + <<create>> Item(name : String)
+            + getName() : String
         }
 
-        class Caracteristiques
-            {
-                ' Membres de la classe
-                - m_pv : Integer
-                - m_force : Integer
-                - m_dexterite : Integer
-                - m_vitesse : Integer
-                - m_initiative : Integer
-                ' Ctor
-                + <<create>> Caracteristiques(pv : Integer, force : Integer, dexterite : Integer, vitesse : Integer, initiative : Integer)
-                ' Getters
-                + getPV() : Integer
-                + getForce() : Integer
-                + getDexterite() : Integer
-                + getVitese() : Integer
-                + getInitiative() : Integer
-                ' Setters
-                + setPV(pv : Integer)
-                + toString() : String
-            }
+        class Arme extends Item
+        {
+            - m_degat : Integer
+            + <<create>> Arme(name : String, degat : Integer)
+        }
+
+        class Armure extends Item
+        {
+            - m_armure : Integer
+            + <<create>> Armure(name : String, armure : Integer)
+        }
+
+        class ArmeCourante extends Arme
+        {
+
+        }
+
+        class ArmeGuerre extends Arme
+        {
+
+        }
+
+        class ArmeDistance extends Arme
+        {
+
+        }
+
+        class ArmureLegere extends Armure
+        {
+
+        }
+
+        class ArmureLourde extends Armure
+        {
+
+        }
+    }
+
+    interface GameObject <<Interface>>
+    {
+        +void deplacement (destination : Position )
+        +void attaque (defenseur : GameObject)
+        +void prendre(personnage : GameObject)
+        +getEtiquette(objet : GameObject)
+    }
+
+    class Caracteristiques
+    {
+        ' Membres de la classe
+        - m_pv : Integer
+        - m_force : Integer
+        - m_dexterite : Integer
+        - m_vitesse : Integer
+        - m_initiative : Integer
+        ' Ctor
+        + <<create>> Caracteristiques(pv : Integer, force : Integer, dexterite : Integer, vitesse : Integer, initiative : Integer)
+        ' Getters
+        + getPV() : Integer
+        + getForce() : Integer
+        + getDexterite() : Integer
+        + getVitese() : Integer
+        + getInitiative() : Integer
+        ' Setters
+        + setPV(pv : Integer)
+        + toString() : String
     }
 }
+
+'dnd/
+'   des/DES
+'   partie/
+'       tourDeJeu/TOUR
+'       donjon/CARTE-CASE-POSITION
+'   gameObject/ASSET-GAMEOBJECT-CARACTERISTIQUE
+'       personnage/PERSONNAGE-INVENTAIRE-EQUIPEMENTPERSONNAGE
+'           race/HUMAIN-ELFE-NAIN-HALFLIN
+'           classe/GUERRIER-CLERC-MAGICIEN-ROUBLARD
+'       ennemi/MONSTRE
+'       objet/ITEM-ARME-ARMURE(et leurs impléments)
+
+
+
+Carte "*" *--> "- m_listeGameObjectPosition[*] : Position selon GameObject (hashmap)" dnd.GameObject.GameObject : possède
+Carte "*" *--> "- m_listPositionGameObject[*] : GameObject selon la Position (hashmap)" dnd.GameObject.GameObject : possède
+
+Position "1" *-->  "- m_position : Position" Case
 
 Personnage "*" *--> "1" race.Race
 Personnage "*" *--> classe.Classe
@@ -298,10 +311,7 @@ Classe "*" *--> "1" Roublard : peut être
 ' Item "*" *--> "- m_armure : Integer" ArmureLegere: contient des
 ' Item "*" *--> "- " ArmureLourde: contient des
 
-Carte "*" *--> "- m_listeGameObjectPosition[*] : Position selon GameObject (hashmap)" dnd.GameObject.GameObject : possède
-Carte "*" *--> "- m_listPositionGameObject[*] : GameObject selon la Position (hashmap)" dnd.GameObject.GameObject : possède
 
-Position "1" *-->  "- m_position : Position" Case
 
 
 
