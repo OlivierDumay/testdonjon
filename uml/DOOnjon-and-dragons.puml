@@ -54,7 +54,7 @@ package dnd
                 -taille[*] : Integer
                 -grille[*] : Case
                 'grille est un tableau à 2 dimensions de case, grille[x][y] = case1; case1.m_x=x; case1.m_y=y
-                -emplacementAsset : Map< id : String, position : Position>
+                -emplacementAsset : Map<id : String, position : Position>
                 +<<create>> Carte
                 ' un choix de carte par défaut
                 ' instancie     taille de la carte et les cases
@@ -64,7 +64,7 @@ package dnd
                 '               positionne equipement
                 '               phrases de contexte
                 + getQuoiEstIci(ici : Case) : Asset[*]
-                ' en arg: grille[case.m_position.m_x][case.m_position.m_y]
+                ' en arg: grille[position.m_position.m_x][position.m_position.m_y]
                 ' on trouve la case qui correpsond a position1 avec : Case cs1 = getCase(position1); Puis on fait cs1.addAsset(), cs1.removeAsset()
                 + getOuEstQuoi(quoi : Asset) : Position
                 'vers emplacementAsset
@@ -73,20 +73,16 @@ package dnd
 
             class Case
             {
-                -m_position : Position
+                -m_x : Integer
+                -m_y : Integer
                 -m_listAsset[*] : Asset
                 +<<create>> Case (position : Position)
+                +calculDistance(destination_x : Integer, destination_y: Integer) : Integer
                 +void addAsset(asset : Asset)
                 +void removeAsset(asset : Asset)
                 +Asset[*] getAsset()
             }
 
-            class Position
-            {
-                -m_x : Integer
-                -m_y : Integer
-                +calculDistance(origine : GameObject, destination : Position)
-            }
         }
     }
 
@@ -201,7 +197,7 @@ package dnd
 
         package objet
         {
-            class Item implements dnd.gameObject.Asset
+            class Item implements dnd.Asset
             {
                 - m_nom : String
                 - m_etiquette : String
@@ -247,15 +243,7 @@ package dnd
             }
         }
 
-        interface Asset <<interface>>
-        {
-            -m_position : Position
-
-
-            +getEtiquette() : Etiquette
-        }
-
-        interface GameObject <<Interface>> implements dnd.gameObject.Asset
+        interface GameObject <<Interface>> implements dnd.Asset
         {
             +void deplacement (destination : Position )
             +void attaque (defenseur : GameObject)
@@ -284,15 +272,23 @@ package dnd
             + toString() : String
         }
     }
+
+    interface Asset <<interface>>
+    {
+        -m_position : Position
+
+
+        +getEtiquette() : Etiquette
+    }
 }
 
 'ARBORESCENCE et CLASSE
-'dnd/
+'dnd/ASSET
 '   des/DES
 '   partie/
 '       tourDeJeu/TOUR
 '       donjon/CARTE-CASE-POSITION
-'   gameObject/ASSET-GAMEOBJECT-CARACTERISTIQUE
+'   gameObject/GAMEOBJECT-CARACTERISTIQUE
 '       personnage/PERSONNAGE-INVENTAIRE-EQUIPEMENTPERSONNAGE
 '           race/HUMAIN-ELFE-NAIN-HALFLIN
 '           classe/GUERRIER-CLERC-MAGICIEN-ROUBLARD
@@ -301,11 +297,9 @@ package dnd
 
 
 'Relations
-dnd.gameObject.Asset "*" o--> "2..*\nm_listAsset" dnd.partie.donjon.Carte : est sur la carte
+dnd.Asset "*" o--> "2..*\nm_listAsset" dnd.partie.donjon.Carte : est sur la carte
 
 dnd.partie.tourDeJeu.Tour "*" o--> "2..*\nm_ordre" dnd.gameObject.GameObject : classé dans
-
-dnd.partie.donjon.Position "1" *--> "1\nm_position" dnd.partie.donjon.Case : belongs to
 
 dnd.partie.donjon.Case "1" *--> "1\nm_grille" dnd.partie.donjon.Carte : belongs to
 'dnd.partie.donjon.Carte "*" *--> "- m_listeGameObjectPosition[*] : Position selon GameObject (hashmap)" dnd.GameObject.GameObject : possède
