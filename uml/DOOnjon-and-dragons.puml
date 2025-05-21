@@ -51,11 +51,10 @@ package dnd
         {
             class Carte
             {
-                -taille[*] : Integer
-                -grille[*] : Case
-                'grille est un tableau à 2 dimensions de case, grille[x][y] = case1; case1.m_x=x; case1.m_y=y
+                -m_max_x : Integer
+                -m_max_y : Case
                 -emplacementAsset : Map<id : String, position : Position>
-                +<<create>> Carte
+                +<<create>> Carte (x : Integer, y : Integer)
                 ' un choix de carte par défaut
                 ' instancie     taille de la carte et les cases
                 '               position des obstacle
@@ -64,11 +63,9 @@ package dnd
                 '               positionne equipement
                 '               phrases de contexte
                 + getQuoiEstIci(ici : Case) : Asset[*]
-                ' en arg: grille[position.m_position.m_x][position.m_position.m_y]
-                ' on trouve la case qui correpsond a position1 avec : Case cs1 = getCase(position1); Puis on fait cs1.addAsset(), cs1.removeAsset()
                 + getOuEstQuoi(quoi : Asset) : Position
-                'vers emplacementAsset
-
+                +void addAsset(asset : Asset, cse : Case)
+                +void removeAsset(asset : Asset, cse : Case)
             }
 
             class Case
@@ -77,9 +74,7 @@ package dnd
                 -m_y : Integer
                 -m_listAsset[*] : Asset
                 +<<create>> Case (position : Position)
-                +calculDistance(destination_x : Integer, destination_y: Integer) : Integer
-                +void addAsset(asset : Asset)
-                +void removeAsset(asset : Asset)
+                +calculDistance(destination_x : Integer, destination_y: Integer) : Float
                 +Asset[*] getAsset()
             }
 

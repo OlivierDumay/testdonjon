@@ -1,4 +1,4 @@
-package dnd.partie;
+package dnd.partie.donjon;
 import dnd.Asset;
 import java.util.ArrayList;
 
@@ -7,7 +7,7 @@ public class Case
     // class members
     private int m_x;
     private int m_y;
-    private ArrayList<Asset> m_contenu;
+    protected ArrayList<Asset> m_contenu;
 
 
     // ctor
@@ -15,22 +15,11 @@ public class Case
     {
         if (x<0 || y<0)
             throw new IllegalArgumentException("Erreur : la position ne peut pas être inférieur à zero");
+        m_x = x;
+        m_y = y;
         m_contenu = new ArrayList<Asset>();
     }
 
-    void ajouter(Asset asset)
-    {
-        if (asset == null)
-            throw new IllegalArgumentException("Erreur : l'asset ne peut pas être null");
-        this.m_contenu.add(asset);
-    }
-
-    void retirer(Asset asset)
-    {
-        if (asset == null)
-            throw new IllegalArgumentException("Erreur : l'asset ne peut pas être null");
-        this.m_contenu.remove(asset);
-    }
 
     ArrayList<Asset> getContenu()
     {
@@ -43,27 +32,39 @@ public class Case
         return "Case(m_contenu=" + this.m_contenu.toString() + ", m_x=" + this.m_x + ", m_y=" + this.m_y + ")";
     }
 
-    private int getX()
+    protected int getX()
     {
         return this.m_x;
     }
 
-    private int getY()
+    protected int getY()
     {
         return this.m_y;
     }
 
-    public int calculDistance(int destinationX, int destinationY)
+    public float calculDistance(Case other)
     {
-        if (this.equalsPosition(grille[destinationX][destinationY]))
+        if (this.equalsPosition(other))
         {
             return 0;
         }
+    int ox = this.getX();
+    int oy = this.getY();
+    int dx = other.getX();
+    int dy = other.getY();
 
-        // TODO : olivier fait ça nb : oui oui aller king kong
-        return 0;
+    int diffx = Math.abs(ox - dx);
+    int diffy = Math.abs(oy - dy);
+
+    float distanceCarre = diffx * diffx + diffy * diffy;
+    float distance = (float) Math.sqrt(distanceCarre);
+
+    return distance;
     }
 
-    public boolean equalsPosition(Case case)    { return ((this.m_x == case.m_x) && (this.m_y == case.m_y)); }
+    public boolean equalsPosition(Case other)
+    {
+        return ((this.m_x == other.getX()) && (this.m_y == other.getY()));
+    }
 
 }
