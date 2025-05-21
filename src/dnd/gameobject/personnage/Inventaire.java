@@ -1,4 +1,4 @@
-package dnd.gameobject;
+package dnd.gameobject.personnage;
 import dnd.objet.Item;
 import java.util.ArrayList;
 

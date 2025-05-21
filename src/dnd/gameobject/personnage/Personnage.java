@@ -2,7 +2,6 @@ package dnd.gameobject.personnage;
 import dnd.Asset;
 import dnd.gameobject.EquipementPersonnage;
 import dnd.gameobject.GameObject;
-import dnd.gameobject.Inventaire;
 import dnd.gameobject.personnage.classe.*;
 import dnd.gameobject.personnage.race.*;
 import dnd.objet.Item;
