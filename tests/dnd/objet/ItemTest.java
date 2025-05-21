@@ -1,7 +1,6 @@
 package dnd.objet;
 
-import dnd.objet.arme.Arme;
-import dnd.objet.arme.ArmeGuerre;
+import dnd.objet.arme.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -16,7 +16,7 @@
 - [ ] : refaire les relation au propre
 - [ ] : comment on recupere les bonus des classes/race
 - [ ] : faire une mehose prendre et un s'équiper
-- [ ] : 
+- [ ] : faire une classe factory pour créer les instances et les trucs "prédéfinis"
 
 
 ## Code

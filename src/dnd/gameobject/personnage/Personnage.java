@@ -1,6 +1,6 @@
 package dnd.gameobject.personnage;
 import dnd.Asset;
-import dnd.gameobject.EquipementPersonnage;
+import dnd.gameobject.personnage.EquipementPersonnage;
 import dnd.gameobject.GameObject;
 import dnd.gameobject.personnage.classe.*;
 import dnd.gameobject.personnage.race.*;
@@ -22,6 +22,8 @@ public class Personnage implements GameObject, Asset
     {
         if (nom.isEmpty())
             throw new IllegalArgumentException("Erreur : le nom du personnage ne peut pas être vide !");
+        if (nom == null || classe == null || race == null)
+            throw new IllegalArgumentException("Erreur : impossible de traiter une référence null !");
 
         // Instanciation de la classe
         switch (classe)
