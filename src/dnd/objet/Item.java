@@ -4,8 +4,7 @@ import dnd.Asset;
 public class Item implements Asset
 {
     // class members
-    private String m_nom;
-    private String m_etiquette;
+    private final String m_nom;
 
     // ctor
     public Item(String nom)
@@ -30,7 +29,7 @@ public class Item implements Asset
         if (obj == null || getClass() != obj.getClass())
             return false;
         Item other = (Item)obj;
-        return this.m_nom.equals(other.getNom()) && this.m_etiquette.equals(other.getEtiquette());
+        return this.m_nom.equals(other.getNom());
     }
 
     @Override
