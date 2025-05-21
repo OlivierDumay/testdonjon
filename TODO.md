@@ -12,15 +12,18 @@
 - [ ] : signature de methode d'interface dans classe interface?
 - [ ] : mettre en static plein de truc, quoiestqui, quiestla, 
 - [ ] : changer nom package objet par objetDeJeu
-- [ ] : remplacer tous les membres "m_etiquette" des classes par une méthode getEtiquette()
-- [ ] : ajouter une enum pour les Monstre
+- [ ] : faire des classes pour l'affichage, pour les différentes partie de l'affichage
+- [ ] : refaire les relation au propre
+- [ ] : comment on recupere les bonus des classes/race
+- [ ] : faire une mehose prendre et un s'équiper
+- [ ] : 
+
 
 ## Code
 - [ ] : creer le string de l'affichage, map + info
 - [x] : methode calcul distance
 
-## Problèmes
-- [ ] : Implémenter une classe intermédiaire à stocker dans Case parce qu'actuellement on ne peut pas stocker deux GameObject dans UNE case (i.e un joueur personnage + un item doivent être sur la même case pour pouvoir ramassser).
+
 
 
 demarrerPartie(carteParDefaut, 15)
