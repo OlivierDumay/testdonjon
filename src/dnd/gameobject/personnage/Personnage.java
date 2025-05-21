@@ -22,6 +22,8 @@ public class Personnage implements GameObject, Asset
     {
         if (nom.isEmpty())
             throw new IllegalArgumentException("Erreur : le nom du personnage ne peut pas être vide !");
+        if (nom == null || classe == null || race == null)
+            throw new IllegalArgumentException("Erreur : impossible de traiter une référence null !");
 
         // Instanciation de la classe
         switch (classe)
