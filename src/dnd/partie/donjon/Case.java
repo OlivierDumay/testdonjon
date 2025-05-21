@@ -1,49 +1,70 @@
-package dnd.partie;
+package dnd.partie.donjon;
 import dnd.Asset;
 import java.util.ArrayList;
 
 public class Case
 {
     // class members
-    private ArrayList<Asset> m_contenu;
-    private Position m_position;
+    private int m_x;
+    private int m_y;
+    protected ArrayList<Asset> m_contenu;
+
 
     // ctor
-    public Case(Position position)
+    public Case(int x, int y)
     {
-        if (position == null)
-            throw new IllegalArgumentException("Erreur : la position ne peut pas être null");
-        m_contenu = new ArrayList<>();
-        this.m_position = position;
+        if (x<0 || y<0)
+            throw new IllegalArgumentException("Erreur : la position ne peut pas être inférieur à zero");
+        m_x = x;
+        m_y = y;
+        m_contenu = new ArrayList<Asset>();
     }
 
-    void ajouter(Asset asset)
-    {
-        if (asset == null)
-            throw new IllegalArgumentException("Erreur : l'asset ne peut pas être null");
-        this.m_contenu.add(asset);
-    }
-
-    void retirer(Asset asset)
-    {
-        if (asset == null)
-            throw new IllegalArgumentException("Erreur : l'asset ne peut pas être null");
-        this.m_contenu.remove(asset);
-    }
 
     ArrayList<Asset> getContenu()
     {
         return this.m_contenu; // TODO : rendre la liste immuable
     }
 
-    public Position getPosition()
-    {
-        return this.m_position;
-    }
-
     @Override
     public String toString()
     {
-        return "Case(m_contenu=" + this.m_contenu.toString() + ", m_position=" + this.m_position.toString() + ")";
+        return "Case(m_contenu=" + this.m_contenu.toString() + ", m_x=" + this.m_x + ", m_y=" + this.m_y + ")";
     }
+
+    protected int getX()
+    {
+        return this.m_x;
+    }
+
+    protected int getY()
+    {
+        return this.m_y;
+    }
+
+    public float calculDistance(Case other)
+    {
+        if (this.equalsPosition(other))
+        {
+            return 0;
+        }
+    int ox = this.getX();
+    int oy = this.getY();
+    int dx = other.getX();
+    int dy = other.getY();
+
+    int diffx = Math.abs(ox - dx);
+    int diffy = Math.abs(oy - dy);
+
+    float distanceCarre = diffx * diffx + diffy * diffy;
+    float distance = (float) Math.sqrt(distanceCarre);
+
+    return distance;
+    }
+
+    public boolean equalsPosition(Case other)
+    {
+        return ((this.m_x == other.getX()) && (this.m_y == other.getY()));
+    }
+
 }
