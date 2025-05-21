@@ -40,8 +40,8 @@ package dnd
             class Tour
             {
                 -m_numeroDuTour : Integer
-                ' methode déroulement du tour
-                -m_ordre : [*] 'contient les monstres et personnages dans l'ordre de leur initiative
+                '-m_ordre : [*] 'contient les monstres et personnages dans l'ordre de leur initiative
+                ' methode déroulement du tour : appel des gameObject dans l'ordre d'initiative
                 'methode qui enleve un monstre ou personnage mort de m_ordre
             }
 
@@ -51,23 +51,34 @@ package dnd
         {
             class Carte
             {
+                -taille[*] : Integer
+                -grille[*] : Case
+                'grille est un tableau à 2 dimensions de case, grille[x][y] = case1; case1.m_x=x; case1.m_y=y
+                -emplacementAsset : Map< id : String, position : Position>
                 +<<create>> Carte
                 ' un choix de carte par défaut
-                ' instancie     taille de la carte
+                ' instancie     taille de la carte et les cases
                 '               position des obstacle
                 '               creer les monstre
                 '               positionne monstre et personnage
                 '               positionne equipement
                 '               phrases de contexte
-                + getQuoiEstIci(position : Position) : GameObject ?
-                ' ici le type, je ne sais pas, car ça peut tout retourner, j'aurais mis Object mais il faudrait utiliser getClass() dans le code (interdit); solution possible : créer une classe "Entité" qui est implémentée par Monstre, Personnage, etc pour plus de flexibilité.
-                ' methode getOuEsTruc (truc)
-                ' EDIT : du coup ici bah c'est "bon" on verra comment ça rend dans le code
+                + getQuoiEstIci(ici : Case) : Asset[*]
+                ' en arg: grille[case.m_position.m_x][case.m_position.m_y]
+                ' on trouve la case qui correpsond a position1 avec : Case cs1 = getCase(position1); Puis on fait cs1.addAsset(), cs1.removeAsset()
+                + getOuEstQuoi(quoi : Asset) : Position
+                'vers emplacementAsset
 
             }
 
-            class Case {
-                -Asset listeAsset[*]
+            class Case
+            {
+                -m_position : Position
+                -m_listAsset[*] : Asset
+                +<<create>> Case (position : Position)
+                +void addAsset(asset : Asset)
+                +void removeAsset(asset : Asset)
+                +Asset[*] getAsset()
             }
 
             class Position
@@ -238,6 +249,9 @@ package dnd
 
         interface Asset <<interface>>
         {
+            -m_position : Position
+
+
             +getEtiquette() : Etiquette
         }
 
@@ -272,6 +286,7 @@ package dnd
     }
 }
 
+'ARBORESCENCE et CLASSE
 'dnd/
 '   des/DES
 '   partie/
@@ -285,7 +300,14 @@ package dnd
 '       objet/ITEM-ARME-ARMURE(et leurs impléments)
 
 
+'Relations
+dnd.gameObject.Asset "*" o--> "2..*\nm_listAsset" dnd.partie.donjon.Carte : est sur la carte
 
+dnd.partie.tourDeJeu.Tour "*" o--> "2..*\nm_ordre" dnd.gameObject.GameObject : classé dans
+
+dnd.partie.donjon.Position "1" *--> "1\nm_position" dnd.partie.donjon.Case : belongs to
+
+dnd.partie.donjon.Case "1" *--> "1\nm_grille" dnd.partie.donjon.Carte : belongs to
 'dnd.partie.donjon.Carte "*" *--> "- m_listeGameObjectPosition[*] : Position selon GameObject (hashmap)" dnd.GameObject.GameObject : possède
 'dnd.partie.donjon.Carte "*" *--> "- m_listPositionGameObject[*] : GameObject selon la Position (hashmap)" dnd.GameObject.GameObject : possède
 
