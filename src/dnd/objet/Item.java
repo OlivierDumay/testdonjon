@@ -1,6 +1,7 @@
 package dnd.objet;
+import dnd.Asset;
 
-public class Item
+public class Item implements Asset
 {
     // class members
     private String m_nom;
@@ -15,6 +16,12 @@ public class Item
             throw new IllegalArgumentException("Erreur : l'item ne peut pas avoir un nom vide !");
     }
 
+
+    public String getNom()
+    {
+        return this.m_nom;
+    }
+
     @Override
     public boolean equals(Object obj)
     {
@@ -26,13 +33,15 @@ public class Item
         return this.m_nom.equals(other.getNom()) && this.m_etiquette.equals(other.getEtiquette());
     }
 
-    private String getEtiquette()
+    @Override
+    public String getEtiquette()
     {
         return this.m_nom.substring(0, 4);
     }
 
-    public String getNom()
+    @Override
+    public String toString()
     {
-        return this.m_nom;
+        return "Item()"; // TODO : à compléter
     }
 }

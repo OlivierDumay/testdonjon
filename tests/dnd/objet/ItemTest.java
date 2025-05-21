@@ -1,10 +1,10 @@
 package dnd.objet;
 
 import dnd.objet.arme.Arme;
+import dnd.objet.arme.ArmeGuerre;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ItemTest
 {
@@ -38,5 +38,12 @@ public class ItemTest
         assertThrows(IllegalArgumentException.class, ()->{
             new Arme("Éppé longue", -10);
         });
+    }
+
+    @Test
+    void ArmeGuerreValide()
+    {
+        Arme massue = new ArmeGuerre("Massue", 50);
+        assertEquals(massue instanceof ArmeGuerre, true);
     }
 }

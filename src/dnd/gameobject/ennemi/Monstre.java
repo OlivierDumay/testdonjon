@@ -1,10 +1,11 @@
 package dnd.gameobject.ennemi;
 
+import dnd.Asset;
 import dnd.gameobject.GameObject;
 import dnd.objet.Item;
 import dnd.partie.Position;
 
-public class Monstre implements GameObject
+public class Monstre implements GameObject, Asset
 {
     // class members
     private static int m_current_id = 0;

@@ -22,8 +22,8 @@ public class Inventaire
 
     public void removeItem(Item item)
     {
-        for (Item i : this.m_items)
-            if (i.equals(item))
-                this.m_items.remove(item);
+        if (item == null)
+            throw new IllegalArgumentException("Erreur : l'item ne peut pas être null");
+        this.m_items.remove(item);
     }
 }
