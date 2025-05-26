@@ -35,17 +35,26 @@ public class PersonnageTest
         });
     }
 
-    /*
 
     // Test par définition impossible car impossible de passer autre chose qu'un membre de l'enum
     @Test
     void PersonnageClasseInexistante()
     {
         assertThrows(IllegalArgumentException.class, ()->{
-            Asset p1 = new Personnage("test", EnumClasse.ROUBLARD, EnumRace.HUMAIN);
+            Asset p1 = new Personnage("test", null, EnumRace.HUMAIN);
         });
     }
-    */
 
-    
+    // Test par définition impossible car impossible de passer autre chose qu'un membre de l'enum
+    @Test
+    void PersonnageRaceInexistante()
+    {
+        assertThrows(IllegalArgumentException.class, ()->{
+            Asset p1 = new Personnage("test", EnumClasse.GUERRIER, null);
+        });
+    }
+
+
+
+
 }
