@@ -9,6 +9,4 @@ public interface GameObject
     void attaque(GameObject defenseur);
 
     void prendre(Item objet);
-
-    String getEtiquette();
 }

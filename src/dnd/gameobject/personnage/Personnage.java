@@ -1,18 +1,19 @@
 package dnd.gameobject.personnage;
 import dnd.Asset;
+import dnd.gameobject.Caracteristique;
 import dnd.gameobject.personnage.EquipementPersonnage;
 import dnd.gameobject.GameObject;
 import dnd.gameobject.personnage.classe.*;
 import dnd.gameobject.personnage.race.*;
 import dnd.objet.Item;
-import dnd.partie.Position;
+// import dnd.partie.Position;
 
 public class Personnage implements GameObject, Asset
 {
     // class members
     private String m_nom;
     private boolean m_etat;
-    private String m_etiquette;
+    private Caracteristique m_caracteristique;
     private Inventaire m_inventaire;
     private EquipementPersonnage m_equipement;
     private Classe m_classe;
@@ -20,29 +21,46 @@ public class Personnage implements GameObject, Asset
 
     public Personnage(String nom, EnumClasse classe, EnumRace race)
     {
-        if (nom.isEmpty())
-            throw new IllegalArgumentException("Erreur : le nom du personnage ne peut pas être vide !");
         if (nom == null || classe == null || race == null)
             throw new IllegalArgumentException("Erreur : impossible de traiter une référence null !");
+
+        if (nom.isEmpty())
+            throw new IllegalArgumentException("Erreur : le nom du personnage ne peut pas être vide !");
+
+
+        // Mise en place du nom
+        this.m_nom = nom;
 
         // Instanciation de la classe
         switch (classe)
         {
+            // TODO : définir ici tous les trucs spécifiques (pv etc) puis ajouter des choses dans l'instanciation de la race
             case CLERC:
                 this.m_classe = new Clerc();
+                this.m_caracteristique = new Caracteristique(16, 0, 0, 0, 0); // TODO : Implémenter ici les d je ne sais combien pour les caractéristiques non définies par la race/classe
+                this.m_equipement = new EquipementPersonnage();
+                this.m_equipement.addEquipement();
                 break;
             case GUERRIER:
                 this.m_classe = new Guerrier();
+                this.m_caracteristique = new Caracteristique();
+                this.m_equipement = new EquipementPersonnage();
                 break;
             case MAGICIEN:
                 this.m_classe = new Magicien();
+                this.m_caracteristique = new Caracteristique();
+                this.m_equipement = new EquipementPersonnage();
                 break;
             case ROUBLARD:
                 this.m_classe = new Roublard();
+                this.m_caracteristique = new Caracteristique();
+                this.m_equipement = new EquipementPersonnage();
                 break;
             default:
                 throw new IllegalArgumentException("Erreur : classe invalide !");
         }
+
+
 
         // Instanciation de la race
         switch (race)
@@ -67,30 +85,25 @@ public class Personnage implements GameObject, Asset
         this.m_etat = true;
 
         this.m_inventaire = new Inventaire();
-        this.m_equipement = new EquipementPersonnage();
     }
 
-    @Override
     public void deplacement(Position destination)
     {
 
     }
 
-    @Override
     public void attaque(GameObject defenseur)
     {
 
     }
 
-    @Override
     public void prendre(Item objet)
     {
 
     }
 
-    @Override
     public String getEtiquette()
     {
-        return "";
+        return this.m_nom.substring(0, 3);
     }
 }
