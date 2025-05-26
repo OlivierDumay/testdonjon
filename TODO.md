@@ -17,12 +17,21 @@
 - [ ] : comment on recupere les bonus des classes/race
 - [ ] : faire une mehose prendre et un s'équiper
 - [ ] : faire une classe factory pour créer les instances et les trucs "prédéfinis"
-
+- [ ] :
 
 ## Code
 - [ ] : creer le string de l'affichage, map + info
 - [x] : methode calcul distance
-
+- [ ] : ajout la portée au arme
+- [ ] : enlever arme legere et ajouter arme a distance
+- [ ] : ajout méthode factory aux armes pour avoir des armes prédef 
+- [ ] : pour les degat des armes, une interface qui appel lancerDées avec es bons arguments
+- [ ] : quand perso attaque : perso.attaque(case, this.armeEquipee.jetDegat())
+- [ ] :
+- [ ] :
+- [ ] :
+- [ ] :
+- [ ] :
 
 
 

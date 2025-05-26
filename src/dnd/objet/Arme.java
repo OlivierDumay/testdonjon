@@ -2,9 +2,9 @@ package dnd.objet;
 
 public abstract class Arme extends Item
 {
-    private int m_deDegat;
-    private int m_nbDe;
-    private int m_portee;
+    protected int m_deDegat;
+    protected int m_nbDe;
+    protected int m_portee;
 
     public Arme(String name, int m_deDegat, int m_nbDe, int m_portee)
     {
@@ -14,9 +14,7 @@ public abstract class Arme extends Item
         this.m_portee = m_portee;
     }
 
-    public void appliqueBonusArme() // pour arme lourde etc
-    {}
+    public abstract void appliqueBonusArme();// pour arme lourde etc
+    public abstract int jetDegat();
 
-    public int jetDegat()
-    {}
 }
