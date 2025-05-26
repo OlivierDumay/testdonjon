@@ -6,6 +6,11 @@ import dnd.gameobject.GameObject;
 import dnd.gameobject.personnage.classe.*;
 import dnd.gameobject.personnage.race.*;
 import dnd.objet.Item;
+import dnd.objet.arme.ArmeCourante;
+import dnd.objet.arme.ArmeGuerre;
+import dnd.partie.donjon.Case;
+
+import static dnd.des.De.lancerDe;
 // import dnd.partie.Position;
 
 public class Personnage implements GameObject, Asset
@@ -37,23 +42,24 @@ public class Personnage implements GameObject, Asset
             // TODO : définir ici tous les trucs spécifiques (pv etc) puis ajouter des choses dans l'instanciation de la race
             case CLERC:
                 this.m_classe = new Clerc();
-                this.m_caracteristique = new Caracteristique(16, 0, 0, 0, 0); // TODO : Implémenter ici les d je ne sais combien pour les caractéristiques non définies par la race/classe
+                this.m_caracteristique = new Caracteristique(lancerDe(4, 4) + this.m_classe.bonusCreation() + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3); // TODO : olivier vérifie si c bien
                 this.m_equipement = new EquipementPersonnage();
-                this.m_equipement.addEquipement();
+                this.m_equipement.addEquipement(new ArmeCourante("Masse d'armes", lancerDe(1, 6), 1));
+                this.m_equipement.addEquipement(new ArmeGuerre("Masse d'armes", lancerDe(1, 6), 1));
                 break;
             case GUERRIER:
                 this.m_classe = new Guerrier();
-                this.m_caracteristique = new Caracteristique();
+                this.m_caracteristique = new Caracteristique(lancerDe(4, 4) + this.m_classe.bonusCreation() + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3);
                 this.m_equipement = new EquipementPersonnage();
                 break;
             case MAGICIEN:
                 this.m_classe = new Magicien();
-                this.m_caracteristique = new Caracteristique();
+                this.m_caracteristique = new Caracteristique(lancerDe(4, 4) + this.m_classe.bonusCreation() + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3);
                 this.m_equipement = new EquipementPersonnage();
                 break;
             case ROUBLARD:
                 this.m_classe = new Roublard();
-                this.m_caracteristique = new Caracteristique();
+                this.m_caracteristique = new Caracteristique(lancerDe(4, 4) + this.m_classe.bonusCreation() + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3); // TODO : Implémenter ici les d je ne sais combien pour les caractéristiques non définies par la race/classe
                 this.m_equipement = new EquipementPersonnage();
                 break;
             default:
@@ -87,7 +93,7 @@ public class Personnage implements GameObject, Asset
         this.m_inventaire = new Inventaire();
     }
 
-    public void deplacement(Position destination)
+    public void deplacement(Case destination)
     {
 
     }

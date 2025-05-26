@@ -22,6 +22,7 @@
 ## Code
 - [ ] : creer le string de l'affichage, map + info
 - [x] : methode calcul distance
+- [ ] : implémenter tous les getBonus dans les classes Classe
 
 
 
