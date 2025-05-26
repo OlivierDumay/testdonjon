@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Case
 {
     // class members
-    private int m_x;
-    private int m_y;
+    private final int m_x;
+    private final int m_y;
     protected ArrayList<Asset> m_contenu;
 
 

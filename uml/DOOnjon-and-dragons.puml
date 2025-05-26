@@ -53,19 +53,13 @@ package dnd
             {
                 -m_max_x : Integer
                 -m_max_y : Case
-                -emplacementAsset : Map<id : String, position : Position>
+                -m_grille[*] : Case  'grille[int][int] = Case
+                -m_emplacementAsset : Map<id : String, position : Position>
                 +<<create>> Carte (x : Integer, y : Integer)
-                ' un choix de carte par défaut
-                ' instancie     taille de la carte et les cases
-                '               position des obstacle
-                '               creer les monstre
-                '               positionne monstre et personnage
-                '               positionne equipement
-                '               phrases de contexte
                 + getQuoiEstIci(ici : Case) : Asset[*]
                 + getOuEstQuoi(quoi : Asset) : Position
-                +void addAsset(asset : Asset, cse : Case)
-                +void removeAsset(asset : Asset, cse : Case)
+                + void addAsset(asset : Asset, cse : Case)
+                + void removeAsset(asset : Asset, cse : Case)
             }
 
             class Case
@@ -73,9 +67,12 @@ package dnd
                 -m_x : Integer
                 -m_y : Integer
                 -m_listAsset[*] : Asset
-                +<<create>> Case (position : Position)
-                +calculDistance(destination_x : Integer, destination_y: Integer) : Float
-                +Asset[*] getAsset()
+                + <<create>> Case (position : Position)
+                + calculDistance(destination_x : Integer, destination_y: Integer) : Float
+                + getContenu() : Asset[*]
+                + getX(): Integer
+                + getY() : Integer
+                + equalsPosition (other Case) : boolean
             }
 
         }
