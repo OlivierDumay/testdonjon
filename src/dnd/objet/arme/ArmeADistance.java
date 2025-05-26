@@ -2,9 +2,9 @@ package dnd.objet.arme;
 
 import dnd.objet.Arme;
 
-public class ArmeLegere extends Arme
+public class ArmeADistance extends Arme
 {
-    public ArmeLegere(String name, int degat)
+    public ArmeADistance(String name, int degat)
     {
         super(name, degat);
     }

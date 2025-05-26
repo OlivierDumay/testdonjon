@@ -4,8 +4,12 @@ import dnd.objet.Arme;
 
 public class ArmeGuerre extends Arme
 {
-    public ArmeGuerre(String name, int degat)
+    public ArmeGuerre(String name)
     {
-        super(name, degat);
+
+        super(name);
+
     }
+
+
 }
