@@ -8,4 +8,9 @@ public class ArmureLourde extends Armure
     {
         super(name, armure);
     }
+
+    public void appliqueBonusArmure()
+    {
+        //malus vitesse
+    }
 }

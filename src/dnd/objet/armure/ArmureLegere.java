@@ -8,4 +8,9 @@ public class ArmureLegere extends Armure
     {
         super(name, armure);
     }
+
+    public void appliqueBonusArmure()
+    {
+        //rien
+    }
 }

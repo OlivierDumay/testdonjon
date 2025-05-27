@@ -22,11 +22,11 @@
 ## Code
 - [ ] : creer le string de l'affichage, map + info
 - [x] : methode calcul distance
-- [ ] : ajout la portée au arme
-- [ ] : enlever arme legere et ajouter arme a distance
+- [x] : ajout la portée au arme
+- [x] : enlever arme legere et ajouter arme a distance
 - [ ] : ajout méthode factory aux armes pour avoir des armes prédef 
 - [ ] : pour les degat des armes, une interface qui appel lancerDées avec es bons arguments
-- [ ] : quand perso attaque : perso.attaque(case, this.armeEquipee.jetDegat())
+         quand perso attaque : perso.attaque(case, this.armeEquipee.jetDegat())
 - [ ] :
 - [ ] :
 - [ ] :
