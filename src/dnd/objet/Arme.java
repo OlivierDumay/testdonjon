@@ -1,13 +1,20 @@
 package dnd.objet;
 
-public class Arme extends Item
+public abstract class Arme extends Item
 {
-    private int m_degat;
+    protected int m_deDegat;
+    protected int m_nbDe;
+    protected int m_portee;
 
-    public Arme(String name, int degat)
+    public Arme(String name, int m_deDegat, int m_nbDe, int m_portee)
     {
         super(name);
-        if (degat < 1)
-            throw new IllegalArgumentException("Erreur : les dégâts de l'arme doivent être supérieurs à 0 !");
+        this.m_deDegat = m_deDegat;
+        this.m_nbDe = m_nbDe;
+        this.m_portee = m_portee;
     }
+
+    public abstract void appliqueBonusArme();// pour arme lourde etc
+    public abstract int jetDegat();
+
 }

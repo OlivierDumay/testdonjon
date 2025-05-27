@@ -199,7 +199,9 @@ package dnd
 
             class Arme extends Item
             {
-                - m_degat : Integer
+                - m_deDegat : Integer
+                - m_nbDe : Integer
+                - m_portee : Interger
                 + <<create>> Arme(name : String, degat : Integer)
             }
 
