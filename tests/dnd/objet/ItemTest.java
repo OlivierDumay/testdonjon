@@ -43,6 +43,6 @@ public class ItemTest
     void ArmeGuerreValide()
     {
         Arme massue = new ArmeGuerre("Massue", 50);
-        assertEquals(massue instanceof ArmeGuerre, true);
+        assertEquals(true, massue instanceof ArmeGuerre);
     }
 }

@@ -2,9 +2,7 @@ import dnd.*;
 import dnd.gameobject.personnage.Personnage;
 import dnd.gameobject.personnage.classe.EnumClasse;
 import dnd.gameobject.personnage.race.EnumRace;
-// import dnd.partie.Carte;
-
-import java.util.ArrayList;
+import dnd.objet.arme.ArmeCourante;
 
 public class Main
 {
@@ -15,7 +13,6 @@ public class Main
 //
 //        System.out.println("Étiquette de Muhammed : " + muhammed.getEtiquette());
 //        System.out.println("Muhammed : " + muhammed.toString());
-
 
     }
 }

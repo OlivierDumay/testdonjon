@@ -1,10 +1,10 @@
 package dnd.gameobject;
 import dnd.objet.Item;
-import dnd.partie.Position;
+import dnd.partie.donjon.Case;
 
 public interface GameObject
 {
-    void deplacement(Position destination);
+    void deplacement(Case destination);
 
     void attaque(GameObject defenseur);
 
