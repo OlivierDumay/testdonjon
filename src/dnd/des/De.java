@@ -7,7 +7,6 @@ public class De
 {
     private static final Random rand = new Random();
 
-
     public static int lancerDe(int nbDe, int nbFace)
     {
         if (nbFace < 1)

@@ -3,7 +3,7 @@ package dnd.gameobject.ennemi;
 import dnd.Asset;
 import dnd.gameobject.GameObject;
 import dnd.objet.Item;
-import dnd.partie.Position;
+import dnd.partie.donjon.Case;
 
 public class Monstre implements GameObject, Asset
 {
@@ -29,7 +29,7 @@ public class Monstre implements GameObject, Asset
     }
 
     @Override
-    public void deplacement(Position destination)
+    public void deplacement(Case destination)
     {
 
     }
