@@ -8,6 +8,7 @@ import dnd.gameobject.personnage.race.*;
 import dnd.objet.Item;
 import dnd.objet.arme.ArmeCourante;
 import dnd.objet.arme.ArmeGuerre;
+import dnd.objet.armure.ArmureLegere;
 import dnd.partie.donjon.Case;
 
 import static dnd.des.De.lancerDe;
@@ -45,12 +46,14 @@ public class Personnage implements GameObject, Asset
                 this.m_caracteristique = new Caracteristique(lancerDe(4, 4) + this.m_classe.bonusCreation() + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3); // TODO : olivier vérifie si c bien
                 this.m_equipement = new EquipementPersonnage();
                 this.m_equipement.addEquipement(new ArmeCourante("Masse d'armes", lancerDe(1, 6), 1));
-                this.m_equipement.addEquipement(new ArmeGuerre("Masse d'armes", lancerDe(1, 6), 1));
+                this.m_equipement.addEquipement(new ArmureLegere("Armure d'écailles", 9));
+                this.m_equipement.addEquipement(new ArmeDistance("Arbalète légère", lancerDe(1, 8), 16));
                 break;
             case GUERRIER:
                 this.m_classe = new Guerrier();
                 this.m_caracteristique = new Caracteristique(lancerDe(4, 4) + this.m_classe.bonusCreation() + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3);
                 this.m_equipement = new EquipementPersonnage();
+                this.m_equipement.addEquipement(new ArmureLourde("Cotte de mailles", 11));
                 break;
             case MAGICIEN:
                 this.m_classe = new Magicien();
