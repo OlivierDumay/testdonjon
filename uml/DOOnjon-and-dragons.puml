@@ -92,6 +92,12 @@ package dnd
             + void ajouterAsset()
             + void supprimerAsset()
         }
+
+        class Partie
+        {
+            - perso : Personnage
+            +<<create>> Partie
+        }
     }
 
     package gameObject

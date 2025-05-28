@@ -27,7 +27,7 @@
 - [ ] : ajout méthode factory aux armes pour avoir des armes prédef 
 - [ ] : pour les degat des armes, une interface qui appel lancerDées avec es bons arguments
          quand perso attaque : perso.attaque(case, this.armeEquipee.jetDegat())
-- [ ] :
+- [ ] : dans carte, il faut quand on deplace qqchose tester si il n'y a pas un obstacle dans la case
 - [ ] :
 - [ ] :
 - [ ] :
@@ -35,11 +35,13 @@
 
 
 ## Question prof
+deroulement de la partie dans constructeur de partie? ou faut il mfaire une méthode déroulementDeLaPartie?
+
 atribut dans arme, protected ou private?
 alors osef, mettre methode lancerdés dans arme, et mettre attribut en private
 
 attribut arme et armure, static?
-argument pour une enum?
+
 
 
 

@@ -6,6 +6,7 @@ import dnd.affichage.*;
 import dnd.gameobject.personnage.*;
 import dnd.gameobject.personnage.race.EnumRace; // ??? ne reconnait pas enumrace sans cet import 
 import dnd.gameobject.personnage.classe.*;
+import dnd.partie.*;
 import dnd.partie.donjon.*;
 
 
@@ -15,6 +16,8 @@ import java.util.List;
 
 
 public class Partie {
+
+    public Personnage perso; // en public pour l'utiliser dans affichage
 
     //ctor
     public Partie (int maxX, int maxY)
@@ -59,16 +62,16 @@ public class Partie {
         EnumRace race;
         switch (crperso[1])
         {
-            case "clerc" :
+            case "1" :
                 classe=EnumClasse.CLERC;
                 break;
-            case "guerrier" :
+            case "2" :
                 classe=EnumClasse.GUERRIER;
                 break;
-            case "magicien" :
+            case "3" :
                 classe=EnumClasse.MAGICIEN;
                 break;
-            case "roublard" :
+            case "4" :
                 classe=EnumClasse.ROUBLARD;
                 break;
             default:
@@ -76,39 +79,39 @@ public class Partie {
         }
         switch (crperso[2])
         {
-            case "elfe" :
+            case "1" :
                 race=EnumRace.ELFE;
                 break;
-            case "halflin" :
+            case "2" :
                 race=EnumRace.HALFLIN;
                 break;
-            case "humain" :
+            case "3" :
                 race=EnumRace.HUMAIN;
                 break;
-            case "nain" :
+            case "4" :
                 race=EnumRace.NAIN;
                 break;
             default:
                 throw new IllegalArgumentException("Erreur: dnd.partie.Partie constructeur, init du perso, classe");
 
         }
-        Personnage perso1 = new Personnage(crperso[1], classe, race);
+        this.perso = new Personnage(crperso[1], classe, race);
 
         //ajout de perso dans ordre
-        ordre.ajouterAsset(perso1);
+        ordre.ajouterAsset(perso);
         int[] emplacement = new int[2];
-        carte.ajouterAsset(perso1, carte.getCase(emplacement[0],emplacement[1]));
+        carte.ajouterAsset(perso, carte.getCase(emplacement[0],emplacement[1]));
 
         // tire les initiative et met les monstres et perso dans l'ordre dans ordre.m_ordre
         ordre.triage();
 
         // Déroulement de la partie:
-        // tant que le perso est vivant ou un monstre est vivant: un lance un nouveau tour
         int nbTour = 0;
-        while ()
+        while ()// tant que le perso est vivant ou un monstre est vivant: un lance un nouveau tour
+
         {
             nbTour++;
-            TourDeJeu(ordre, nbTour);
+            TourDeJeu tour = new TourDeJeu((List<Asset>) ordre, nbTour);
         }
 
     }
