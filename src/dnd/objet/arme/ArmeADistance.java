@@ -6,10 +6,10 @@ import static dnd.des.De.lancerDe;
 
 public class ArmeADistance extends Arme
 {
-    public ArmeADistance(String name, int m_deDegat, int m_nbDe, int m_portee)
+    public ArmeADistance(String name, int nb_de, int nb_face, int m_portee)
     {
 
-        super(name, m_deDegat, m_nbDe, m_portee);
+        super(name, nb_de, nb_face, m_portee);
 
     }
 
@@ -19,7 +19,7 @@ public class ArmeADistance extends Arme
     }
     public int jetDegat()
     {
-        return lancerDe(this.m_deDegat, this.m_nbDe); // quand perso attaque : perso.attaque(case, this.armeEquipee)
+        return lancerDe(super.getnbDe(), super.getnbFace()); // quand perso attaque : perso.attaque(case, this.armeEquipee)
     }
 
 }
