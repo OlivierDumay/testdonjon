@@ -25,8 +25,8 @@ public class Carte
         this.m_max_y = y;
 
         //init de chaque cases
-        for (int i = 0 ; i<this.m_max_x ; i++)
-            for(int j = 0 ; j<this.m_max_y ; j++)
+        for (int i = 0; i<this.m_max_x; i++)
+            for(int j = 0; j<this.m_max_y; j++)
             {
                 m_grille[i][j] = new Case(i, j);
             }
@@ -43,20 +43,25 @@ public class Carte
     }
 
     
-    void ajouterAsset(Asset asset, Case cse)
+    public void ajouterAsset(Asset asset, Case cse)
     {
-        //manque le test: 2 item ou 2 gameObjet sur meme case impossible
+        //manque le test: 2 item ou 2 gameObjet sur meme case impossible ou si il y a un obstacle
         if (asset == null)
             throw new IllegalArgumentException("Erreur : l'asset ne peut pas être null");
         this.m_grille[cse.getX()][cse.getY()].m_contenu.add(asset); // ajout dans la case
         this.m_emplacementObjet.put(asset, cse); // ajout dans la hashmap m_emplacementObjet
     }
 
-    void retirerAsset(Asset asset, Case cse)
+    public void retirerAsset(Asset asset, Case cse)
     {
         if (asset == null)
             throw new IllegalArgumentException("Erreur : l'asset ne peut pas être null");
         this.m_grille[cse.getX()][cse.getY()].m_contenu.remove(asset); // supresion dans la case
         this.m_emplacementObjet.remove(asset, cse); // supression dans la hashmap m_emplacementObjet
+    }
+
+    public Case getCase(int x, int y)
+    {
+        return m_grille[x][y];
     }
 }

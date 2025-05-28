@@ -1,11 +1,15 @@
 package dnd.partie;
 
 import dnd.Asset;
-import dnd.gameobject.personnage.race.EnumRace;
-import dnd.partie.donjon.*;
-import dnd.gameobject.personnage.*;
-import dnd.gameobject.personnage.classe.*;
+import dnd.Obstacle;
 import dnd.affichage.*;
+import dnd.gameobject.personnage.*;
+import dnd.gameobject.personnage.race.EnumRace; // ??? ne reconnait pas enumrace sans cet import 
+import dnd.gameobject.personnage.classe.*;
+import dnd.partie.donjon.*;
+
+
+
 
 import java.util.List;
 
@@ -17,6 +21,36 @@ public class Partie {
     {
         // init carte
         Carte carte = new Carte(maxX, maxY);
+
+        // init ordre de jeu
+        Ordre ordre = new Ordre();
+
+        // init monstre et equipement sur la map,
+        int[] retCreaMJ = new int[3];  // stock retour de afficherCreaMonstreObjet
+                                            // 1er int: code, 2eme et 3eme : position x,y
+        retCreaMJ[0] = 1;// init à != 0
+        while (retCreaMJ[0] !=0)
+        {
+            retCreaMJ = Affichage.afficherCreaMonstreObjet();
+            switch (retCreaMJ[0])
+            {
+                case 0 :
+                    break;
+                case 1:
+                    Asset monstre = Affichage.afficheCreaMonstre();
+                    carte.ajouterAsset(monstre, carte.getCase(retCreaMJ[1], retCreaMJ[2]));
+                    ordre.ajouterAsset(monstre);
+                    break;
+                case 2:
+                    carte.ajouterAsset(Affichage.afficheCreaEquipement(), carte.getCase(retCreaMJ[1], retCreaMJ[2]));
+                    break;
+                case 3:
+                    Obstacle obstacle = new Obstacle();
+                    carte.ajouterAsset(obstacle, carte.getCase(retCreaMJ[1], retCreaMJ[2]));
+                    break;
+            }
+        }
+
         // init perso
         // Afficher choix de race et classe, recuperer les arguments(nom, classe, race)
 
@@ -60,18 +94,23 @@ public class Partie {
         }
         Personnage perso1 = new Personnage(crperso[1], classe, race);
 
-        // init ordre de jeu
-        List<Asset>[] ordre;
+        //ajout de perso dans ordre
+        ordre.ajouterAsset(perso1);
+        int[] emplacement = new int[2];
+        carte.ajouterAsset(perso1, carte.getCase(emplacement[0],emplacement[1]));
 
-        // init monstre et equipement sur la map, 
-        Affichage.afficherCreaMonstreObjet();
+        // tire les initiative et met les monstres et perso dans l'ordre dans ordre.m_ordre
+        ordre.triage();
 
+        // Déroulement de la partie:
+        // tant que le perso est vivant ou un monstre est vivant: un lance un nouveau tour
+        int nbTour = 0;
+        while ()
+        {
+            nbTour++;
+            TourDeJeu(ordre, nbTour);
+        }
 
-
-
-        TourDeJeu(ordre, 1);
-
-        // lance tour 1
     }
 
     // pour lancer une partie par défaut

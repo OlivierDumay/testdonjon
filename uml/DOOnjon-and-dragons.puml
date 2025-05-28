@@ -9,7 +9,6 @@ skinparam style strictuml hide empty members
 '   Affichage/
 '   des/
 '   partie/
-'       tourDeJeu/
 '       donjon/
 '   gameObject/
 '       personnage/
@@ -48,21 +47,6 @@ package dnd
 
     package partie
     {
-        package tourDeJeu
-        {
-            class Tour
-            {
-                -m_numeroDuTour : Integer
-                -m_ordre : [*]
-                + void initOrdre
-                + void supprimerAssetDOrdre
-                'contient les monstres et personnages dans l'ordre de leur initiative
-                ' methode déroulement du tour : appel des gameObject dans l'ordre d'initiative
-                'methode qui enleve un monstre ou personnage mort de m_ordre
-            }
-
-        }
-
         package donjon
         {
             class Carte
@@ -90,7 +74,23 @@ package dnd
                 + getY() : Integer
                 + equalsPosition (other Case) : boolean
             }
+        }
+         class TourDeJeu
+        {
+            -m_numeroDuTour : Integer
+            +<<create>> TourDeJeu
+            'contient les monstres et personnages dans l'ordre de leur initiative
+            ' methode déroulement du tour : appel des gameObject dans l'ordre d'initiative
+            'methode qui enleve un monstre ou personnage mort de m_ordre
+        }
 
+        class Ordre
+        {
+            -m_ordre : [*]
+            +<<create>> Ordre
+            + void triage()
+            + void ajouterAsset()
+            + void supprimerAsset()
         }
     }
 
@@ -286,17 +286,21 @@ package dnd
     interface Asset <<interface>>
     {
         -m_position : Position
-
-
         +getEtiquette() : Etiquette
+    }
+
+    class Obstacle implements dnd.Asset
+    {
+        -m_etiquette : String
+        +<<create>> Obstacle
+        + getEtiquette :  String
     }
 }
 
 'ARBORESCENCE et CLASSE
 'dnd/ASSET
 '   des/DES
-'   partie/
-'       tourDeJeu/TOUR
+'   partie/TOURDEJEU-ORDRE
 '       donjon/CARTE-CASE-POSITION
 '   gameObject/GAMEOBJECT-CARACTERISTIQUE
 '       personnage/PERSONNAGE-INVENTAIRE-EQUIPEMENTPERSONNAGE
@@ -309,7 +313,7 @@ package dnd
 'Relations
 dnd.Asset "*" o--> "2..*\nm_listAsset" dnd.partie.donjon.Carte : est sur la carte
 
-dnd.partie.tourDeJeu.Tour "*" o--> "2..*\nm_ordre" dnd.gameObject.GameObject : classé dans
+
 
 dnd.partie.donjon.Case "1" *--> "1\nm_grille" dnd.partie.donjon.Carte : belongs to
 'dnd.partie.donjon.Carte "*" *--> "- m_listeGameObjectPosition[*] : Position selon GameObject (hashmap)" dnd.GameObject.GameObject : possède
