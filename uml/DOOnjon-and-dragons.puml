@@ -6,6 +6,7 @@ skinparam style strictuml hide empty members
 'skinparam linetype ortho
 
 'dnd/
+'   Affichage/
 '   des/
 '   partie/
 '       tourDeJeu/
@@ -25,6 +26,18 @@ class Main
 
 package dnd
 {
+    package affichage
+    {
+        class Affichage
+        {
+            + void afficherInfoDonjon
+            + void afficherCarte
+            + void afficherInfoPerso
+            + void afficherInfoTour
+            + afficherCreaPerso: string[*]
+            + void afficherCreaMonstreObjet
+        }
+    }
     package des
     {
         class Des
@@ -40,7 +53,10 @@ package dnd
             class Tour
             {
                 -m_numeroDuTour : Integer
-                '-m_ordre : [*] 'contient les monstres et personnages dans l'ordre de leur initiative
+                -m_ordre : [*]
+                + void initOrdre
+                + void supprimerAssetDOrdre
+                'contient les monstres et personnages dans l'ordre de leur initiative
                 ' methode déroulement du tour : appel des gameObject dans l'ordre d'initiative
                 'methode qui enleve un monstre ou personnage mort de m_ordre
             }

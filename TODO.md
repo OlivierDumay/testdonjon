@@ -34,21 +34,37 @@
 - [ ] :
 
 
+## Question prof
+atribut dans arme, protected ou private?
+alors osef, mettre methode lancerdés dans arme, et mettre attribut en private
 
-demarrerPartie(carteParDefaut, 15)
-   init carte
-   boucle 15 itérations
-    tour 1: foreach GameObject entité in m_ordre
-            pour un perso
-                utilisateur tape: attaquer /n 10 5
-            dans le code: partie.
-                                tour[1].
-                                        (attaque(entité, quoiEstIci(10,5)))
-            dans le code: partie.
-                                tour[1].
-                                        (entité.attaque (entité, quoiEstIci(10,5)))
-                                        
-                                        
+attribut arme et armure, static?
+argument pour une enum?
+
+
+
+
+
+
+
+void main (){
+
+    demarrerPartie(carteParDefaut, 15, 15)
+    demarrerPartie( opt = partie par defaut, maxX, maxY)
+    
+       
+       boucle 15 itérations
+        tour 1: foreach GameObject entité in m_ordre
+                pour un perso
+                    utilisateur tape: attaquer /n 10 5
+                dans le code: partie.
+                                    tour[1].
+                                            (attaque(entité, quoiEstIci(10,5)))
+                dans le code: partie.
+                                    tour[1].
+                                            (entité.attaque (entité, quoiEstIci(10,5)))
+                                            
+}                                        
                                         
                                         
                                         

@@ -4,6 +4,7 @@ import dnd.Asset;
 import dnd.gameobject.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Carte
 {
@@ -12,6 +13,7 @@ public class Carte
     private int m_max_y;
     private Case m_grille[][];
     private HashMap<Asset, Case> m_emplacementObjet;
+    private List<Asset> m_asset;
 
     // ctor
     public Carte(int x, int y)
