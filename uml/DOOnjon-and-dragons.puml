@@ -60,6 +60,8 @@ package dnd
                 + getOuEstQuoi(quoi : Asset) : Position
                 + void addAsset(asset : Asset, cse : Case)
                 + void removeAsset(asset : Asset, cse : Case)
+                + getMaxX() : Integer
+                + getMaxY() : Integer
             }
 
             class Case

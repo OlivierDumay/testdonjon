@@ -35,6 +35,10 @@
 
 
 ## Question prof
+carte en public? pour y acceder dans affichage.affichageCreaMonstre
+
+attribut perso en public dans partie?
+
 deroulement de la partie dans constructeur de partie? ou faut il mfaire une méthode déroulementDeLaPartie?
 
 atribut dans arme, protected ou private?

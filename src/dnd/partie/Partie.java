@@ -22,13 +22,13 @@ public class Partie {
     //ctor
     public Partie (int maxX, int maxY)
     {
-        // init carte
+        //// init carte
         Carte carte = new Carte(maxX, maxY);
 
-        // init ordre de jeu
+        //// init ordre de jeu
         Ordre ordre = new Ordre();
 
-        // init monstre et equipement sur la map,
+        //// init monstre et equipement sur la map,
         int[] retCreaMJ = new int[3];  // stock retour de afficherCreaMonstreObjet
                                             // 1er int: code, 2eme et 3eme : position x,y
         retCreaMJ[0] = 1;// init à != 0
@@ -54,7 +54,7 @@ public class Partie {
             }
         }
 
-        // init perso
+        //// init perso
         // Afficher choix de race et classe, recuperer les arguments(nom, classe, race)
 
         String crperso[] = Affichage.afficherCreaPerso(); // affiche les instruction et recupere 3 arument de ctor personnage
@@ -96,19 +96,17 @@ public class Partie {
 
         }
         this.perso = new Personnage(crperso[1], classe, race);
-
         //ajout de perso dans ordre
         ordre.ajouterAsset(perso);
         int[] emplacement = new int[2];
         carte.ajouterAsset(perso, carte.getCase(emplacement[0],emplacement[1]));
 
-        // tire les initiative et met les monstres et perso dans l'ordre dans ordre.m_ordre
+        //// tire les initiative et met les monstres et perso dans l'ordre dans ordre.m_ordre
         ordre.triage();
 
-        // Déroulement de la partie:
+        //// Déroulement de la partie:
         int nbTour = 0;
-        while ()// tant que le perso est vivant ou un monstre est vivant: un lance un nouveau tour
-
+        while (perso)// tant que le perso est vivant ou un monstre est vivant: un lance un nouveau tour
         {
             nbTour++;
             TourDeJeu tour = new TourDeJeu((List<Asset>) ordre, nbTour);

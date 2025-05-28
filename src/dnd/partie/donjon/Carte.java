@@ -64,4 +64,8 @@ public class Carte
     {
         return m_grille[x][y];
     }
+
+    public int getMaxX() {return this.m_max_x;}
+    public int getMaxY() {return this.m_max_y;}
+
 }

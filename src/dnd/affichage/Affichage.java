@@ -42,7 +42,7 @@ public class Affichage {
         return res;
     }
 
-    public static int[] afficherCreaMonstreObjet() // enlever les deux dernoer argment, on s'occupera de la position dans afficheCreaTruc
+    public static int[] afficherCreaMonstreObjet(Carte carte) // enlever les deux dernoer argment, on s'occupera de la position dans afficheCreaTruc
     {
         // boucle de creation pour MJ: 3 choix: créer monstre, placer monstre, creer equipement, placer equipement, placer obstacle
         // renvoie trois int
@@ -60,10 +60,20 @@ public class Affichage {
         while (ret[0] != 1 || ret[0] != 2 || ret[0] != 3 || ret[0] != 0)
         {
             System.out.println("Erreur : Entrez 1, 2, 3 ou 0");
-            ret[0] = scanner.nextLine();
+            ret[0] = (int) scanner.nextInt();
         }
-        if (ret[0] == 1 || ret[0] == 2 || ret[0] == 3 )
-
+            if (ret[0] == 1 || ret[0] == 2 || ret[0] == 3 )
+            {
+                System.out.println("A quelle position (x, y)?\n .x : ");
+                ret[1] = (int) scanner.nextInt();
+                if (ret[1] > carte.getMaxX()) // x dans la carte
+                { return Exception("Erreur : x en dehors de la carte);}
+                System.out.println(".y : ");
+                if (ret[2] > carte.getMaxY()) // y dans la carte
+                { return Exception("Erreur : y en dehors de la carte");}
+                ret[2] = (int) scanner.nextInt();
+            }
+        }
         scanner.close();
         return ret;
     }
