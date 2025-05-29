@@ -2,6 +2,8 @@ package dnd.partie.donjon;
 
 import dnd.Asset;
 import dnd.gameobject.*;
+import dnd.objet.Item;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,8 +14,9 @@ public class Carte
     private int m_max_x;
     private int m_max_y;
     private Case m_grille[][];
-    private HashMap<Asset, Case> m_emplacementObjet;
+    private HashMap<GameObject, Case> m_emplacementObjet;
     private List<Asset> m_asset;
+
 
     // ctor
     public Carte(int x, int y)
@@ -23,6 +26,9 @@ public class Carte
 
         this.m_max_x = x;
         this.m_max_y = y;
+        this.m_grille = new Case[this.m_max_x][this.m_max_y];
+        this.m_emplacementObjet = new HashMap<>();
+        this.m_asset = new ArrayList<>();
 
         //init de chaque cases
         for (int i = 0; i<this.m_max_x; i++)
@@ -32,39 +38,89 @@ public class Carte
             }
     }
 
-    public ArrayList<Asset> getQuoiEstIci(int x, int y)
+    public Asset getQuelGameObjectEstIci(int x, int y)
     {
-        return this.m_grille[x][y].getContenu();
+        return this.m_grille[x][y].getGameObject();
     }
 
-    public Case OuEstQuoi(Asset quoi)
+    public ArrayList<Item> getQuelItemEstIci(int x, int y)
+    {
+        return this.m_grille[x][y].getItem();
+    }
+
+    public Case OuEstGameObjet(GameObject quoi)
     {
         return m_emplacementObjet.get(quoi);
     }
 
-    
-    public void ajouterAsset(Asset asset, Case cse)
+    public void ajouterItem(Item item, Case cse)
     {
-        //manque le test: 2 item ou 2 gameObjet sur meme case impossible ou si il y a un obstacle
-        if (asset == null)
-            throw new IllegalArgumentException("Erreur : l'asset ne peut pas être null");
-        this.m_grille[cse.getX()][cse.getY()].m_contenu.add(asset); // ajout dans la case
-        this.m_emplacementObjet.put(asset, cse); // ajout dans la hashmap m_emplacementObjet
+        if (item == null)
+        { throw new IllegalArgumentException("Erreur : l'item ne peut pas être null");}
+        if (!this.m_grille[cse.getX()][cse.getY()].getObstacle()) // si il n'y a pas d'obstacle
+        {
+            this.m_grille[cse.getX()][cse.getY()].getItem().add(item); // ajout dans la case
+        }
+    }
+    public void ajouterGameObject(GameObject gameObject, int x, int y)
+    {
+        if (gameObject == null)
+        {throw new IllegalArgumentException("Erreur : le gameObject ne peut pas être null");}
+        if (this.m_grille[x][y].getGameObject() != null && !this.m_grille[x][y].getObstacle()){ // si il n'y a pas de perso ou de monstre ou d'obstaclesur la case
+            this.m_grille[x][y].setGameObject(gameObject); // ajout dans la case
+            this.m_emplacementObjet.put(gameObject, this.m_grille[x][y]); // ajout dans la hashmap m_emplacementObjet
+        }
+
+    }
+    public void ajouterObstacle(Case cse)
+    {
+        this.m_grille[cse.getX()][cse.getY()].setObstacle(true);
     }
 
-    public void retirerAsset(Asset asset, Case cse)
+    public void retirerItem(Item item, Case cse)
     {
-        if (asset == null)
-            throw new IllegalArgumentException("Erreur : l'asset ne peut pas être null");
-        this.m_grille[cse.getX()][cse.getY()].m_contenu.remove(asset); // supresion dans la case
-        this.m_emplacementObjet.remove(asset, cse); // supression dans la hashmap m_emplacementObjet
+        //manque le test: 2 item ou 2 gameObjet sur meme case impossible ou si il y a un obstacle
+        if (item == null)
+        { throw new IllegalArgumentException("Erreur : l'item ne peut pas être null");}
+        if (this.m_grille[cse.getX()][cse.getY()].getItem().contains(item)) // test si l'item est present dans la case
+        {
+            this.m_grille[cse.getX()][cse.getY()].getItem().remove(item); // ajout dans la case
+        }
+    }
+    public void retirerGameObject(GameObject gameObject, Case cse)
+    {
+        //manque le test: 2 item ou 2 gameObjet sur meme case impossible ou si il y a un obstacle
+        if (gameObject == null)
+        {throw new IllegalArgumentException("Erreur : le gameObject ne peut pas être null");}
+        if (this.m_grille[cse.getX()][cse.getY()].getGameObject() == gameObject) // test si l'objet a enlever est bien present
+        {
+            this.m_grille[cse.getX()][cse.getY()].setGameObject(gameObject); // ajout dans la case
+            this.m_emplacementObjet.remove(gameObject, cse); // ajout dans la hashmap m_emplacementObjet
+        }
+
+    }
+
+    public String getEtiquetteDeLaCase(int x, int y)
+    {
+        if (this.m_grille[x][y].getObstacle()) { return "[ ]";} // si il y a un obstacle
+        if (this.m_grille[x][y].getGameObject() != null) // si un monstre ou perso est dans la case
+        {
+            return this.m_grille[x][y].getGameObject().getEtiquette();
+        }
+        if (this.m_grille[x][y].getItem().size() > 0) // si il y a au moins un item
+        {
+            return " * ";
+        }
+        else // sinon affiche un vide
+        {
+            return " . ";
+        }
     }
 
     public Case getCase(int x, int y)
     {
         return m_grille[x][y];
     }
-
     public int getMaxX() {return this.m_max_x;}
     public int getMaxY() {return this.m_max_y;}
 

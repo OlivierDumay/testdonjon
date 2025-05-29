@@ -133,10 +133,13 @@ public class Personnage implements GameObject, Asset
 
     }
 
-
-
     public String getEtiquette()
     {
         return this.m_nom.substring(0, 3);
+    }
+
+    public int getPV()
+    {
+        return this.m_caracteristique.getPV();
     }
 }

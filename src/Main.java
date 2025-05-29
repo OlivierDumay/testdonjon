@@ -3,19 +3,22 @@ import dnd.gameobject.personnage.Personnage;
 import dnd.gameobject.personnage.classe.EnumClasse;
 import dnd.gameobject.personnage.race.EnumRace;
 import dnd.objet.arme.ArmeCourante;
+import dnd.partie.donjon.Carte;
+import dnd.affichage.Affichage;
 
 public class Main
 {
     public static void main(String args[])
     {
-        System.out.println("Bienvenue dans DOOnjon et Dragons");
-        Personnage muhammed = new Personnage("Muhammed", EnumClasse.CLERC, EnumRace.HUMAIN);
+        System.out.println("Bienvenue dans DOOnjon et Dragons\n");
+        Carte carte =new Carte(15,15);
 
-        System.out.println("Étiquette de Muhammed : " + muhammed.getEtiquette());
+        Personnage perso = new Personnage("Alber Venturier", EnumClasse.CLERC, EnumRace.HUMAIN);
 
-        muhammed.equiper(0);
+        carte.ajouterGameObject(perso, 2, 2);
+        Affichage.afficherCarte(carte);
 
-        System.out.println("Muhammed : " + muhammed.toString());
+
 
 
     }

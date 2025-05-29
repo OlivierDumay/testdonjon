@@ -2,14 +2,28 @@ package dnd.affichage;
 
 
 import dnd.Asset;
-
+import dnd.gameobject.GameObject;
+import dnd.objet.Item;
+import dnd.partie.donjon.*;
 import java.util.Scanner;
 
 public class Affichage {
 
     // Methode d'affichage de la partie
 
-
+    public static void afficherCarte(Carte carte)
+    {
+        int maxX = carte.getMaxX();
+        int maxY = carte.getMaxY();
+        for (int x = 0; x<maxX; x++)
+        {
+            for (int y = 0; y<maxY; y++)
+            {
+                System.out.print(carte.getEtiquetteDeLaCase(x, y));
+            }
+        System.out.println();
+        }
+    }
 
 
     // Methodes d'affichage de la création de la partie
@@ -42,7 +56,7 @@ public class Affichage {
         return res;
     }
 
-    public static int[] afficherCreaMonstreObjet(Carte carte) // enlever les deux dernoer argment, on s'occupera de la position dans afficheCreaTruc
+    public static int[] afficherCreaMonstreObjet(Carte carte) throws Exception // enlever les deux dernoer argment, on s'occupera de la position dans afficheCreaTruc
     {
         // boucle de creation pour MJ: 3 choix: créer monstre, placer monstre, creer equipement, placer equipement, placer obstacle
         // renvoie trois int
@@ -61,30 +75,36 @@ public class Affichage {
         {
             System.out.println("Erreur : Entrez 1, 2, 3 ou 0");
             ret[0] = (int) scanner.nextInt();
-        }
-            if (ret[0] == 1 || ret[0] == 2 || ret[0] == 3 )
+
+            if (ret[0] == 1 || ret[0] == 2 || ret[0] == 3) // si l'utilisateur veut palcer quqchose
             {
                 System.out.println("A quelle position (x, y)?\n .x : ");
+
                 ret[1] = (int) scanner.nextInt();
-                if (ret[1] > carte.getMaxX()) // x dans la carte
-                { return Exception("Erreur : x en dehors de la carte);}
+                if (ret[1] > carte.getMaxX()) // si x hors de la carte
+                {
+                    throw new Exception("Erreur : x en dehors de la carte");
+                }
+
                 System.out.println(".y : ");
-                if (ret[2] > carte.getMaxY()) // y dans la carte
-                { return Exception("Erreur : y en dehors de la carte");}
                 ret[2] = (int) scanner.nextInt();
+                if (ret[2] > carte.getMaxY()) // si y hors de la carte
+                {
+                    throw new Exception("Erreur : y en dehors de la carte");
+                }
             }
         }
         scanner.close();
         return ret;
     }
 
-    public static Asset afficheCreaMonstre()
+    public static GameObject afficheCreaMonstre()
     {
-
+        return null;
     }
 
-    public static Asset afficheCreaEquipement()
+    public static Item afficheCreaEquipement()
     {
-
+        return null;
     }
 }

@@ -178,9 +178,11 @@ package dnd
                 + getEtat() : Boolean
                 + toString() : String
 
-                +void deplacement (destination : Position )
-                +void attaque (defenseur : GameObject)
-                +void prendre(personnage : GameObject)
+                + void deplacement (destination : Position )
+                + void attaque (defenseur : GameObject)
+                + void prendre(personnage : GameObject)
+
+                + getPV() : Integer
             }
 
             class Inventaire

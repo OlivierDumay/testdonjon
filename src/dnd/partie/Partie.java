@@ -3,6 +3,8 @@ package dnd.partie;
 import dnd.Asset;
 import dnd.Obstacle;
 import dnd.affichage.*;
+import dnd.affichage.Affichage;
+import dnd.gameobject.GameObject;
 import dnd.gameobject.personnage.*;
 import dnd.gameobject.personnage.race.EnumRace; // ??? ne reconnait pas enumrace sans cet import 
 import dnd.gameobject.personnage.classe.*;
@@ -34,22 +36,25 @@ public class Partie {
         retCreaMJ[0] = 1;// init à != 0
         while (retCreaMJ[0] !=0)
         {
-            retCreaMJ = Affichage.afficherCreaMonstreObjet();
+            try {
+                retCreaMJ = Affichage.afficherCreaMonstreObjet(carte);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             switch (retCreaMJ[0])
             {
                 case 0 :
                     break;
                 case 1:
-                    Asset monstre = Affichage.afficheCreaMonstre();
-                    carte.ajouterAsset(monstre, carte.getCase(retCreaMJ[1], retCreaMJ[2]));
+                    GameObject monstre = Affichage.afficheCreaMonstre();
+                    carte.ajouterGameObject(monstre, carte.getCase(retCreaMJ[1], retCreaMJ[2]));
                     ordre.ajouterAsset(monstre);
                     break;
                 case 2:
-                    carte.ajouterAsset(Affichage.afficheCreaEquipement(), carte.getCase(retCreaMJ[1], retCreaMJ[2]));
+                    carte.ajouterItem(Affichage.afficheCreaEquipement(), carte.getCase(retCreaMJ[1], retCreaMJ[2]));
                     break;
                 case 3:
-                    Obstacle obstacle = new Obstacle();
-                    carte.ajouterAsset(obstacle, carte.getCase(retCreaMJ[1], retCreaMJ[2]));
+                    carte.ajouterObstacle(carte.getCase(retCreaMJ[1], retCreaMJ[2]));
                     break;
             }
         }
@@ -99,24 +104,26 @@ public class Partie {
         //ajout de perso dans ordre
         ordre.ajouterAsset(perso);
         int[] emplacement = new int[2];
-        carte.ajouterAsset(perso, carte.getCase(emplacement[0],emplacement[1]));
+        carte.ajouterGameObject(perso, carte.getCase(emplacement[0],emplacement[1]));
 
         //// tire les initiative et met les monstres et perso dans l'ordre dans ordre.m_ordre
         ordre.triage();
 
         //// Déroulement de la partie:
         int nbTour = 0;
-        while (perso)// tant que le perso est vivant ou un monstre est vivant: un lance un nouveau tour
+        while (perso.getPV()<0)// tant que le perso est vivant ou un monstre est vivant: un lance un nouveau tour
         {
             nbTour++;
             TourDeJeu tour = new TourDeJeu((List<Asset>) ordre, nbTour);
         }
 
     }
-
+/*
     // pour lancer une partie par défaut
     public Partie (int maxX, int maxY, EnumPartie defaut)
     {
         super(maxX, maxY);
     }
+    */
+
 }
