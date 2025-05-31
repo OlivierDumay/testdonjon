@@ -16,7 +16,7 @@ import dnd.partie.donjon.*;
 
 import java.util.List;
 
-
+// partie contient l'instance de la carte, de l'ordre de jeu
 public class Partie {
 
     public Personnage perso; // en public pour l'utiliser dans affichage
@@ -47,7 +47,7 @@ public class Partie {
                     break;
                 case 1:
                     GameObject monstre = Affichage.afficheCreaMonstre();
-                    carte.ajouterGameObject(monstre, carte.getCase(retCreaMJ[1], retCreaMJ[2]));
+                    carte.ajouterGameObject(monstre, retCreaMJ[1], retCreaMJ[2]);
                     ordre.ajouterAsset(monstre);
                     break;
                 case 2:
@@ -104,7 +104,8 @@ public class Partie {
         //ajout de perso dans ordre
         ordre.ajouterAsset(perso);
         int[] emplacement = new int[2];
-        carte.ajouterGameObject(perso, carte.getCase(emplacement[0],emplacement[1]));
+        emplacement = Affichage.afficheDemandeEmplacement(carte);
+        carte.ajouterGameObject(perso, emplacement[0],emplacement[1]);
 
         //// tire les initiative et met les monstres et perso dans l'ordre dans ordre.m_ordre
         ordre.triage();

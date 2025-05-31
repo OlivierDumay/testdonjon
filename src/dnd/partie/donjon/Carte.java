@@ -62,15 +62,15 @@ public class Carte
             this.m_grille[cse.getX()][cse.getY()].getItem().add(item); // ajout dans la case
         }
     }
-    public void ajouterGameObject(GameObject gameObject, int x, int y)
+    public void ajouterGameObject(GameObject gameObject, int x, int y) throws IllegalArgumentException
     {
         if (gameObject == null)
         {throw new IllegalArgumentException("Erreur : le gameObject ne peut pas être null");}
-        if (this.m_grille[x][y].getGameObject() != null && !this.m_grille[x][y].getObstacle()){ // si il n'y a pas de perso ou de monstre ou d'obstaclesur la case
-            this.m_grille[x][y].setGameObject(gameObject); // ajout dans la case
+        if (this.m_grille[x][y].getGameObject() == null && !this.m_grille[x][y].getObstacle()) // si il n'y a pas de perso ou de monstre ou d'obstaclesur la case
+        {
+            this.m_grille[x][y].setGameObject(gameObject);     // ajout dans la case
             this.m_emplacementObjet.put(gameObject, this.m_grille[x][y]); // ajout dans la hashmap m_emplacementObjet
         }
-
     }
     public void ajouterObstacle(Case cse)
     {

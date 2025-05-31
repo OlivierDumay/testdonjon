@@ -142,4 +142,18 @@ public class Personnage implements GameObject, Asset
     {
         return this.m_caracteristique.getPV();
     }
+
+    public void getString ()
+    {
+        System.out.println("Nom : " + this.m_nom);
+        System.out.println(" Classe : " + this.m_classe.toString());
+        System.out.println("Race : " + this.m_race.toString());
+        System.out.println("Vivant : " + this.m_etat);
+        System.out.println("Pv : " + this.m_caracteristique.getPV());
+        System.out.println("Force : " + this.m_caracteristique.getForce());
+        System.out.println("Dexterité : " + this.m_caracteristique.getDexterite());
+        System.out.println("Vitesse : " + this.m_caracteristique.getVitesse());
+        System.out.println("Inventaire : " + this.m_inventaire.toString());
+        System.out.println("Equipement : " + this.m_equipement.toString());
+    }
 }

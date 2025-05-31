@@ -28,18 +28,15 @@
 - [ ] : pour les degat des armes, une interface qui appel lancerDées avec es bons arguments
          quand perso attaque : perso.attaque(case, this.armeEquipee.jetDegat())
 - [ ] : dans carte, il faut quand on deplace qqchose tester si il n'y a pas un obstacle dans la case
-- [ ] :
-- [ ] :
+- [ ] : finir condition du while dans constructeur partie, deroulement des tours
+- [ ] : pour afficher le contenu d'une case dasn afficahgeCarte: mettre deux list dans case, une pour les gameObject et une autre pour les object, il faudra aussi deux méthode pour ajouter
 - [ ] :
 - [ ] :
 
 
 ## Question prof
-carte en public? pour y acceder dans affichage.affichageCreaMonstre
 
-attribut perso en public dans partie?
-
-deroulement de la partie dans constructeur de partie? ou faut il mfaire une méthode déroulementDeLaPartie?
+deroulement de la partie dans constructeur de partie? ou faut il faire une méthode déroulementDeLaPartie?
 
 atribut dans arme, protected ou private?
 alors osef, mettre methode lancerdés dans arme, et mettre attribut en private

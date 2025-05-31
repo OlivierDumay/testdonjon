@@ -52,6 +52,7 @@ public class Affichage {
             System.out.println("Erreur : Entrez 1, 2, 3 ou 4");
             res[2] = scanner.nextLine();
         }
+
         scanner.close();
         return res;
     }
@@ -106,5 +107,31 @@ public class Affichage {
     public static Item afficheCreaEquipement()
     {
         return null;
+    }
+
+    public static int[] afficheDemandeEmplacement(Carte carte)
+    {
+        int[] res = new int[2];
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Indiquer une case : \nx:\n");
+        int x = scanner.nextInt();
+        while (x < 0 || x > carte.getMaxX())
+        {
+            System.out.println("Indiquer une valeur entre 0 et " + carte.getMaxX());
+            x = scanner.nextInt();
+        }
+
+        System.out.println("y:\n");
+        int y = scanner.nextInt();
+        while (y < 0 || y > carte.getMaxY())
+        {
+            System.out.println("Indiquer une valeur entre 0 et " + carte.getMaxY());
+            y = scanner.nextInt();
+        }
+
+        scanner.close();
+        res[0] = x;
+        res[1] = y;
+        return res;
     }
 }
