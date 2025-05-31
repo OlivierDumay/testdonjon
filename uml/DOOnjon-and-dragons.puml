@@ -6,9 +6,9 @@ skinparam style strictuml hide empty members
 'skinparam linetype ortho
 
 'dnd/
+'   Affichage/
 '   des/
 '   partie/
-'       tourDeJeu/
 '       donjon/
 '   gameObject/
 '       personnage/
@@ -25,6 +25,18 @@ class Main
 
 package dnd
 {
+    package affichage
+    {
+        class Affichage
+        {
+            + void afficherInfoDonjon
+            + void afficherCarte
+            + void afficherInfoPerso
+            + void afficherInfoTour
+            + afficherCreaPerso: string[*]
+            + void afficherCreaMonstreObjet
+        }
+    }
     package des
     {
         class Des
@@ -35,18 +47,6 @@ package dnd
 
     package partie
     {
-        package tourDeJeu
-        {
-            class Tour
-            {
-                -m_numeroDuTour : Integer
-                '-m_ordre : [*] 'contient les monstres et personnages dans l'ordre de leur initiative
-                ' methode déroulement du tour : appel des gameObject dans l'ordre d'initiative
-                'methode qui enleve un monstre ou personnage mort de m_ordre
-            }
-
-        }
-
         package donjon
         {
             class Carte
@@ -60,6 +60,8 @@ package dnd
                 + getOuEstQuoi(quoi : Asset) : Position
                 + void addAsset(asset : Asset, cse : Case)
                 + void removeAsset(asset : Asset, cse : Case)
+                + getMaxX() : Integer
+                + getMaxY() : Integer
             }
 
             class Case
@@ -74,7 +76,29 @@ package dnd
                 + getY() : Integer
                 + equalsPosition (other Case) : boolean
             }
+        }
+         class TourDeJeu
+        {
+            -m_numeroDuTour : Integer
+            +<<create>> TourDeJeu
+            'contient les monstres et personnages dans l'ordre de leur initiative
+            ' methode déroulement du tour : appel des gameObject dans l'ordre d'initiative
+            'methode qui enleve un monstre ou personnage mort de m_ordre
+        }
 
+        class Ordre
+        {
+            -m_ordre : [*]
+            +<<create>> Ordre
+            + void triage()
+            + void ajouterAsset()
+            + void supprimerAsset()
+        }
+
+        class Partie
+        {
+            - perso : Personnage
+            +<<create>> Partie
         }
     }
 
@@ -154,9 +178,11 @@ package dnd
                 + getEtat() : Boolean
                 + toString() : String
 
-                +void deplacement (destination : Position )
-                +void attaque (defenseur : GameObject)
-                +void prendre(personnage : GameObject)
+                + void deplacement (destination : Position )
+                + void attaque (defenseur : GameObject)
+                + void prendre(personnage : GameObject)
+
+                + getPV() : Integer
             }
 
             class Inventaire
@@ -270,17 +296,21 @@ package dnd
     interface Asset <<interface>>
     {
         -m_position : Position
-
-
         +getEtiquette() : Etiquette
+    }
+
+    class Obstacle implements dnd.Asset
+    {
+        -m_etiquette : String
+        +<<create>> Obstacle
+        + getEtiquette :  String
     }
 }
 
 'ARBORESCENCE et CLASSE
 'dnd/ASSET
 '   des/DES
-'   partie/
-'       tourDeJeu/TOUR
+'   partie/TOURDEJEU-ORDRE
 '       donjon/CARTE-CASE-POSITION
 '   gameObject/GAMEOBJECT-CARACTERISTIQUE
 '       personnage/PERSONNAGE-INVENTAIRE-EQUIPEMENTPERSONNAGE
@@ -293,7 +323,7 @@ package dnd
 'Relations
 dnd.Asset "*" o--> "2..*\nm_listAsset" dnd.partie.donjon.Carte : est sur la carte
 
-dnd.partie.tourDeJeu.Tour "*" o--> "2..*\nm_ordre" dnd.gameObject.GameObject : classé dans
+
 
 dnd.partie.donjon.Case "1" *--> "1\nm_grille" dnd.partie.donjon.Carte : belongs to
 'dnd.partie.donjon.Carte "*" *--> "- m_listeGameObjectPosition[*] : Position selon GameObject (hashmap)" dnd.GameObject.GameObject : possède

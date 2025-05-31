@@ -1,13 +1,20 @@
 package dnd.partie.donjon;
+
 import dnd.Asset;
+import dnd.objet.Item;
+import dnd.gameobject.*;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class Case
 {
     // class members
     private final int m_x;
     private final int m_y;
-    protected ArrayList<Asset> m_contenu;
+    private ArrayList<Item> m_item;
+    private GameObject m_gameObject;
+    private boolean m_obstacle;
 
 
     // ctor
@@ -15,21 +22,37 @@ public class Case
     {
         if (x<0 || y<0)
             throw new IllegalArgumentException("Erreur : la position ne peut pas être inférieur à zero");
-        m_x = x;
-        m_y = y;
-        m_contenu = new ArrayList<Asset>();
+        this.m_x = x;
+        this.m_y = y;
+        this.m_item = new ArrayList<>();
+        this.m_gameObject = null;
+        this.m_obstacle = false;
     }
 
 
-    ArrayList<Asset> getContenu()
+    public ArrayList<Item> getItem() { return this.m_item;}
+    public String getNomsItem()
     {
-        return this.m_contenu; // TODO : rendre la liste immuable
+        String ret = "";
+        for (Item item : this.m_item)
+        {
+            ret += item.toString();
+        }
+        return ret;
     }
+    public GameObject getGameObject() { return this.m_gameObject;}
+    public void setGameObject(GameObject gameObject) { this.m_gameObject = gameObject;}
+    public boolean getObstacle() { return this.m_obstacle;}
+    public void setObstacle(boolean val) { this.m_obstacle = val;}
 
     @Override
     public String toString()
     {
-        return "Case(m_contenu=" + this.m_contenu.toString() + ", m_x=" + this.m_x + ", m_y=" + this.m_y + ")";
+        return ("m_x= " + this.m_x +
+                ", m_y= " + this.m_y +
+                ", m_gameObject= " + this.m_gameObject.toString() +
+                ", m_item= " + this.getNomsItem() +
+                ", m_obstacle = " + (this.m_obstacle ? "oui" : "non"));
     }
 
     protected int getX()
@@ -66,5 +89,4 @@ public class Case
     {
         return ((this.m_x == other.getX()) && (this.m_y == other.getY()));
     }
-
 }

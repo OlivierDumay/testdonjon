@@ -35,7 +35,7 @@ public class Item implements Asset
     @Override
     public String getEtiquette()
     {
-        return this.m_nom.substring(0, 4);
+        return " * ";
     }
 
     @Override

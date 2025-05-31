@@ -42,4 +42,6 @@ public class Inventaire
     {
         return this.m_items.size();
     }
+
+
 }

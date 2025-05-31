@@ -27,28 +27,47 @@
 - [ ] : ajout méthode factory aux armes pour avoir des armes prédef 
 - [ ] : pour les degat des armes, une interface qui appel lancerDées avec es bons arguments
          quand perso attaque : perso.attaque(case, this.armeEquipee.jetDegat())
-- [ ] :
-- [ ] :
-- [ ] :
+- [ ] : dans carte, il faut quand on deplace qqchose tester si il n'y a pas un obstacle dans la case
+- [ ] : finir condition du while dans constructeur partie, deroulement des tours
+- [ ] : pour afficher le contenu d'une case dasn afficahgeCarte: mettre deux list dans case, une pour les gameObject et une autre pour les object, il faudra aussi deux méthode pour ajouter
 - [ ] :
 - [ ] :
 
 
+## Question prof
 
-demarrerPartie(carteParDefaut, 15)
-   init carte
-   boucle 15 itérations
-    tour 1: foreach GameObject entité in m_ordre
-            pour un perso
-                utilisateur tape: attaquer /n 10 5
-            dans le code: partie.
-                                tour[1].
-                                        (attaque(entité, quoiEstIci(10,5)))
-            dans le code: partie.
-                                tour[1].
-                                        (entité.attaque (entité, quoiEstIci(10,5)))
-                                        
-                                        
+deroulement de la partie dans constructeur de partie? ou faut il faire une méthode déroulementDeLaPartie?
+
+atribut dans arme, protected ou private?
+alors osef, mettre methode lancerdés dans arme, et mettre attribut en private
+
+attribut arme et armure, static?
+
+
+
+
+
+
+
+
+void main (){
+
+    demarrerPartie(carteParDefaut, 15, 15)
+    demarrerPartie( opt = partie par defaut, maxX, maxY)
+    
+       
+       boucle 15 itérations
+        tour 1: foreach GameObject entité in m_ordre
+                pour un perso
+                    utilisateur tape: attaquer /n 10 5
+                dans le code: partie.
+                                    tour[1].
+                                            (attaque(entité, quoiEstIci(10,5)))
+                dans le code: partie.
+                                    tour[1].
+                                            (entité.attaque (entité, quoiEstIci(10,5)))
+                                            
+}                                        
                                         
                                         
                                         
