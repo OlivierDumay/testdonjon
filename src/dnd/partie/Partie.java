@@ -51,10 +51,10 @@ public class Partie {
                     ordre.ajouterAsset(monstre);
                     break;
                 case 2:
-                    carte.ajouterItem(Affichage.afficheCreaEquipement(), carte.getCase(retCreaMJ[1], retCreaMJ[2]));
+                    carte.ajouterItem(Affichage.afficheCreaEquipement(), retCreaMJ[1], retCreaMJ[2]);
                     break;
                 case 3:
-                    carte.ajouterObstacle(carte.getCase(retCreaMJ[1], retCreaMJ[2]));
+                    carte.ajouterObstacle(retCreaMJ[1], retCreaMJ[2]);
                     break;
             }
         }

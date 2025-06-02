@@ -1,0 +1,8 @@
+dnd.affichage.Affichage:
+	faire afficherInfoDonjon
+	faire afficherInfoPerso
+	faire afficherInfiTour
+	faire afficherAttaquer
+	faire afficherPrendre
+	faire afficherSeDeplacer
+

@@ -53,13 +53,13 @@ public class Carte
         return m_emplacementObjet.get(quoi);
     }
 
-    public void ajouterItem(Item item, Case cse)
+    public void ajouterItem(Item item, int x, int y)
     {
         if (item == null)
         { throw new IllegalArgumentException("Erreur : l'item ne peut pas être null");}
-        if (!this.m_grille[cse.getX()][cse.getY()].getObstacle()) // si il n'y a pas d'obstacle
+        if (!this.m_grille[x][y].getObstacle()) // si il n'y a pas d'obstacle
         {
-            this.m_grille[cse.getX()][cse.getY()].getItem().add(item); // ajout dans la case
+            this.m_grille[x][y].getItem().add(item); // ajout dans la case
         }
     }
     public void ajouterGameObject(GameObject gameObject, int x, int y) throws IllegalArgumentException
@@ -72,33 +72,35 @@ public class Carte
             this.m_emplacementObjet.put(gameObject, this.m_grille[x][y]); // ajout dans la hashmap m_emplacementObjet
         }
     }
-    public void ajouterObstacle(Case cse)
+    public void ajouterObstacle(int x, int y)
     {
-        this.m_grille[cse.getX()][cse.getY()].setObstacle(true);
+        this.m_grille[x][y].setObstacle(true);
     }
 
-    public void retirerItem(Item item, Case cse)
+    public void retirerItem(Item item,int x, int y)
     {
         //manque le test: 2 item ou 2 gameObjet sur meme case impossible ou si il y a un obstacle
         if (item == null)
         { throw new IllegalArgumentException("Erreur : l'item ne peut pas être null");}
-        if (this.m_grille[cse.getX()][cse.getY()].getItem().contains(item)) // test si l'item est present dans la case
+        if (this.m_grille[x][y].getItem().contains(item)) // test si l'item est present dans la case
         {
-            this.m_grille[cse.getX()][cse.getY()].getItem().remove(item); // ajout dans la case
+            this.m_grille[x][y].getItem().remove(item); // ajout dans la case
         }
     }
-    public void retirerGameObject(GameObject gameObject, Case cse)
+    public void retirerGameObject(GameObject gameObject, int x, int y)
     {
         //manque le test: 2 item ou 2 gameObjet sur meme case impossible ou si il y a un obstacle
         if (gameObject == null)
         {throw new IllegalArgumentException("Erreur : le gameObject ne peut pas être null");}
-        if (this.m_grille[cse.getX()][cse.getY()].getGameObject() == gameObject) // test si l'objet a enlever est bien present
+        if (this.m_grille[x][y].getGameObject() == gameObject) // test si l'objet a enlever est bien present
         {
-            this.m_grille[cse.getX()][cse.getY()].setGameObject(gameObject); // ajout dans la case
+            this.m_grille[x][y].setGameObject(gameObject); // ajout dans la case
+            Case cse = this.m_grille[x][y];
             this.m_emplacementObjet.remove(gameObject, cse); // ajout dans la hashmap m_emplacementObjet
         }
 
     }
+
 
     public String getEtiquetteDeLaCase(int x, int y)
     {
