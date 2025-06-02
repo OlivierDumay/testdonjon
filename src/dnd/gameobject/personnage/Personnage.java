@@ -105,9 +105,9 @@ public class Personnage implements GameObject, Asset
 
     }
 
-    public void deplacement(Case destination)
+    public void deplacement(Case cse)
     {
-
+        
     }
 
     public void attaque(GameObject defenseur)
@@ -131,6 +131,11 @@ public class Personnage implements GameObject, Asset
     public void desequiperArme(int n_arme)
     {
 
+    }
+
+    public void getPosition()
+    {
+        return carte.OuEstGameObject(this);
     }
 
     public String getEtiquette()
