@@ -6,3 +6,11 @@ dnd.affichage.Affichage:
 	faire afficherPrendre
 	faire afficherSeDeplacer
 
+
+Finir monstre
+
+Est que gameObect peut etre une classe abstraite aussi?
+est ce que ca veux dire que quand perso.getEtiquette, dans le compilateur cest:
+asset.gameObject.personnage.getEtiquette ???
+
+personnage.getPosition ???

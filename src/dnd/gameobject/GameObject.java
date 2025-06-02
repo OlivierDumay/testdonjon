@@ -5,7 +5,7 @@ import dnd.partie.donjon.Case;
 
 public interface GameObject extends Asset
 {
-    void deplacement(Case destination);
+    void deplacement(int x, int y);
 
     void attaque(GameObject defenseur);
 
