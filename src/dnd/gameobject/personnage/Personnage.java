@@ -26,6 +26,8 @@ public class Personnage implements GameObject, Asset
     private EquipementPersonnage m_equipement;
     private Classe m_classe;
     private Race m_race;
+    private int[] m_position;
+
 
     public Personnage(String nom, EnumClasse classe, EnumRace race)
     {
@@ -103,6 +105,9 @@ public class Personnage implements GameObject, Asset
         // Vivant
         this.m_etat = true;
 
+        //Init position
+        this.m_position = new int[2];
+
     }
 
     public void deplacement(Case cse)
@@ -133,9 +138,17 @@ public class Personnage implements GameObject, Asset
 
     }
 
-    public void getPosition()
+    @Override
+    public void setPosition(int x , int y)
     {
-        return carte.OuEstGameObject(this);
+        this.m_position[0] = x;
+        this.m_position[1] = y;
+    }
+
+    @Override
+    public int[] getPosition()
+    {
+        return this.m_position;
     }
 
     public String getEtiquette()
@@ -143,9 +156,15 @@ public class Personnage implements GameObject, Asset
         return this.m_nom.substring(0, 3);
     }
 
+
     public int getPV()
     {
         return this.m_caracteristique.getPV();
+    }
+
+    public int getVitesse()
+    {
+        return this.m_caracteristique.getVitesse();
     }
 
     public void getString ()

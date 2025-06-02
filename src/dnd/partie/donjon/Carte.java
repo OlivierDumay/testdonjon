@@ -69,6 +69,7 @@ public class Carte
         if (this.m_grille[x][y].getGameObject() == null && !this.m_grille[x][y].getObstacle()) // si il n'y a pas de perso ou de monstre ou d'obstaclesur la case
         {
             this.m_grille[x][y].setGameObject(gameObject);     // ajout dans la case
+            gameObject.setPosition(x,y);
             this.m_emplacementObjet.put(gameObject, this.m_grille[x][y]); // ajout dans la hashmap m_emplacementObjet
         }
     }
@@ -125,5 +126,18 @@ public class Carte
     }
     public int getMaxX() {return this.m_max_x;}
     public int getMaxY() {return this.m_max_y;}
+
+    void deplacement(Case cse, GameObject gameObject)
+    {
+        int[] postionGameObject =  gameObject.getPosition();
+        Case caseGameObject = this.getCase(postionGameObject[0], postionGameObject[1]);
+
+        float distance = caseGameObject.calculDistance(cse);
+        if (distance < (float)gameObject.getVitesse());
+        {
+            this.retirerGameObject(gameObject ,postionGameObject[0], postionGameObject[1]);
+            this.ajouterGameObject(gameObject, cse.getX(), cse.getY());
+        }
+    }
 
 }

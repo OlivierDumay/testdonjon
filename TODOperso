@@ -14,3 +14,7 @@ est ce que ca veux dire que quand perso.getEtiquette, dans le compilateur cest:
 asset.gameObject.personnage.getEtiquette ???
 
 personnage.getPosition ???
+m_position dans gameObject, carte.m!_emplacement devient obsolete
+
+dans perso et monstre ou juste dans gameObject
+getTouteLesCarac dans gameObject car besoin d'appeler cette methode sans pécifier la classe
