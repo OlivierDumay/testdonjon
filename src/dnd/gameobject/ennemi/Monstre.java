@@ -20,7 +20,7 @@ public class Monstre implements GameObject, Asset
 
     // ctor
     // voir TODO.md
-    public Monstre(String espece, int nDe, int nFace, int armure, int pv, int force, int dexterite, int vitesse, int initiative, String etiquette)
+    public Monstre(String espece, int nDe, int nFace, int armure, int pv, int vitesse, String etiquette)
     {
         if (espece.isEmpty())
             throw new IllegalArgumentException("Erreur : le nom du monstre ne doit pas être vide");

@@ -33,15 +33,6 @@ public class EquipementPersonnage
         this.m_armure = Optional.of(armure);
     }
 
-
-
-    public void equiper(Item item)
-    {
-        if (item == null)
-            throw new IllegalArgumentException("Erreur : l'item ne peut pas être null");
-        equiper(item);
-    }
-
     public Arme desequiperArme()
     {
         if (this.m_arme.isEmpty())
