@@ -43,23 +43,6 @@ public class Monstre implements GameObject, Asset
     }
 
     @Override
-    public void deplacement(Case destination)
-    {
-
-    }
-
-    @Override
-    public void attaque(GameObject defenseur)
-    {
-
-    }
-
-    @Override
-    public void prendre(Item objet) {
-
-    }
-
-    @Override
     public String getEtiquette()
     {
         return m_etiquette;

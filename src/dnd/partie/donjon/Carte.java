@@ -133,7 +133,7 @@ public class Carte
         Case caseGameObject = this.getCase(postionGameObject[0], postionGameObject[1]);
 
         float distance = caseGameObject.calculDistance(cse);
-        if (distance < (float)gameObject.getVitesse());
+        if (distance <= (float)gameObject.getVitesse());
         {
             this.retirerGameObject(gameObject ,postionGameObject[0], postionGameObject[1]);
             this.ajouterGameObject(gameObject, cse.getX(), cse.getY());

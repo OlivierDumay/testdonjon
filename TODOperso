@@ -18,3 +18,7 @@ m_position dans gameObject, carte.m!_emplacement devient obsolete
 
 dans perso et monstre ou juste dans gameObject
 getTouteLesCarac dans gameObject car besoin d'appeler cette methode sans pécifier la classe
+
+mettre methode seDeplacer() dans tourdejeu, et autre action aussi?
+
+

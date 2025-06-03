@@ -110,20 +110,6 @@ public class Personnage implements GameObject, Asset
 
     }
 
-    public void deplacement(Case cse)
-    {
-        
-    }
-
-    public void attaque(GameObject defenseur)
-    {
-
-    }
-
-    public void prendre(Item objet)
-    {
-
-    }
 
     public void equiper(int n_item)
     {
