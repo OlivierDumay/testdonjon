@@ -40,9 +40,14 @@ public class Monstre implements GameObject, Asset
         this.m_etiquette = etiquette;
     }
 
-    @Override
     public void deplacement(Case destination)
     {
+
+    }
+
+    // À EFFACER
+    @Override
+    public void deplacement(int x, int y) {
 
     }
 

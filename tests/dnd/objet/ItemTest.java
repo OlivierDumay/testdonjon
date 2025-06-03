@@ -11,7 +11,7 @@ public class ItemTest
     void ItemVide()
     {
         assertThrows(IllegalArgumentException.class, ()->{
-            new Arme("", 10);
+            new ArmeCourante("", 10, 10, 1);
         });
     }
 
@@ -19,15 +19,15 @@ public class ItemTest
     void ArmeValide()
     {
         assertDoesNotThrow(()->{
-            Item eppe = new Arme("Éppé longue", 15);
+            Item eppe = new ArmeGuerre("Éppé longue", 1, 6, 1);
         });
     }
 
     @Test
-    void ArmeSansDegats()
+    void ArmeSansDe()
     {
         assertThrows(IllegalArgumentException.class, ()->{
-            new Arme("Éppé longue", 0);
+            new ArmeCourante("Éppé longue", 0, 6, 1);
         });
     }
 
@@ -35,14 +35,22 @@ public class ItemTest
     void ArmeDegatsNegatifs()
     {
         assertThrows(IllegalArgumentException.class, ()->{
-            new Arme("Éppé longue", -10);
+            new ArmeGuerre("Éppé longue", -1, 4, 10);
         });
     }
 
     @Test
     void ArmeGuerreValide()
     {
-        Arme massue = new ArmeGuerre("Massue", 50);
+        Arme massue = new ArmeGuerre("Massue", 1, 4, 1);
         assertEquals(true, massue instanceof ArmeGuerre);
+    }
+
+    @Test
+    void ArmePortee0()
+    {
+        assertThrows(IllegalArgumentException.class, ()->{
+            new ArmeCourante("Épée longue", 1, 6, 0);
+        });
     }
 }
