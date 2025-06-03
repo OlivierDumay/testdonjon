@@ -52,6 +52,7 @@ public class Partie {
                     break;
                 case 2:
                     carte.ajouterItem(Affichage.afficheCreaEquipement(), retCreaMJ[1], retCreaMJ[2]);
+                    // manque ajouterItem
                     break;
                 case 3:
                     carte.ajouterObstacle(retCreaMJ[1], retCreaMJ[2]);
@@ -112,10 +113,10 @@ public class Partie {
 
         //// Déroulement de la partie:
         int nbTour = 0;
-        while (perso.getPV()<0)// tant que le perso est vivant ou un monstre est vivant: un lance un nouveau tour
+        while (perso.getPV()<1)// tant que le perso est vivant ou un monstre est vivant: un lance un nouveau tour
         {
             nbTour++;
-            TourDeJeu tour = new TourDeJeu((List<Asset>) ordre, nbTour);
+            TourDeJeu tour = new TourDeJeu(carte, (List<Asset>) ordre, nbTour);
         }
 
     }

@@ -2,5 +2,5 @@ package dnd;
 
 public interface Asset
 {
-    String getEtiquette();
+    public String getEtiquette();
 }

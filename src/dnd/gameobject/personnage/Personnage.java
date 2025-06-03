@@ -1,6 +1,7 @@
 package dnd.gameobject.personnage;
 import dnd.Asset;
 import dnd.gameobject.Caracteristique;
+import dnd.gameobject.personnage.EquipementPersonnage;
 import dnd.gameobject.GameObject;
 import dnd.gameobject.personnage.classe.*;
 import dnd.gameobject.personnage.race.*;
@@ -12,6 +13,7 @@ import dnd.objet.arme.ArmeCourante;
 import dnd.objet.arme.ArmeGuerre;
 import dnd.objet.armure.ArmureLegere;
 import dnd.objet.armure.ArmureLourde;
+import dnd.partie.donjon.Case;
 
 import static dnd.des.De.lancerDe;
 // import dnd.partie.Position;
@@ -26,6 +28,8 @@ public class Personnage implements GameObject, Asset
     private EquipementPersonnage m_equipement;
     private Classe m_classe;
     private Race m_race;
+    private int[] m_position;
+
 
     public Personnage(String nom, EnumClasse classe, EnumRace race)
     {
@@ -38,7 +42,8 @@ public class Personnage implements GameObject, Asset
 
         // Mise en place du nom
         this.m_nom = nom;
-
+        // Vivant
+        this.m_etat = true;
         // Instanciation de l'inventaire
         this.m_inventaire = new Inventaire();
         // Instanciation de la classe
@@ -100,26 +105,11 @@ public class Personnage implements GameObject, Asset
                 throw new IllegalArgumentException("Erreur : race invalide !");
         }
 
-        // Vivant
-        this.m_etat = true;
+        //Init position
+        this.m_position = new int[2];
 
     }
 
-    // A EFFACER
-    @Override
-    public void deplacement(int x, int y) {
-
-    }
-
-    public void attaque(GameObject defenseur)
-    {
-
-    }
-
-    public void prendre(Item objet)
-    {
-
-    }
 
     public void equiperArme(int n_arme)
     {
@@ -151,9 +141,17 @@ public class Personnage implements GameObject, Asset
         return this.m_equipement.desequiperArmure();
     }
 
-    public void getPosition()
+    @Override
+    public void setPosition(int x , int y)
     {
-//        return carte.OuEstGameObject(this); // TODO à faire
+        this.m_position[0] = x;
+        this.m_position[1] = y;
+    }
+
+    @Override
+    public int[] getPosition()
+    {
+        return this.m_position;
     }
 
     public String getEtiquette()
@@ -164,6 +162,11 @@ public class Personnage implements GameObject, Asset
     public int getPV()
     {
         return this.m_caracteristique.getPV();
+    }
+
+    public int getVitesse()
+    {
+        return this.m_caracteristique.getVitesse();
     }
 
     public void getString ()

@@ -5,9 +5,13 @@ import dnd.partie.donjon.Case;
 
 public interface GameObject extends Asset
 {
-    void deplacement(int x, int y);
+    public void setPosition(int x , int y);
 
-    void attaque(GameObject defenseur);
+    public int[] getPosition();
 
-    void prendre(Item objet);
+    public int getVitesse();
+    /*
+    int getPv() // faire les autres caractéristique au besoin
+         */
+
 }

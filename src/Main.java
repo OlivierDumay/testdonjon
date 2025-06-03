@@ -22,7 +22,14 @@ public class Main
         carte.ajouterObstacle(8, 3);
 
         Item item = new Item("epee");
-        carte.ajouterItem(item, 1,2);
+        try
+        {
+            carte.ajouterItem(item, 1,21);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
         Affichage.afficherCarte(carte);
         carte.retirerItem( item, 1, 2);
         System.out.println();
