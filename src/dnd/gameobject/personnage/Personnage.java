@@ -40,7 +40,8 @@ public class Personnage implements GameObject, Asset
 
         // Mise en place du nom
         this.m_nom = nom;
-
+        // Vivant
+        this.m_etat = true;
         // Instanciation de l'inventaire
         this.m_inventaire = new Inventaire();
         // Instanciation de la classe
@@ -80,9 +81,6 @@ public class Personnage implements GameObject, Asset
             default:
                 throw new IllegalArgumentException("Erreur : classe invalide !");
         }
-
-
-
         // Instanciation de la race
         switch (race)
         {
@@ -101,9 +99,6 @@ public class Personnage implements GameObject, Asset
             default:
                 throw new IllegalArgumentException("Erreur : race invalide !");
         }
-
-        // Vivant
-        this.m_etat = true;
 
         //Init position
         this.m_position = new int[2];
