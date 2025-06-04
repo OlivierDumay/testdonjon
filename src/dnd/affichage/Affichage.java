@@ -3,6 +3,8 @@ package dnd.affichage;
 
 import dnd.Asset;
 import dnd.gameobject.GameObject;
+import dnd.gameobject.personnage.Inventaire;
+import dnd.gameobject.personnage.Personnage;
 import dnd.objet.Item;
 import dnd.partie.donjon.*;
 import java.util.Scanner;
@@ -133,5 +135,15 @@ public class Affichage {
         res[0] = x;
         res[1] = y;
         return res;
+    }
+
+    public static void afficherEquipement(Personnage personnage)
+    {
+        Inventaire inventaire_perso = personnage.getInventaire();
+        for (int i = 0 ; i < inventaire_perso.getInventaire().size() ; i++)
+        {
+            Item current_item = inventaire_perso.getInventaire().get(i);
+            System.out.println(i + " - " + current_item.getNom());
+        }
     }
 }

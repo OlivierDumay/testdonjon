@@ -38,15 +38,7 @@ public class Main
 
         Asset muhammed = new Personnage("Muhammed", EnumClasse.GUERRIER, EnumRace.HUMAIN);
 
-
-        try
-        {
-            ((Personnage)muhammed).equiper(2);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
+        Affichage.afficherEquipement((Personnage)muhammed);
         System.out.println(muhammed.getType());
 
     }

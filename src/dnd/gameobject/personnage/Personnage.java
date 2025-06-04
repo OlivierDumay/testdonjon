@@ -55,31 +55,31 @@ public class Personnage implements GameObject, Asset
                 this.m_classe = new Clerc();
                 this.m_caracteristique = new Caracteristique(lancerDe(4, 4) + this.m_classe.bonusCreation() + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3); // TODO : olivier vérifie si c bien
                 this.m_equipement = new EquipementPersonnage();
-                this.m_inventaire.addArme(new ArmeCourante("Masse d'armes", 1, 6, 1));
-                this.m_inventaire.addArme(new ArmeADistance("Arbalète légère", 1, 8, 16));
-                this.m_inventaire.addArmure(new ArmureLegere("Armure d'écailles", 9));
+                this.m_inventaire.addItem(new ArmeCourante("Masse d'armes", 1, 6, 1));
+                this.m_inventaire.addItem(new ArmeADistance("Arbalète légère", 1, 8, 16));
+                this.m_inventaire.addItem(new ArmureLegere("Armure d'écailles", 9));
                 break;
             case GUERRIER:
                 this.m_classe = new Guerrier();
                 this.m_caracteristique = new Caracteristique(lancerDe(4, 4) + this.m_classe.bonusCreation() + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3);
                 this.m_equipement = new EquipementPersonnage();
-                this.m_inventaire.addArmure(new ArmureLourde("Cotte de mailles", 11));
-                this.m_inventaire.addArme(new ArmeGuerre("Épée longue", 1, 8, 1));
-                this.m_inventaire.addArme(new ArmeADistance("Arbalète légère", 1, 8, 16));
+                this.m_inventaire.addItem(new ArmureLourde("Cotte de mailles", 11));
+                this.m_inventaire.addItem(new ArmeGuerre("Épée longue", 1, 8, 1));
+                this.m_inventaire.addItem(new ArmeADistance("Arbalète légère", 1, 8, 16));
                 break;
             case MAGICIEN:
                 this.m_classe = new Magicien();
                 this.m_caracteristique = new Caracteristique(lancerDe(4, 4) + this.m_classe.bonusCreation() + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3);
                 this.m_equipement = new EquipementPersonnage();
-                this.m_inventaire.addArme(new ArmeCourante("Baton", 1, 6, 1));
-                this.m_inventaire.addArme(new ArmeADistance("Fronde", 1, 4, 6));
+                this.m_inventaire.addItem(new ArmeCourante("Baton", 1, 6, 1));
+                this.m_inventaire.addItem(new ArmeADistance("Fronde", 1, 4, 6));
                 break;
             case ROUBLARD:
                 this.m_classe = new Roublard();
                 this.m_caracteristique = new Caracteristique(lancerDe(4, 4) + this.m_classe.bonusCreation() + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3);
                 this.m_equipement = new EquipementPersonnage();
-                this.m_inventaire.addArme(new ArmeGuerre("Rapière", 1, 8, 1));
-                this.m_inventaire.addArme(new ArmeADistance("Arc court", 1, 6, 16));
+                this.m_inventaire.addItem(new ArmeGuerre("Rapière", 1, 8, 1));
+                this.m_inventaire.addItem(new ArmeADistance("Arc court", 1, 6, 16));
                 break;
             default:
                 throw new IllegalArgumentException("Erreur : classe invalide !");
@@ -168,6 +168,11 @@ public class Personnage implements GameObject, Asset
     public int getVitesse()
     {
         return this.m_caracteristique.getVitesse();
+    }
+
+    public Inventaire getInventaire()
+    {
+        return this.m_inventaire;
     }
 
     public void getString ()
