@@ -23,6 +23,8 @@ public class EquipementPersonnage
     {
         if (arme == null)
             throw new IllegalArgumentException("Erreur : l'arme ne peut pas être null");
+        if (this.m_arme.isPresent())
+            throw new NoSuchElementException("Erreur : il y a une arme déjà équipée");
         this.m_arme = Optional.of(arme);
     }
 
@@ -30,24 +32,30 @@ public class EquipementPersonnage
     {
         if (armure == null)
             throw new NoSuchElementException("Erreur : l'armure ne peut pas être null");
+        if (this.m_armure.isPresent())
+            throw new NoSuchElementException("Erreur : il y a une armure déjà équipée");
         this.m_armure = Optional.of(armure);
     }
 
-    public Arme desequiperArme()
+    public Arme getArme()
     {
-        if (this.m_arme.isEmpty())
-            throw new NoSuchElementException("Erreur : pas d'arme équipée");
-        Arme tmp = this.m_arme.get();
-        this.m_arme = Optional.empty(); // TODO : à changer : perfecto
-        return tmp;
+        return this.m_arme.orElseThrow(() ->
+                new NoSuchElementException("Erreur : pas d'arme équipée"));
     }
 
-    public Armure desequiperArmure()
+    public Armure getArmure()
     {
-        if (this.m_armure.isEmpty())
-            throw new RuntimeException("Erreur : pas d'armure équipée");
-        Armure tmp = this.m_armure.get();
-        this.m_armure = Optional.empty(); // TODO : à changer : perfecto
-        return tmp;
+        return this.m_armure.orElseThrow(() ->
+                new NoSuchElementException("Erreur : pas d'armure équipée"));
+    }
+
+    public void retirerArme()
+    {
+        this.m_arme = Optional.empty();
+    }
+
+    public void retirerArmure()
+    {
+        this.m_armure = Optional.empty();
     }
 }

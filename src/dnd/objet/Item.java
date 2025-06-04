@@ -1,6 +1,10 @@
 package dnd.objet;
 import dnd.Asset;
 import dnd.Type;
+import dnd.gameobject.ennemi.Monstre;
+import dnd.gameobject.personnage.Personnage;
+
+import java.util.NoSuchElementException;
 
 public class Item implements Asset
 {

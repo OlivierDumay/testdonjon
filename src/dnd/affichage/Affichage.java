@@ -137,9 +137,9 @@ public class Affichage {
         return res;
     }
 
-    public static void afficherEquipement(Personnage personnage)
+    public static void afficherEquipement(Asset personnage)
     {
-        Inventaire inventaire_perso = personnage.getInventaire();
+        Inventaire inventaire_perso = ((Personnage)personnage).getInventaire();
         for (int i = 0 ; i < inventaire_perso.getInventaire().size() ; i++)
         {
             Item current_item = inventaire_perso.getInventaire().get(i);

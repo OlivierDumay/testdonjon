@@ -3,6 +3,7 @@ import dnd.Asset;
 import dnd.Type;
 import dnd.gameobject.Caracteristique;
 import dnd.gameobject.GameObject;
+import dnd.gameobject.ennemi.Monstre;
 import dnd.gameobject.personnage.classe.*;
 import dnd.gameobject.personnage.race.*;
 import dnd.objet.Arme;
@@ -13,6 +14,8 @@ import dnd.objet.arme.ArmeCourante;
 import dnd.objet.arme.ArmeGuerre;
 import dnd.objet.armure.ArmureLegere;
 import dnd.objet.armure.ArmureLourde;
+
+import java.util.NoSuchElementException;
 
 import static dnd.Type.PERSONNAGE;
 import static dnd.des.De.lancerDe;
@@ -108,33 +111,6 @@ public class Personnage implements GameObject, Asset
 
         //Init position
         this.m_position = new int[2];
-
-    }
-
-
-    public void equiper(int n_equipement)
-    {
-        Item item = this.m_inventaire.removeItem(n_equipement);
-
-        switch (item.getType()) {
-            case ARME:
-                this.m_equipement.equiperArme((Arme)item);
-                break;
-            case ARMURE:
-                this.m_equipement.equiperArmure((Armure)item);
-                break;
-            default:
-                throw new IllegalArgumentException("Erreur : cet item n'est ni une arme ni une armure !");
-        }
-    }
-
-
-
-    public Item desequiper(int n_equipement)
-    {
-        if (n_equipement < 0 || n_equipement > 2)
-            throw new IllegalArgumentException("Erreur : numéro d'équipement invalide");
-        return this.m_equipement.desequiperArme();
     }
 
     @Override
@@ -173,6 +149,11 @@ public class Personnage implements GameObject, Asset
     public Inventaire getInventaire()
     {
         return this.m_inventaire;
+    }
+
+    public EquipementPersonnage getEquipement()
+    {
+        return this.m_equipement;
     }
 
     public void getString ()

@@ -4,8 +4,11 @@ import dnd.Asset;
 import dnd.Type;
 import dnd.gameobject.Caracteristique;
 import dnd.gameobject.GameObject;
+import dnd.gameobject.personnage.Personnage;
 import dnd.objet.Item;
 import dnd.partie.donjon.Case;
+
+import java.util.NoSuchElementException;
 
 import static dnd.Type.MONSTRE;
 
@@ -55,7 +58,7 @@ public class Monstre implements GameObject, Asset
     @Override
     public Type getType()
     {
-        return this.m_type;
+        return m_type;
     }
 
     public void setPosition(int x , int y)
