@@ -9,60 +9,34 @@ import java.util.ArrayList;
 public class Inventaire
 {
     // class members
-    private ArrayList<Arme> m_armes;
-    private ArrayList<Armure> m_armures;
+//    private ArrayList<Arme> m_armes;
+//    private ArrayList<Armure> m_armures;
+    private ArrayList<Item> m_items;
 
     // ctor
     public Inventaire()
     {
-        this.m_armes = new ArrayList<>();
-        this.m_armures = new ArrayList<>();
+//        this.m_armes = new ArrayList<>();
+//        this.m_armures = new ArrayList<>();
+        this.m_items = new ArrayList<>();
     }
 
-    public void addArme(Arme arme)
+    public void addItem(Item item)
     {
-        if (arme == null)
-            throw new IllegalArgumentException("Erreur : l'arme ne peut pas être null");
-        this.m_armes.add(arme);
+        if (item == null)
+            throw new IllegalArgumentException("Erreur : l'item ne peut pas être null");
+        this.m_items.add(item);
     }
 
-    public void addArmure(Armure armure)
+    public Item removeItem(int index)
     {
-        if (armure == null)
-            throw new IllegalArgumentException("Erreur : l'armure ne peut pas être null");
-        this.m_armures.add(armure);
+        if (index < 0 || index >= this.m_items.size())
+            throw new IllegalArgumentException("Erreur : pas d'item avec l'index " + index);
+        return this.m_items.remove(index);
     }
 
-    public Arme removeArme(int n_arme)
+    public int size()
     {
-        if (n_arme < 0 || n_arme >= this.m_armes.size())
-            throw new IllegalArgumentException("Erreur : l'item ne peut pas être inférieur à 0");
-        Arme tmp = this.m_armes.get(n_arme);
-
-        this.m_armes.remove(n_arme);
-
-        return tmp;
+        return this.m_items.size();
     }
-
-    public Armure removeArmure(int n_armure)
-    {
-        if (n_armure < 0 || n_armure >= this.m_armures.size())
-            throw new IllegalArgumentException("Erreur : l'item ne peut pas être inférieur à 0");
-        Armure tmp = this.m_armures.get(n_armure);
-
-        this.m_armures.remove(n_armure);
-
-        return tmp;
-    }
-
-    public int count_armes()
-    {
-        return this.m_armes.size();
-    }
-
-    public int count_armures()
-    {
-        return this.m_armures.size();
-    }
-
 }

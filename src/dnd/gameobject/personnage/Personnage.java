@@ -2,7 +2,6 @@ package dnd.gameobject.personnage;
 import dnd.Asset;
 import dnd.Type;
 import dnd.gameobject.Caracteristique;
-import dnd.gameobject.personnage.EquipementPersonnage;
 import dnd.gameobject.GameObject;
 import dnd.gameobject.personnage.classe.*;
 import dnd.gameobject.personnage.race.*;
@@ -14,7 +13,6 @@ import dnd.objet.arme.ArmeCourante;
 import dnd.objet.arme.ArmeGuerre;
 import dnd.objet.armure.ArmureLegere;
 import dnd.objet.armure.ArmureLourde;
-import dnd.partie.donjon.Case;
 
 import static dnd.Type.PERSONNAGE;
 import static dnd.des.De.lancerDe;
@@ -114,34 +112,29 @@ public class Personnage implements GameObject, Asset
     }
 
 
-    public void equiperArme(int n_arme)
+    public void equiper(int n_equipement)
     {
-        if (n_arme < 0 || n_arme > this.m_inventaire.count_armes())
-            throw new IllegalArgumentException("Erreur : numéro d'arme invalide");
-        Arme arme = this.m_inventaire.removeArme(n_arme);
-        this.m_equipement.equiperArme(arme);
+        Item item = this.m_inventaire.removeItem(n_equipement);
+
+        switch (item.getType()) {
+            case ARME:
+                this.m_equipement.equiperArme((Arme)item);
+                break;
+            case ARMURE:
+                this.m_equipement.equiperArmure((Armure)item);
+                break;
+            default:
+                throw new IllegalArgumentException("Erreur : cet item n'est ni une arme ni une armure !");
+        }
     }
 
-    public void equiperArmure(int n_armure)
-    {
-        if (n_armure < 0 || n_armure > this.m_inventaire.count_armures())
-            throw new IllegalArgumentException("Erreur : numéro d'arme invalide");
-        Armure armure = this.m_inventaire.removeArmure(n_armure);
-        this.m_equipement.equiperArmure(armure);
-    }
 
-    public Arme desequiperArme(int n_arme)
+
+    public Item desequiper(int n_equipement)
     {
-        if (n_arme < 0 || n_arme > 2)
+        if (n_equipement < 0 || n_equipement > 2)
             throw new IllegalArgumentException("Erreur : numéro d'équipement invalide");
         return this.m_equipement.desequiperArme();
-    }
-
-    public Armure desequiperArmure(int n_armure)
-    {
-        if (n_armure < 0 || n_armure > 2)
-            throw new IllegalArgumentException("Erreur : numéro d'équipement invalide");
-        return this.m_equipement.desequiperArmure();
     }
 
     @Override
