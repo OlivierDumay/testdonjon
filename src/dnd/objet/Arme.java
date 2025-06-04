@@ -1,5 +1,7 @@
 package dnd.objet;
 
+import dnd.Type;
+
 public abstract class Arme extends Item
 {
     private int m_nb_de;
@@ -8,7 +10,7 @@ public abstract class Arme extends Item
 
     public Arme(String name, int nb_de, int nb_face, int portee)
     {
-        super(name);
+        super(name, Type.ARME);
         if (nb_de < 1)
             throw new IllegalArgumentException("Erreur : le nombre de dés doit être supérieur à 0");
         this.m_nb_de = nb_de;

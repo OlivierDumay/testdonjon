@@ -1,14 +1,21 @@
 package dnd.objet;
 import dnd.Asset;
+import dnd.Type;
 
 public class Item implements Asset
 {
     // class members
     private final String m_nom;
+    private final Type m_type;
 
     // ctor
-    public Item(String nom)
+    public Item(String nom, Type type)
     {
+        if (type == null)
+            throw new IllegalArgumentException("Erreur : le type ne peut pas être null !");
+
+        this.m_type = type;
+
         if (!nom.isEmpty())
             this.m_nom = nom;
         else
@@ -19,6 +26,11 @@ public class Item implements Asset
     public String getNom()
     {
         return this.m_nom;
+    }
+
+    public Type getType()
+    {
+        return this.m_type;
     }
 
     @Override

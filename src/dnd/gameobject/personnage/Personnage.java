@@ -1,5 +1,6 @@
 package dnd.gameobject.personnage;
 import dnd.Asset;
+import dnd.Type;
 import dnd.gameobject.Caracteristique;
 import dnd.gameobject.personnage.EquipementPersonnage;
 import dnd.gameobject.GameObject;
@@ -15,6 +16,7 @@ import dnd.objet.armure.ArmureLegere;
 import dnd.objet.armure.ArmureLourde;
 import dnd.partie.donjon.Case;
 
+import static dnd.Type.PERSONNAGE;
 import static dnd.des.De.lancerDe;
 // import dnd.partie.Position;
 
@@ -29,6 +31,7 @@ public class Personnage implements GameObject, Asset
     private Classe m_classe;
     private Race m_race;
     private int[] m_position;
+    private static Type m_type = PERSONNAGE;
 
 
     public Personnage(String nom, EnumClasse classe, EnumRace race)
@@ -157,6 +160,11 @@ public class Personnage implements GameObject, Asset
     public String getEtiquette()
     {
         return this.m_nom.substring(0, 3);
+    }
+
+    @Override
+    public Type getType() {
+        return m_type;
     }
 
     public int getPV()
