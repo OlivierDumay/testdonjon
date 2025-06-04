@@ -1,10 +1,13 @@
 package dnd.gameobject.ennemi;
 
 import dnd.Asset;
+import dnd.Type;
 import dnd.gameobject.Caracteristique;
 import dnd.gameobject.GameObject;
 import dnd.objet.Item;
 import dnd.partie.donjon.Case;
+
+import static dnd.Type.MONSTRE;
 
 public class Monstre implements GameObject, Asset
 {
@@ -17,6 +20,7 @@ public class Monstre implements GameObject, Asset
     private Caracteristique m_caracteristique;
     private String m_etiquette;
     private int[] m_position;
+    private static final Type m_type = MONSTRE;
 
     // ctor
     // voir TODO.md
@@ -26,7 +30,7 @@ public class Monstre implements GameObject, Asset
             throw new IllegalArgumentException("Erreur : le nom du monstre ne doit pas être vide");
         if (nDe < 1 || nFace < 1)
             throw new IllegalArgumentException("Erreur l'attaque d'un monstre doit être supérieure à 0");
-        if (etiquette.length() < 1 || etiquette.length() > 3)
+        if (etiquette.isEmpty() || etiquette.length() > 3)
         {
             throw new IllegalArgumentException("Erreur: l'etiquette du monstre doit faire entre 1 et 3 caractères");
         }
@@ -36,7 +40,7 @@ public class Monstre implements GameObject, Asset
         this.m_attaque[0] = nDe;
         this.m_attaque[1] = nFace;
         this.m_classeArmure = armure;
-        this.m_caracteristique = new Caracteristique(pv, force, dexterite, vitesse, initiative);
+        this.m_caracteristique = new Caracteristique(pv, 1, 1, vitesse, 1);
         this.m_etiquette = etiquette;
         //Init position
         this.m_position = new int[2];
@@ -46,6 +50,12 @@ public class Monstre implements GameObject, Asset
     public String getEtiquette()
     {
         return m_etiquette;
+    }
+
+    @Override
+    public Type getType()
+    {
+        return this.m_type;
     }
 
     public void setPosition(int x , int y)

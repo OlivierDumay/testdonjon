@@ -30,7 +30,7 @@
 - [ ] : dans carte, il faut quand on deplace qqchose tester si il n'y a pas un obstacle dans la case
 - [ ] : finir condition du while dans constructeur partie, deroulement des tours
 - [ ] : pour afficher le contenu d'une case dasn afficahgeCarte: mettre deux list dans case, une pour les gameObject et une autre pour les object, il faudra aussi deux méthode pour ajouter
-- [ ] :
+- [ ] : Faire une enum avec un gettype() qui retourne une valeur de l'enum pour les items etc.
 - [ ] :
 
 
