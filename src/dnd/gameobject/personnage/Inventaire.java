@@ -21,6 +21,11 @@ public class Inventaire
         this.m_items = new ArrayList<>();
     }
 
+    public ArrayList<Item> getInventaire()
+    {
+        return this.m_items;
+    }
+
     public void addItem(Item item)
     {
         if (item == null)

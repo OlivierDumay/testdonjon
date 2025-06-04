@@ -1,13 +1,10 @@
 import dnd.*;
-import dnd.gameobject.GameObject;
 import dnd.gameobject.personnage.Personnage;
 import dnd.gameobject.personnage.classe.EnumClasse;
 import dnd.gameobject.personnage.race.EnumRace;
-import dnd.objet.Item;
-import dnd.objet.arme.ArmeCourante;
 import dnd.partie.donjon.Carte;
 import dnd.affichage.Affichage;
-import dnd.Type;
+import dnd.gameobject.Action;
 
 public class Main
 {
@@ -35,19 +32,6 @@ public class Main
 //        carte.retirerItem( item, 1, 2);
 //        System.out.println();
 //        Affichage.afficherCarte(carte);
-
-        Asset muhammed = new Personnage("Muhammed", EnumClasse.GUERRIER, EnumRace.HUMAIN);
-
-
-        try
-        {
-            ((Personnage)muhammed).equiper(2);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-        System.out.println(muhammed.getType());
 
     }
 }
