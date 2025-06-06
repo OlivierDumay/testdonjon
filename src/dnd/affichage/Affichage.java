@@ -12,30 +12,76 @@ import java.util.Scanner;
 
 public class Affichage
 {
+
+    // affichage pendant partie
     public static void afficherTour(Carte carte, Personnage personnage, int n_tour, int n_donjon)
     {
+        afficherInfoDonjon(carte, personnage, n_tour, n_donjon);
+        afficherCarte(carte);
+        afficherInfoPersos(personnage);
+
+    }
+
+    public static void afficherCarte(Carte carte)
+    {
+        int maxX = carte.getMaxX(); // Colonnes
+        int maxY = carte.getMaxY(); // Lignes
+
+        // 1. En-tête des colonnes (1, 2, 3, ...)
+        System.out.print("     ");
+        for (int x = 1; x <= maxX; x++)
+        {
+            System.out.printf("%-3d", x);
+        }
+        System.out.println();
+
+        // 2. Ligne du haut
+        System.out.print("   *");
+        for (int x = 0; x < maxX * 3; x++)
+        {
+            System.out.print("-");
+        }
+        System.out.println("*");
+
+        // 3. Affichage des lignes
+        for (int y = 0; y < maxY; y++)
+        {
+            System.out.printf("%-3d|", y + 1);
+            for (int x = 0; x < maxX; x++)
+            {
+                String etiquette = carte.getEtiquetteDeLaCase(x, y);
+                System.out.printf("%-3s", etiquette);
+            }
+            System.out.println("|");
+        }
+
+        // 4. Ligne du bas
+        System.out.print("   *");
+        for (int x = 0; x < maxX * 3; x++)
+        {
+            System.out.print("-");
+        }
+        System.out.println("*");
+
+        // 5. Légende
+        System.out.println("    * Equipement   |   [ ] Obstacle  |");
+    }
+
+    public static void afficherInfoDonjon(Carte carte, Personnage personnage, int n_tour, int n_donjon)
+    {
         System.out.println("********************************************************************************\nDonjon " + n_donjon + ":");
-        // TODO : print le donjon et son numéro ici
+
 
         System.out.println("                                    " +
-                personnage
-                        .getNom() +
-                " (" +
-                personnage.
-                        getRace().
-                        toString() +
-                " " +
-                personnage
-                        .getClasse()
-                        .toString() +
-                ")"); // TODO : afficher genré si carré
+                personnage.getNom() + " (" + personnage.getRace().toString() + " " + personnage.getClasse().toString() +")");
 
         System.out.println("\n********************************************************************************");
 
         System.out.println("Tour " + n_tour + ":");
-        // TODO : afficher les Assets sur la carte sous la forme d'une liste
-        System.out.println("    * Equipement   |   [ ] Obstacle  |");
+    }
 
+    public static void afficherInfoPersos (Personnage personnage)
+    {
         String armure;
         try
         {
@@ -129,54 +175,59 @@ public class Affichage
         );
     }
 
-    public static void afficherCarte(Carte carte)
+    public static void afficherActionPerso(Personnage perso, int nAction)
     {
-        int maxX = carte.getMaxX(); // Colonnes
-        int maxY = carte.getMaxY(); // Lignes
-
-        // 1. En-tête des colonnes (1, 2, 3, ...)
-        System.out.print("     ");
-        for (int x = 1; x <= maxX; x++)
+        /*
+        "Caelynn il vous reste 2 actions que souhaitez vous faire ?
+                - laisser le maître du jeu commenter l'action précédente (mj <texte>)
+            - commenter action précédente (com <texte>)
+            - attaquer (att <Case>)
+            - se déplacer (dep <Case>)
+            - s'équiper (equ <numero equipement>)"
+         */
+        Scanner scanner = new Scanner(System.in);
+        System.out.print(perso.getNom() + " il vous reste " + nAction + " action, que souhaitez vous faire? Entrez le nuemro de l'action que vous volez réaliser\n" +
+                "\t\t\t 1. laisser le maître du jeu commenter l'action précédente\n" +
+                "\t\t\t 2. commenter action précédente \n" +
+                "\t\t\t 3. Attaquer\n" +
+                "\t\t\t 4. Vous déplacer\n" +
+                "\t\t\t 5. S'équiper\n" +
+                "\t\t\t 6. Prendre un objet par terre");
+        int reponse = scanner.nextInt();
+        while (reponse < 1 || reponse > 6)
         {
-            System.out.printf("%-3d", x);
+            System.out.println("Tapez un chiffre entre 1 et 6");
+            reponse = scanner.nextInt();
         }
-        System.out.println();
-
-        // 2. Ligne du haut
-        System.out.print("   *");
-        for (int x = 0; x < maxX * 3; x++)
+        switch (reponse)
         {
-            System.out.print("-");
+            case 1:
+                afficherCommentaire("Maitre du Jeu - ");
+                break;
+            case 2:
+                afficherCommentaire(perso.getNom() + " - ");
+                break;
+            case 3:
+                afficherAttaquer(perso);
+                break;
+            case 4:
+                afficherSeDeplacer(perso);
+                break;
+            case 5:
+                afficherSEquiper(perso);
+                break;
+            case 6:
+                afficherPrendre(perso);
+                break;
+            default:
+                break;
         }
-        System.out.println("*");
-
-        // 3. Affichage des lignes
-        for (int y = 0; y < maxY; y++)
-        {
-            System.out.printf("%-3d|", y + 1);
-            for (int x = 0; x < maxX; x++)
-            {
-                String etiquette = carte.getEtiquetteDeLaCase(x, y);
-                System.out.printf("%-3s", etiquette);
-            }
-            System.out.println("|");
-        }
-
-        // 4. Ligne du bas
-        System.out.print("   *");
-        for (int x = 0; x < maxX * 3; x++)
-        {
-            System.out.print("-");
-        }
-        System.out.println("*");
-
-        // 5. Légende
-        System.out.println("    * Equipement   |   [ ] Obstacle  |");
     }
 
+    public static void afficherCommentaire(String debut)
+    {
 
-
-
+    }
 
     // Methodes d'affichage de la création de la partie
 

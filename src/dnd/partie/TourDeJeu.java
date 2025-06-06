@@ -8,6 +8,8 @@ import dnd.partie.donjon.Case;
 
 import java.util.List;
 
+import static dnd.affichage.Affichage.afficheActionPerso;
+
 public class TourDeJeu
 {
     private int nbTour;
@@ -15,18 +17,47 @@ public class TourDeJeu
     public TourDeJeu(Carte carte, List<Asset> ordre, int n){
 
         // deroulement du tour: boucle qui parcours ordre.m_ordre
-        // 3 action possible
-        //      carte.seDeplacer(case, gameObject)
-        //      carte.attaquer(attaquant, defenseur)
-        //      carte.prendre(gameObject, item)
+        //      3 action possible pour perso
+        //          carte.seDeplacer(case, gameObject)
+        //          carte.attaquer(attaquant, defenseur)
+        //          carte.prendre(gameObject, item)
 
-        //condition de break: perso mort, ou tout les monstre mort
+        for (int i = 0; i < ordre.size(); i++) //parcours ordre.m_ordre
+        {
+            // test du type
+            switch (ordre.get(i).getType())
+            {
+                case PERSONNAGE:
+                    for (int nAction = 3; nAction >0; nAction--)
+                    {
+                        afficherActionPerso(ordre.get(i),nAction);
+                    }
+                    break;
+                case MONSTRE:
+                    for (int nAction = 3; nAction >0; nAction--)
+                    {
+                        afficherActionMonstre(ordre.get(i),nAction);
+                    }
+                    break;
+            }
+        }
 
 
     }
 
-    void seDeplacer(int x, int y, GameObject gameObject)
+    void seDeplacer(Carte carte, int x, int y, GameObject gameObject)
     {
+
+            int[] postionGameObject =  gameObject.getPosition();
+            Case caseGameObject = carte.getCase(postionGameObject[0], postionGameObject[1]);
+
+            float distance = caseGameObject.calculDistance(carte.getCase(x,y));
+            if (distance <= (float)gameObject.getVitesse())
+            {
+                carte.retirerGameObject(gameObject ,postionGameObject[0], postionGameObject[1]);
+                carte.ajouterGameObject(gameObject, x, y);
+            } else { ;}// erreur distance trop grande
+
 
     }
 
