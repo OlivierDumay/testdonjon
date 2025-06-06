@@ -7,18 +7,47 @@ dnd.affichage.Affichage:
 	faire afficherSeDeplacer
 
 
-Finir monstre
 
-Est que gameObect peut etre une classe abstraite aussi?
-est ce que ca veux dire que quand perso.getEtiquette, dans le compilateur cest:
-asset.gameObject.personnage.getEtiquette ???
+deroulement
+	appel tour de jeu
+		parcours m_ordre
+			appel afficheQuelActionTYPE
+				"Caelynn il vous reste 2 actions que souhaitez vous faire ?
+				  - laisser le maître du jeu commenter l'action précédente (mj <texte>)
+				  - commenter action précédente (com <texte>)
+				  - attaquer (att <Case>)
+				  - se déplacer (dep <Case>)
+				  - s'équiper (equ <numero equipement>)"
 
-personnage.getPosition ???
-m_position dans gameObject, carte.m!_emplacement devient obsolete
+case gameObject et item a mettre en optional
 
-dans perso et monstre ou juste dans gameObject
-getTouteLesCarac dans gameObject car besoin d'appeler cette methode sans pécifier la classe
+mettre list<item> de case en item simple
 
-mettre methode seDeplacer() dans tourdejeu, et autre action aussi?
+faire carte.setItem(case, item)
+
+FINIR LE PROJET
+
+mettre pusieurs perso par donjon
+	pour:
+	affichage infoDOnjon
+	affichage infoPerso
+	constructeur de partie
+	
+finir affichage
+	(voir avance muhammed)
+	faire affichageFinDePartie, quand tout les perso sont mort on arrete la partie
+	faire afficheCreaMonstre
+	faire afficheCreaItem
+	x faire afficherCommentaire
+	faire afficherActionMonstre
+
+ajouter des action dans afficherActionPerso	
+
+
+faire des import propre
+
+faire l'uml
+	
+
 
 

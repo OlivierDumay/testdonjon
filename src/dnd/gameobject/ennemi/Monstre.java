@@ -67,6 +67,8 @@ public class Monstre implements GameObject, Asset
         this.m_position[1] = y;
     }
 
+    public String getNom() {return (m_espece+m_id);}
+
     public int[] getPosition()
     {
         return this.m_position;

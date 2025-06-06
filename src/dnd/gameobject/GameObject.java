@@ -10,6 +10,8 @@ public interface GameObject extends Asset
     public int[] getPosition();
 
     public int getVitesse();
+
+    public String getNom();
     /*
     int getPv() // faire les autres caractéristique au besoin
          */

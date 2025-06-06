@@ -2,6 +2,7 @@ package dnd.partie.donjon;
 
 import dnd.Asset;
 import dnd.gameobject.*;
+import dnd.gameobject.personnage.Personnage;
 import dnd.objet.Item;
 
 import java.util.ArrayList;
@@ -38,12 +39,12 @@ public class Carte
             }
     }
 
-    public Asset getQuelGameObjectEstIci(int x, int y)
+    public GameObject getQuelGameObjectEstIci(int x, int y)
     {
         return this.m_grille[x][y].getGameObject();
     }
 
-    public ArrayList<Item> getQuelItemEstIci(int x, int y)
+    public Item getQuelItemEstIci(int x, int y)
     {
         return this.m_grille[x][y].getItem();
     }
@@ -57,9 +58,9 @@ public class Carte
     {
         if (item == null)
         { throw new IllegalArgumentException("Erreur : l'item ne peut pas être null");}
-        if (!this.m_grille[x][y].getObstacle()) // si il n'y a pas d'obstacle
+        if (!this.m_grille[x][y].getObstacle() && this.m_grille[x][y].getItem() == null ) // si il n'y a pas d'obstacle, ni d'item
         {
-            this.m_grille[x][y].getItem().add(item); // ajout dans la case
+            this.m_grille[x][y].setItem(item); // ajout dans la case
         }
     }
     public void ajouterGameObject(GameObject gameObject, int x, int y) throws IllegalArgumentException
@@ -83,9 +84,9 @@ public class Carte
         //manque le test: 2 item ou 2 gameObjet sur meme case impossible ou si il y a un obstacle
         if (item == null)
         { throw new IllegalArgumentException("Erreur : l'item ne peut pas être null");}
-        if (this.m_grille[x][y].getItem().contains(item)) // test si l'item est present dans la case
+        if (this.m_grille[x][y].getItem() == item ) // test si l'item est present dans la case
         {
-            this.m_grille[x][y].getItem().remove(item); // ajout dans la case
+            this.m_grille[x][y].setItem(null); // ajout dans la case
         }
     }
     public void retirerGameObject(GameObject gameObject, int x, int y)
@@ -110,7 +111,7 @@ public class Carte
         {
             return this.m_grille[x][y].getGameObject().getEtiquette();
         }
-        if (this.m_grille[x][y].getItem().size() > 0) // si il y a au moins un item
+        if (this.m_grille[x][y].getItem() != null) // si il y a un item
         {
             return " * ";
         }
@@ -126,6 +127,41 @@ public class Carte
     }
     public int getMaxX() {return this.m_max_x;}
     public int getMaxY() {return this.m_max_y;}
+
+    // les actions
+
+    public int seDeplacer(Carte carte, int x, int y, GameObject gameObject)
+    {
+
+        int[] postionGameObject =  gameObject.getPosition();
+        Case caseGameObject = carte.getCase(postionGameObject[0], postionGameObject[1]);
+
+        float distance = caseGameObject.calculDistance(carte.getCase(x,y));
+        if (distance <= (float)gameObject.getVitesse())
+        {
+            carte.retirerGameObject(gameObject ,postionGameObject[0], postionGameObject[1]);
+            carte.ajouterGameObject(gameObject, x, y);
+            return 0;
+        } else
+        {
+            System.out.println("Case hors de portée, choisissez une autre case");
+            return 1;
+        }// erreur distance trop grande
+
+
+    }
+
+    public void attaquer(GameObject attaquant, GameObject defenseur)
+    {
+
+    }
+
+    public void prendre (Personnage perso, Item item)
+    {
+        int oxy[] = perso.getPosition();
+        perso.getInventaire().addItem(this.getQuelItemEstIci(oxy[0], oxy[1]));
+        this.retirerItem(this.getQuelItemEstIci(oxy[0], oxy[1]), oxy[0], oxy[1]);
+    }
 
 
 }

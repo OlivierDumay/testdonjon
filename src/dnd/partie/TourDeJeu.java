@@ -2,13 +2,14 @@ package dnd.partie;
 
 import dnd.Asset;
 import dnd.gameobject.GameObject;
+import dnd.gameobject.personnage.Personnage;
 import dnd.objet.Item;
 import dnd.partie.donjon.Carte;
 import dnd.partie.donjon.Case;
 
 import java.util.List;
 
-import static dnd.affichage.Affichage.afficheActionPerso;
+import static dnd.affichage.Affichage.afficherActionPerso;
 
 public class TourDeJeu
 {
@@ -28,15 +29,16 @@ public class TourDeJeu
             switch (ordre.get(i).getType())
             {
                 case PERSONNAGE:
+                    Personnage p = (Personnage) ordre.get(i);
                     for (int nAction = 3; nAction >0; nAction--)
                     {
-                        afficherActionPerso(ordre.get(i),nAction);
+                        afficherActionPerso(carte, p, nAction);
                     }
                     break;
                 case MONSTRE:
                     for (int nAction = 3; nAction >0; nAction--)
                     {
-                        afficherActionMonstre(ordre.get(i),nAction);
+                        afficherActionMonstre(carte, ordre.get(i),nAction);
                     }
                     break;
             }
@@ -45,31 +47,7 @@ public class TourDeJeu
 
     }
 
-    void seDeplacer(Carte carte, int x, int y, GameObject gameObject)
-    {
 
-            int[] postionGameObject =  gameObject.getPosition();
-            Case caseGameObject = carte.getCase(postionGameObject[0], postionGameObject[1]);
-
-            float distance = caseGameObject.calculDistance(carte.getCase(x,y));
-            if (distance <= (float)gameObject.getVitesse())
-            {
-                carte.retirerGameObject(gameObject ,postionGameObject[0], postionGameObject[1]);
-                carte.ajouterGameObject(gameObject, x, y);
-            } else { ;}// erreur distance trop grande
-
-
-    }
-
-    void attaquer(GameObject attaquant, GameObject defenseur)
-    {
-
-    }
-
-    void prendre (GameObject gameObject, Item item)
-    {
-
-    }
 
 
 
