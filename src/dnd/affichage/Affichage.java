@@ -5,27 +5,177 @@ import dnd.Asset;
 import dnd.gameobject.GameObject;
 import dnd.gameobject.personnage.Inventaire;
 import dnd.gameobject.personnage.Personnage;
+import dnd.objet.Arme;
 import dnd.objet.Item;
 import dnd.partie.donjon.*;
 import java.util.Scanner;
 
-public class Affichage {
+public class Affichage
+{
+    public static void afficherTour(Carte carte, Personnage personnage, int n_tour, int n_donjon)
+    {
+        System.out.println("********************************************************************************\nDonjon " + n_donjon + ":");
+        // TODO : print le donjon et son numéro ici
 
-    // Methode d'affichage de la partie
+        System.out.println("                                    " +
+                personnage
+                        .getNom() +
+                " (" +
+                personnage.
+                        getRace().
+                        toString() +
+                " " +
+                personnage
+                        .getClasse()
+                        .toString() +
+                ")"); // TODO : afficher genré si carré
+
+        System.out.println("\n********************************************************************************");
+
+        System.out.println("Tour " + n_tour + ":");
+        // TODO : afficher les Assets sur la carte sous la forme d'une liste
+        System.out.println("    * Equipement   |   [ ] Obstacle  |");
+
+        String armure;
+        try
+        {
+            armure = personnage
+                    .getEquipement()
+                    .getArmure()
+                    .getNom();
+        }
+        catch (Exception e)
+        {
+            armure = " aucune";
+        }
+
+        String arme;
+        try
+        {
+            arme = personnage
+                    .getEquipement()
+                    .getArme()
+                    .getNom() +
+                    " (degat: " +
+                    personnage
+                            .getEquipement()
+                            .getArme()
+                            .getnbDe() +
+                    "d" +
+                    personnage
+                            .getEquipement()
+                            .getArme()
+                            .getnbFace() +
+                    ", portée: " +
+                    personnage
+                            .getEquipement()
+                            .getArme()
+                            .getPortee() +
+                    ")";
+        }
+        catch (Exception e)
+        {
+            arme = " aucune";
+        }
+
+        int nb_items_inventaire = personnage
+                .getInventaire()
+                .size();
+
+        String inventaire = "";
+
+        if (nb_items_inventaire > 0)
+        {
+            for (int i = 0 ; i < nb_items_inventaire ; i++)
+            {
+                inventaire += personnage
+                        .getInventaire()
+                        .getInventaire()
+                        .get(i)
+                        .getNom();
+                if (i < nb_items_inventaire - 1)
+                    inventaire += ", ";
+            }
+        }
+        else
+        {
+            inventaire = "";
+        }
+
+        System.out.println(personnage.getNom() +
+                "\n  Vie : " +
+                personnage.getPV() +
+                "/" + personnage.getPVMax() +
+                "\n  Armure : " +
+                armure +
+                "\n  Arme : " +
+                arme +
+                "\n  Inventaire : [" +
+                nb_items_inventaire +
+                "] " +
+                inventaire +
+                "\n  Force : " +
+                personnage
+                        .getCaracteristique()
+                        .getForce() +
+                "\n  Dextérité : " +
+                personnage
+                        .getCaracteristique()
+                        .getDexterite() +
+                "\n  Vitesse : " +
+                personnage
+                        .getCaracteristique()
+                        .getVitesse()
+        );
+    }
 
     public static void afficherCarte(Carte carte)
     {
-        int maxX = carte.getMaxX();
-        int maxY = carte.getMaxY();
-        for (int x = 0; x<maxX; x++)
+        int maxX = carte.getMaxX(); // Colonnes
+        int maxY = carte.getMaxY(); // Lignes
+
+        // 1. En-tête des colonnes (1, 2, 3, ...)
+        System.out.print("     ");
+        for (int x = 1; x <= maxX; x++)
         {
-            for (int y = 0; y<maxY; y++)
-            {
-                System.out.print(carte.getEtiquetteDeLaCase(x, y));
-            }
-        System.out.println();
+            System.out.printf("%-3d", x);
         }
+        System.out.println();
+
+        // 2. Ligne du haut
+        System.out.print("   *");
+        for (int x = 0; x < maxX * 3; x++)
+        {
+            System.out.print("-");
+        }
+        System.out.println("*");
+
+        // 3. Affichage des lignes
+        for (int y = 0; y < maxY; y++)
+        {
+            System.out.printf("%-3d|", y + 1);
+            for (int x = 0; x < maxX; x++)
+            {
+                String etiquette = carte.getEtiquetteDeLaCase(x, y);
+                System.out.printf("%-3s", etiquette);
+            }
+            System.out.println("|");
+        }
+
+        // 4. Ligne du bas
+        System.out.print("   *");
+        for (int x = 0; x < maxX * 3; x++)
+        {
+            System.out.print("-");
+        }
+        System.out.println("*");
+
+        // 5. Légende
+        System.out.println("    * Equipement   |   [ ] Obstacle  |");
     }
+
+
+
 
 
     // Methodes d'affichage de la création de la partie
@@ -137,9 +287,9 @@ public class Affichage {
         return res;
     }
 
-    public static void afficherEquipement(Asset personnage)
+    public static void afficherEquipement(Personnage personnage)
     {
-        Inventaire inventaire_perso = ((Personnage)personnage).getInventaire();
+        Inventaire inventaire_perso = personnage.getInventaire();
         for (int i = 0 ; i < inventaire_perso.getInventaire().size() ; i++)
         {
             Item current_item = inventaire_perso.getInventaire().get(i);

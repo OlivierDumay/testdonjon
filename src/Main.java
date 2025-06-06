@@ -28,10 +28,15 @@ public class Main
 //        {
 //            System.out.println(e.getMessage());
 //        }
-//        Affichage.afficherCarte(carte);
+//        Affichage.afficherCarte(carte);personnage_cast
 //        carte.retirerItem( item, 1, 2);
 //        System.out.println();
 //        Affichage.afficherCarte(carte);
+        Personnage muhammed = new Personnage("muhammed", EnumClasse.GUERRIER, EnumRace.HUMAIN);
+        Carte carte = new Carte(10, 10);
 
+        Action.equiper(muhammed, 1);
+        // Action.equiper(muhammed, 0);
+        Affichage.afficherTour(carte, muhammed, 1, 2);
     }
 }

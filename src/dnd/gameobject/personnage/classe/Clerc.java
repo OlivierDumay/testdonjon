@@ -7,4 +7,9 @@ public class Clerc extends Classe
     {
         return 16;
     }
+
+    @Override
+    public String toString() {
+        return "Clerc";
+    }
 }

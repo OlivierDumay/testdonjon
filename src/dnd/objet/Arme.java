@@ -23,14 +23,19 @@ public abstract class Arme extends Item
         this.m_portee = portee;
     }
 
-    protected int getnbDe()
+    public int getnbDe()
     {
         return this.m_nb_de;
     }
 
-    protected int getnbFace()
+    public int getnbFace()
     {
         return this.m_nb_face;
+    }
+
+    public int getPortee()
+    {
+        return this.m_portee;
     }
 
     public abstract void appliqueBonusArme();// pour arme lourde etc

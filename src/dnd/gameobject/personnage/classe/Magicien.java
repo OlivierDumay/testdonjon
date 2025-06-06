@@ -7,4 +7,9 @@ public class Magicien extends Classe
     {
         return 12;
     }
+
+    @Override
+    public String toString() {
+        return "Magicien";
+    }
 }

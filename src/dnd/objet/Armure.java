@@ -15,7 +15,7 @@ public abstract class Armure extends Item
         this.m_armure = armure;
     }
 
-    protected int getArmure()
+    public int getArmure()
     {
         return this.m_armure;
     }

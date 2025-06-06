@@ -7,4 +7,9 @@ public class Guerrier extends Classe
     {
         return 20;
     }
+
+    @Override
+    public String toString() {
+        return "Guerrier";
+    }
 }
