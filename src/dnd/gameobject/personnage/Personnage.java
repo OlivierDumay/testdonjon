@@ -56,7 +56,6 @@ public class Personnage implements GameObject, Asset
             // TODO : définir ici tous les trucs spécifiques (pv etc) puis ajouter des choses dans l'instanciation de la race
             case CLERC:
                 this.m_classe = new Clerc();
-                this.m_caracteristique = new Caracteristique(lancerDe(4, 4) + this.m_classe.bonusCreation() + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3); // TODO : olivier vérifie si c bien
                 this.m_equipement = new EquipementPersonnage();
                 this.m_inventaire.addItem(new ArmeCourante("Masse d'armes", 1, 6, 1));
                 this.m_inventaire.addItem(new ArmeADistance("Arbalète légère", 1, 8, 16));
@@ -64,7 +63,6 @@ public class Personnage implements GameObject, Asset
                 break;
             case GUERRIER:
                 this.m_classe = new Guerrier();
-                this.m_caracteristique = new Caracteristique(lancerDe(4, 4) + this.m_classe.bonusCreation() + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3);
                 this.m_equipement = new EquipementPersonnage();
                 this.m_inventaire.addItem(new ArmureLourde("Cotte de mailles", 11));
                 this.m_inventaire.addItem(new ArmeGuerre("Épée longue", 1, 8, 1));
@@ -72,14 +70,12 @@ public class Personnage implements GameObject, Asset
                 break;
             case MAGICIEN:
                 this.m_classe = new Magicien();
-                this.m_caracteristique = new Caracteristique(lancerDe(4, 4) + this.m_classe.bonusCreation() + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3);
                 this.m_equipement = new EquipementPersonnage();
                 this.m_inventaire.addItem(new ArmeCourante("Baton", 1, 6, 1));
                 this.m_inventaire.addItem(new ArmeADistance("Fronde", 1, 4, 6));
                 break;
             case ROUBLARD:
                 this.m_classe = new Roublard();
-                this.m_caracteristique = new Caracteristique(lancerDe(4, 4) + this.m_classe.bonusCreation() + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3, lancerDe(4, 4) + 3);
                 this.m_equipement = new EquipementPersonnage();
                 this.m_inventaire.addItem(new ArmeGuerre("Rapière", 1, 8, 1));
                 this.m_inventaire.addItem(new ArmeADistance("Arc court", 1, 6, 16));
@@ -108,6 +104,8 @@ public class Personnage implements GameObject, Asset
             default:
                 throw new IllegalArgumentException("Erreur : race invalide !");
         }
+
+        this.m_caracteristique = new Caracteristique(this.m_classe.bonusCreation(), lancerDe(4, 4) + 3 + this.m_race.bonusForce(), lancerDe(4, 4) + 3 + this.m_race.bonusDexterite(), lancerDe(4, 4) + 3 + this.m_race.bonusVitesse(), lancerDe(4, 4) + 3 + this.m_race.bonusInitiative());
 
         //Init position
         this.m_position = new int[2];
@@ -151,9 +149,34 @@ public class Personnage implements GameObject, Asset
         return this.m_inventaire;
     }
 
+    public String getNom()
+    {
+        return this.m_nom;
+    }
+
+    public int getPVMax()
+    {
+        return this.m_caracteristique.getPVMax();
+    }
+
     public EquipementPersonnage getEquipement()
     {
         return this.m_equipement;
+    }
+
+    public Caracteristique getCaracteristique()
+    {
+        return this.m_caracteristique;
+    }
+
+    public Race getRace()
+    {
+        return this.m_race;
+    }
+
+    public Classe getClasse()
+    {
+        return this.m_classe;
     }
 
     public void getString ()

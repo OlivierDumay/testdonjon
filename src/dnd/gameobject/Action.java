@@ -11,10 +11,9 @@ import dnd.objet.Item;
 
 public class Action
 {
-    public static void equiper(Asset personnage, int n_equipement)
+    public static void equiper(Personnage personnage, int n_equipement)
     {
-        Personnage personnage_cast = (Personnage) personnage;
-        Inventaire inventaire_perso = personnage_cast.getInventaire();
+        Inventaire inventaire_perso = personnage.getInventaire();
 
         if (n_equipement < 0 || n_equipement >= inventaire_perso.size())
             throw new IllegalArgumentException("Erreur : item inexistant dans l'inventaire !");
@@ -25,10 +24,10 @@ public class Action
             switch (item.getType())
             {
                 case ARME:
-                    personnage_cast.getEquipement().equiperArme((Arme) item);
+                    personnage.getEquipement().equiperArme((Arme) item);
                     break;
                 case ARMURE:
-                    personnage_cast.getEquipement().equiperArmure((Armure) item);
+                    personnage.getEquipement().equiperArmure((Armure) item);
                     break;
                 default:
                     throw new IllegalArgumentException("Erreur : cet item n'est ni une arme ni une armure !");
@@ -42,11 +41,10 @@ public class Action
     }
 
 
-    public static void desequiper(Asset personnage, Type type)
+    public static void desequiper(Personnage personnage, Type type)
     {
-        Personnage personnage_cast = (Personnage)personnage;
-        Inventaire inventaire_perso = personnage_cast.getInventaire();
-        EquipementPersonnage equipement_perso = personnage_cast.getEquipement();
+        Inventaire inventaire_perso = personnage.getInventaire();
+        EquipementPersonnage equipement_perso = personnage.getEquipement();
 
         switch (type)
         {
@@ -64,10 +62,5 @@ public class Action
                 // should never occur
                 throw new IllegalArgumentException("Erreur : le type d'équipement est invalide !");
         }
-    }
-
-    public static void deplacer(Asset personnage)
-    {
-        Personnage personnage_cast = (Personnage)personnage;
     }
 }

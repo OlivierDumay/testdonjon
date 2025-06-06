@@ -3,7 +3,7 @@ package dnd.gameobject;
 public class Caracteristique
 {
     // class members
-    private final int m_PVmax;
+    private final int m_pvmax;
     private int m_pv;
     private int m_force;
     private int m_dexterite;
@@ -16,7 +16,7 @@ public class Caracteristique
         if (!(pv > 0 && force > 0 && dexterite > 0 && vitesse > 0 && initiative > 0))
             throw new IllegalArgumentException("Les caractéristiques doivent être supérieures à 0");
 
-        this.m_PVmax = pv;
+        this.m_pvmax = pv;
         this.m_pv = pv;
         this.m_force = force;
         this.m_dexterite = dexterite;
@@ -44,6 +44,10 @@ public class Caracteristique
         return this.m_vitesse;
     }
 
+    public int getPVMax()
+    {
+        return this.m_pvmax;
+    }
     public void subPV(int pv)
     {
         if (pv < 0 || pv > getPV())

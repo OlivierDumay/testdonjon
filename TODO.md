@@ -4,14 +4,14 @@
 - [x] : Classe dé
 - [ ] : Compléter les classes avec les méthodes qui manquent
 - [x] : Bouger Initiative
-- [ ] : Classe equipement, mettre getArme(), getArmure()
+- [x] : Classe equipement, mettre getArme(), getArmure()
 - [x] : Faire les étiquettes d'affichage, ou les mettres? * pour les équipement?
 - [x] : methode getEtiqeutte() dans en  tité
-- [ ] : ou mettre m_ordre? tour ou partie?
+- [x] : ou mettre m_ordre? tour ou partie?
 - [x] : creer package partie
 - [ ] : signature de methode d'interface dans classe interface?
-- [ ] : mettre en static plein de truc, quoiestqui, quiestla, 
-- [ ] : changer nom package objet par objetDeJeu
+~~- [ ] : mettre en static plein de truc, quoiestqui, quiestla,~~ Obsolète
+~~- [x] : changer nom package objet par objetDeJeu~~ Obsolète
 - [ ] : faire des classes pour l'affichage, pour les différentes partie de l'affichage
 - [ ] : refaire les relation au propre
 - [ ] : comment on recupere les bonus des classes/race
