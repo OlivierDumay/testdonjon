@@ -41,4 +41,5 @@ public abstract class Arme extends Item
     public abstract void appliqueBonusArme();// pour arme lourde etc
     public abstract int jetDegat();
 
+    public abstract int getBonusAttaque(int force, int dex);
 }

@@ -40,6 +40,7 @@ finir affichage
 	faire afficheCreaItem
 	x faire afficherCommentaire
 	faire afficherActionMonstre
+	faire un affichage des lancé de dés (juste lancer undes appuyer sur une touche)
 
 ajouter des action dans afficherActionPerso	
 

@@ -134,11 +134,6 @@ public class Personnage implements GameObject, Asset
         return m_type;
     }
 
-    public int getPV()
-    {
-        return this.m_caracteristique.getPV();
-    }
-
     public int getVitesse()
     {
         return this.m_caracteristique.getVitesse();
@@ -177,6 +172,49 @@ public class Personnage implements GameObject, Asset
     public Classe getClasse()
     {
         return this.m_classe;
+    }
+
+    public int getPortee()
+    {
+        return this.m_equipement.getArme().getPortee();
+    }
+
+    public int[] getAttaque()
+    {
+        int[] retour = {0,0};
+        retour[0] = this.m_equipement.getArme().getnbDe();
+        retour[1] = this.m_equipement.getArme().getnbFace();
+        return retour;
+
+    }
+
+    public int getArmure()
+    {
+        return this.getEquipement().getArmure().getArmure();
+    }
+
+    public int getBonusAttaque()
+    {
+        return this.m_equipement.getArme().getBonusAttaque(this.m_caracteristique.getForce(), this.m_caracteristique.getDexterite());
+    }
+
+    public int getPV()
+    {
+        return this.m_caracteristique.getPV();
+    }
+
+    public boolean setPV(int pv)
+    {
+        this.m_caracteristique.setPV(pv);
+        return this.testEtatVie();
+
+    }
+
+    public boolean testEtatVie()
+    {
+        if (this.m_caracteristique.getPV()<=0)
+        {return false;}
+        return true;
     }
 
     public void getString ()

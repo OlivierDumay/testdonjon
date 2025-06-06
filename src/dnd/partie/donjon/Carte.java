@@ -1,6 +1,7 @@
 package dnd.partie.donjon;
 
 import dnd.Asset;
+import dnd.des.De;
 import dnd.gameobject.*;
 import dnd.gameobject.personnage.Personnage;
 import dnd.objet.Item;
@@ -130,17 +131,17 @@ public class Carte
 
     // les actions
 
-    public int seDeplacer(Carte carte, int x, int y, GameObject gameObject)
+    public int seDeplacer(int x, int y, GameObject gameObject)
     {
 
         int[] postionGameObject =  gameObject.getPosition();
-        Case caseGameObject = carte.getCase(postionGameObject[0], postionGameObject[1]);
+        Case caseGameObject = this.getCase(postionGameObject[0], postionGameObject[1]);
 
-        float distance = caseGameObject.calculDistance(carte.getCase(x,y));
+        float distance = caseGameObject.calculDistance(this.getCase(x,y));
         if (distance <= (float)gameObject.getVitesse())
         {
-            carte.retirerGameObject(gameObject ,postionGameObject[0], postionGameObject[1]);
-            carte.ajouterGameObject(gameObject, x, y);
+            this.retirerGameObject(gameObject ,postionGameObject[0], postionGameObject[1]);
+            this.ajouterGameObject(gameObject, x, y);
             return 0;
         } else
         {
@@ -151,9 +152,48 @@ public class Carte
 
     }
 
-    public void attaquer(GameObject attaquant, GameObject defenseur)
+    public int attaquer(GameObject attaquant, GameObject defenseur)
     {
+        // retour:
+        //      0 si l'attaque est réussie et le defenseur est encore vivant
+        //      1 si l'attaque est ratée
+        //      2 si le défenseur est mort
+        //      3 si cible hors de portée
 
+
+        // test portée
+        int[] postionAttaquant =  attaquant.getPosition();
+        int[] postionDefenseur =  defenseur.getPosition();
+        Case caseAttaquant = this.getCase(postionAttaquant[0], postionAttaquant[1]);
+        Case caseDefenseur = this.getCase(postionDefenseur[0], postionDefenseur[1]);
+
+        float distance = caseAttaquant.calculDistance(caseDefenseur);
+        if (distance >= (float)attaquant.getPortee()) // si distance est plus grande que la portée de l'attaquant
+        {
+            return 3;
+        }
+
+        // l'attaque
+
+        int resultatDeAttaque = De.lancerDe(1,20);
+        int armureDefenseur = defenseur.getArmure();
+        int bonusAttaque = attaquant.getBonusAttaque();
+
+        if (resultatDeAttaque + bonusAttaque >= armureDefenseur)
+        {
+            // attaque réussie, application des dégats
+
+            int[] deDegat = attaquant.getAttaque();
+            int resultatDegat = De.lancerDe(deDegat[0],deDegat[1]);
+
+            if (!defenseur.setPV(defenseur.getPV() - resultatDegat)) // si renvoie faux, le defenseur est mort
+            {
+                return 2; //le defenseur est mort
+            }
+            else {return 0;}  //l'attaque est réussie et le defenseur est encore vivant
+
+        }
+        else {return 1;} // l'attaque a échoué
     }
 
     public void prendre (Personnage perso, Item item)

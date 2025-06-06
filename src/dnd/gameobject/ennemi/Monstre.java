@@ -78,4 +78,26 @@ public class Monstre implements GameObject, Asset
     {
         return this.m_caracteristique.getVitesse();
     }
+
+    public int getArmure()
+    {
+        return this.m_classeArmure;
+    }
+
+    public int getPortee() { return 1;}
+
+    public int[] getAttaque()
+    {
+        int[] retour = {0,0};
+        retour[0] = this.m_attaque[0];
+        retour[1] = this.m_attaque[1];
+        return retour;
+    }
+
+    public int getBonusAttaque() {return this.m_caracteristique.getForce();}
+
+    public int getPV()
+    {
+        return this.m_caracteristique.getPV();
+    }
 }

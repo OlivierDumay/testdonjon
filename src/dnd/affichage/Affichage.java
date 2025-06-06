@@ -274,8 +274,41 @@ public class Affichage
             cible = carte.getQuelGameObjectEstIci(x, y);
         }
 
+        int retour;
+        retour = carte.attaquer(gameObject, cible);
+        while (retour != -1)
+        {
+            switch (retour)
+            {
+                case 0 : // attaque est réussie et le defenseur est encore vivant
 
-        carte.attaquer(gameObject, cible);
+                case 1 : // attaque est ratée
+
+                case 2 : // le défenseur est mort
+
+                case 3 : // cible hors de portée
+                    System.out.println("Cible hors de portée, choisissez en une case. (Votre portée :  " + gameObject.getPortee() + ")\n x: ");
+                    x = scanner.nextInt();
+                    while (x < 0 || x > carte.getMaxX())
+                    {
+                        System.out.println("Indiquer une valeur entre 0 et " + carte.getMaxX());
+                        x = scanner.nextInt();
+                    }
+                    System.out.println("y: ");
+                    y = scanner.nextInt();
+                    while (y < 0 || y > carte.getMaxY())
+                    {
+                        System.out.println("Indiquer une valeur entre 0 et " + carte.getMaxY());
+                        y = scanner.nextInt();
+                    }
+                    cible = carte.getQuelGameObjectEstIci(x, y);
+                    retour = carte.attaquer(gameObject, cible);
+                    break;
+            }
+
+
+        }
+
         scanner.close();
     }
 
@@ -300,7 +333,7 @@ public class Affichage
 
         // appel à seDeplacer
         int retour = 1;
-        retour = carte.seDeplacer(carte, x, y, gameObject);
+        retour = carte.seDeplacer(x, y, gameObject);
         while (retour == 1)
         {
             System.out.println("x: ");
@@ -317,7 +350,7 @@ public class Affichage
                 System.out.println("Indiquer une valeur entre 0 et " + carte.getMaxY());
                 y = scanner.nextInt();
             }
-            retour = carte.seDeplacer(carte, x, y, gameObject);
+            retour = carte.seDeplacer(x, y, gameObject);
         }
 
         System.out.println(gameObject.getNom() + " s'est déplacé à la case " + x + ", " + y);
