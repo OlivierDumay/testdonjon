@@ -87,4 +87,10 @@ public class Case
     {
         return ((this.m_x == other.getX()) && (this.m_y == other.getY()));
     }
+
+
+    public String stringItem()
+    {
+        return this.m_item.toString();
+    }
 }

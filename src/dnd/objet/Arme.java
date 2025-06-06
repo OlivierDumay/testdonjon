@@ -42,4 +42,10 @@ public abstract class Arme extends Item
     public abstract int jetDegat();
 
     public abstract int getBonusAttaque(int force, int dex);
+
+    @Override
+    public String toString()
+    {
+        return (super.toString() + " degat:" + this.m_nb_de + "d" + this.m_nb_face + " portée:" + this.m_portee);
+    }
 }

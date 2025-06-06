@@ -100,4 +100,18 @@ public class Monstre implements GameObject, Asset
     {
         return this.m_caracteristique.getPV();
     }
+
+    public boolean setPV(int pv)
+    {
+        this.m_caracteristique.setPV(pv);
+        return this.testEtatVie();
+
+    }
+
+    public boolean testEtatVie()
+    {
+        if (this.m_caracteristique.getPV()<=0)
+        {return false;}
+        return true;
+    }
 }

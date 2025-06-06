@@ -3,6 +3,7 @@ package dnd.affichage;
 
 import dnd.Asset;
 import dnd.gameobject.GameObject;
+import dnd.gameobject.ennemi.Monstre;
 import dnd.gameobject.personnage.Inventaire;
 import dnd.gameobject.personnage.Personnage;
 import dnd.objet.Arme;
@@ -173,59 +174,7 @@ public class Affichage
         );
     }
 
-    public static void afficherActionPerso(Carte carte, Personnage perso, int nAction)
-    {
-        // ajouter action, voir quel est l'object sur cette case
 
-        /*
-        "Caelynn il vous reste 2 actions que souhaitez vous faire ?
-                - laisser le maître du jeu commenter l'action précédente (mj <texte>)
-            - commenter action précédente (com <texte>)
-            - attaquer (att <Case>)
-            - se déplacer (dep <Case>)
-            - s'équiper (equ <numero equipement>)"
-         */
-        Scanner scanner = new Scanner(System.in);
-        System.out.print(perso.getNom() + " il vous reste " + nAction + " action, que souhaitez vous faire? Entrez le nuemro de l'action que vous volez réaliser\n" +
-                "\t\t\t 1. laisser le maître du jeu commenter l'action précédente (ne consomme pas d'action)\n" +
-                "\t\t\t 2. commenter action précédente (ne consomme pas d'action)\n" +
-                "\t\t\t 3. Attaquer\n" +
-                "\t\t\t 4. Vous déplacer\n" +
-                "\t\t\t 5. S'équiper\n" +
-                "\t\t\t 6. Prendre un objet par terre");
-        int reponse = scanner.nextInt();
-        while (reponse < 1 || reponse > 6)
-        {
-            System.out.println("Tapez un chiffre entre 1 et 6");
-            reponse = scanner.nextInt();
-        }
-        switch (reponse)
-        {
-            case 1:
-                afficherCommentaire("Maitre du Jeu - ");
-                afficherActionPerso(carte, perso, nAction);
-                break;
-            case 2:
-                afficherCommentaire(perso.getNom() + " - ");
-                afficherActionPerso(carte, perso, nAction);
-                break;
-            case 3:
-                afficherAttaquer(carte, perso);
-                break;
-            case 4:
-                afficherSeDeplacer(carte, perso);
-                break;
-            case 5:
-                afficherSEquiper(carte, perso);
-                break;
-            case 6:
-                afficherPrendre(carte, perso);
-                break;
-            default:
-                break;
-        }
-        scanner.close();
-    }
 
     public static void afficherCommentaire(String debut)
     {
@@ -233,6 +182,35 @@ public class Affichage
         System.out.println("Entrer votre commentaire sans retour à la ligne, et appuyer sur entrer");
         String comment = scanner.nextLine();
         System.out.println(debut + comment);
+        scanner.close();
+    }
+
+    public static void afficherObjetSurCase(Carte carte)
+    {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Sur quelle case est l'objet qui vous interrese?\n x: ");
+        int x = scanner.nextInt();
+        while (x < 0 || x > carte.getMaxX())
+        {
+            System.out.println("Indiquer une valeur entre 0 et " + carte.getMaxX());
+            x = scanner.nextInt();
+        }
+        System.out.println("y: ");
+        int y = scanner.nextInt();
+        while (y < 0 || y > carte.getMaxY())
+        {
+            System.out.println("Indiquer une valeur entre 0 et " + carte.getMaxY());
+            y = scanner.nextInt();
+        }
+
+        if (carte.getQuelItemEstIci(x,y) != null)
+        {
+            carte.getQuelItemEstIci(x,y).toString();
+        }
+        else
+        {
+            System.out.println("Il n'y as rien dans cette case");
+        }
         scanner.close();
     }
 
@@ -485,6 +463,98 @@ public class Affichage
 
         System.out.println( perso.getNom() + " met dans son inventaire " + carte.getQuelItemEstIci(oxy[0], oxy[1]).getNom());
 
+    }
+
+    public static void afficherActionPerso(Carte carte, Personnage perso, int nAction)
+    {
+        // ajouter action, voir quel est l'object sur cette case
+
+        /*
+        "Caelynn il vous reste 2 actions que souhaitez vous faire ?
+                - laisser le maître du jeu commenter l'action précédente (mj <texte>)
+            - commenter action précédente (com <texte>)
+            - attaquer (att <Case>)
+            - se déplacer (dep <Case>)
+            - s'équiper (equ <numero equipement>)"
+         */
+        Scanner scanner = new Scanner(System.in);
+        System.out.print(perso.getNom() + " il vous reste " + nAction + " action, que souhaitez vous faire? Entrez le nuemro de l'action que vous volez réaliser\n" +
+                "\t\t\t 1. laisser le maître du jeu commenter l'action précédente (ne consomme pas d'action)\n" +
+                "\t\t\t 2. commenter action précédente (ne consomme pas d'action)\n" +
+                "\t\t\t 3. Voir les caracteristique d'un objet sur une case (ne consomme pas d'action)\n" +
+                "\t\t\t 4. Attaquer\n" +
+                "\t\t\t 5. Vous déplacer\n" +
+                "\t\t\t 6. S'équiper\n" +
+                "\t\t\t 7. Prendre un objet par terre");
+        int reponse = scanner.nextInt();
+        while (reponse < 1 || reponse > 7)
+        {
+            System.out.println("Tapez un chiffre entre 1 et 7");
+            reponse = scanner.nextInt();
+        }
+        switch (reponse)
+        {
+            case 1:
+                afficherCommentaire("Maitre du Jeu - ");
+                afficherActionPerso(carte, perso, nAction);
+                break;
+            case 2:
+                afficherCommentaire(perso.getNom() + " - ");
+                afficherActionPerso(carte, perso, nAction);
+                break;
+            case 3:
+                afficherObjetSurCase(carte);
+                break;
+            case 4:
+                afficherAttaquer(carte, perso);
+                break;
+            case 5:
+                afficherSeDeplacer(carte, perso);
+                break;
+            case 6:
+                afficherSEquiper(carte, perso);
+                break;
+            case 7:
+                afficherPrendre(carte, perso);
+                break;
+            default:
+                break;
+        }
+        scanner.close();
+    }
+
+    public static void afficherActionMonstre(Carte carte, Monstre monstre, int nAction)
+    {
+        // ajouter action, voir quel est l'object sur cette case
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print(monstre.getNom() + " il vous reste " + nAction + " action, que souhaitez vous faire? Entrez le numero de l'action que vous voulez réaliser\n" +
+                "\t\t\t 1. commenter action précédente (ne consomme pas d'action)\n" +
+                "\t\t\t 2. Attaquer\n" +
+                "\t\t\t 3. Vous déplacer\n");
+
+        int reponse = scanner.nextInt();
+        while (reponse < 1 || reponse > 6)
+        {
+            System.out.println("Tapez un chiffre entre 1 et 6");
+            reponse = scanner.nextInt();
+        }
+        switch (reponse)
+        {
+            case 1:
+                afficherCommentaire("Maitre du Jeu - ");
+                afficherActionMonstre(carte, monstre, nAction);
+                break;
+            case 2:
+                afficherAttaquer(carte, monstre);
+                break;
+            case 3:
+                afficherSeDeplacer(carte, monstre);
+                break;
+            default:
+                break;
+        }
+        scanner.close();
     }
 
     // Methodes d'affichage de la création de la partie

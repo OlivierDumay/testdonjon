@@ -2,6 +2,7 @@ package dnd.partie;
 
 import dnd.Asset;
 import dnd.gameobject.GameObject;
+import dnd.gameobject.ennemi.Monstre;
 import dnd.gameobject.personnage.Personnage;
 import dnd.objet.Item;
 import dnd.partie.donjon.Carte;
@@ -9,6 +10,7 @@ import dnd.partie.donjon.Case;
 
 import java.util.List;
 
+import static dnd.affichage.Affichage.afficherActionMonstre;
 import static dnd.affichage.Affichage.afficherActionPerso;
 
 public class TourDeJeu
@@ -36,9 +38,10 @@ public class TourDeJeu
                     }
                     break;
                 case MONSTRE:
+                    Monstre m = (Monstre) ordre.get(i);
                     for (int nAction = 3; nAction >0; nAction--)
                     {
-                        afficherActionMonstre(carte, ordre.get(i),nAction);
+                        afficherActionMonstre(carte, m, nAction);
                     }
                     break;
             }

@@ -21,4 +21,10 @@ public abstract class Armure extends Item
     }
 
     public abstract void appliqueBonusArmure();
+
+    @Override
+    public String toString()
+    {
+        return (super.toString() + " Classe d'armure:" + this.m_armure);
+    }
 }
