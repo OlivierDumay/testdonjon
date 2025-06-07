@@ -1,20 +1,13 @@
 package dnd.partie;
 
-import dnd.Asset;
-import dnd.Obstacle;
-import dnd.affichage.*;
 import dnd.affichage.Affichage;
-import dnd.gameobject.GameObject;
 import dnd.gameobject.personnage.*;
 import dnd.gameobject.personnage.race.EnumRace; // ??? ne reconnait pas enumrace sans cet import 
 import dnd.gameobject.personnage.classe.*;
-import dnd.partie.*;
 import dnd.partie.donjon.*;
 
 
-
-
-import java.util.List;
+import static dnd.affichage.Affichage.*;
 
 // partie contient l'instance de la carte, de l'ordre de jeu
 public class Partie {
@@ -31,8 +24,17 @@ public class Partie {
         Ordre ordre = new Ordre();
 
         //// init monstre et equipement sur la map,
-        int[] retCreaMJ = new int[3];  // stock retour de afficherCreaMonstreObjet
-                                            // 1er int: code, 2eme et 3eme : position x,y
+        int[] retCreaMJ = new int[3];
+        // stock retour de afficherCreaMonstreObjet
+        // 1er int: code, 2eme et 3eme : position x,y
+        //
+        //              0 : fin de creation monstre etc
+        //              1: veut creer monstre
+        //              2: veut creer un equipement
+        //              3: veut placer un obstacle
+        //              4: placer un monstre,
+        //              5: placer un equipement
+        //
         retCreaMJ[0] = 1;// init à != 0
         while (retCreaMJ[0] !=0)
         {
@@ -46,9 +48,7 @@ public class Partie {
                 case 0 :
                     break;
                 case 1:
-                    GameObject monstre = Affichage.afficheCreaMonstre();
-                    carte.ajouterGameObject(monstre, retCreaMJ[1], retCreaMJ[2]);
-                    ordre.ajouterAsset(monstre);
+                    Affichage.afficheCreaMonstre();
                     break;
                 case 2:
                     carte.ajouterItem(Affichage.afficheCreaEquipement(), retCreaMJ[1], retCreaMJ[2]);
@@ -57,6 +57,11 @@ public class Partie {
                 case 3:
                     carte.ajouterObstacle(retCreaMJ[1], retCreaMJ[2]);
                     break;
+                case 4:
+                    AffichageAjoutMonstreCarte(carte, ordre);
+
+
+                case 5:
             }
         }
 
@@ -103,7 +108,7 @@ public class Partie {
         }
         this.perso = new Personnage(crperso[1], classe, race);
         //ajout de perso dans ordre
-        ordre.ajouterAsset(perso);
+        ordre.ajouterGameObject(perso);
         int[] emplacement = new int[2];
         emplacement = Affichage.afficheDemandeEmplacement(carte);
         carte.ajouterGameObject(perso, emplacement[0],emplacement[1]);
@@ -112,14 +117,79 @@ public class Partie {
         ordre.triage();
 
         //// Déroulement de la partie:
-        int nbTour = 0;
-        while (perso.getPV()<1)// tant que le perso est vivant ou un monstre est vivant: un lance un nouveau tour
+        deroulementPartie(ordre, carte);
+
+
+
+    }
+
+
+    public void deroulementPartie (Ordre ordre, Carte carte)
+    {
+        int nbDonjon = 1;
+        int retourDonjon = 0;
+        boolean continuer = true;
+
+        while (continuer)
         {
-            nbTour++;
-            TourDeJeu tour = new TourDeJeu(carte, (List<Asset>) ordre, nbTour);
+            retourDonjon = deroulementDonjon(ordre, carte, nbDonjon);
+            switch (retourDonjon)
+            {
+                case 0 :
+                    if (nbDonjon == 3)
+                    {
+                        affichePartieTerminee();
+                    }
+                    nbDonjon++;
+                    int[] xyMax = new int [2];
+                    xyMax = afficheDonjonSuivant(nbDonjon);
+                    carte = new Carte(xyMax[0], xyMax[1]);
+                    ordre = new Ordre();
+
+                    break;
+                case 1 :
+                    afficheFinDePartie();
+                    continuer = false;
+                    break;
+            }
         }
 
     }
+
+
+    public int deroulementDonjon (Ordre ordre, Carte carte, int nbDonjon)
+        {
+            // retour
+            //  0 tous les monstres sont mort, donjon suivant
+            //  1 tous les perso mort, fin de la partie
+
+            int nbTour = 0;
+            while (true)
+            {
+                switch (ordre.testFinDePartie())
+                {
+                    // retour de testFinDePartie
+                    //  0 des monstres et des perso encore en vie, la partie continue
+                    //  1 tous les perso mort, fin de la partie
+                    //  2 tous les monstres sont mort, donjon suivant
+                    case 0 :
+                        nbTour++;
+                        TourDeJeu tour = new TourDeJeu(carte, ordre.m_ordre , nbTour);
+                        break;
+                    case 1 :
+                        return 0;
+                    case 2 :
+                        return 1;
+                    default:
+                        break;
+                }
+            }
+
+        }
+
+
+
+
 /*
     // pour lancer une partie par défaut
     public Partie (int maxX, int maxY, EnumPartie defaut)

@@ -15,7 +15,7 @@ import static dnd.Type.MONSTRE;
 public class Monstre implements GameObject, Asset
 {
     // class members
-    private static int m_current_id = 0;
+    private int m_current_id;
     private int m_id;
     private String m_espece;
     private int[] m_attaque;
@@ -27,7 +27,7 @@ public class Monstre implements GameObject, Asset
 
     // ctor
     // voir TODO.md
-    public Monstre(String espece, int nDe, int nFace, int armure, int pv, int vitesse, String etiquette)
+    public Monstre(String espece, int nDe, int nFace, int armure, int pv, int vitesse, String etiquette,int id)
     {
         if (espece.isEmpty())
             throw new IllegalArgumentException("Erreur : le nom du monstre ne doit pas être vide");
@@ -37,9 +37,9 @@ public class Monstre implements GameObject, Asset
         {
             throw new IllegalArgumentException("Erreur: l'etiquette du monstre doit faire entre 1 et 3 caractères");
         }
-        this.m_id = m_current_id;
-        m_current_id++;
+        this.m_id = id;
         this.m_espece = espece;
+        this.m_attaque = new int[2];
         this.m_attaque[0] = nDe;
         this.m_attaque[1] = nFace;
         this.m_classeArmure = armure;
@@ -67,6 +67,8 @@ public class Monstre implements GameObject, Asset
         this.m_position[1] = y;
     }
 
+    public String getNom() {return (m_espece+m_id);}
+
     public int[] getPosition()
     {
         return this.m_position;
@@ -76,4 +78,49 @@ public class Monstre implements GameObject, Asset
     {
         return this.m_caracteristique.getVitesse();
     }
+
+    public int getArmure()
+    {
+        return this.m_classeArmure;
+    }
+
+    public int getPortee() { return 1;}
+
+    public int[] getAttaque()
+    {
+        int[] retour = {0,0};
+        retour[0] = this.m_attaque[0];
+        retour[1] = this.m_attaque[1];
+        return retour;
+    }
+
+    public int getBonusAttaque() {return this.m_caracteristique.getForce();}
+
+    public int getPV()
+    {
+        return this.m_caracteristique.getPV();
+    }
+
+    public boolean setPV(int pv)
+    {
+        this.m_caracteristique.setPV(pv);
+        return this.testEtatVie();
+
+    }
+
+    public boolean testEtatVie()
+    {
+        if (this.m_caracteristique.getPV()<=0)
+        {return false;}
+        return true;
+    }
+
+    public int getAttaque1()
+    {return this.m_attaque[0];}
+
+    public int getAttaque2()
+    {return this.m_attaque[1];}
+
+    public int getID()
+    {return this.m_id;}
 }

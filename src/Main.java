@@ -2,6 +2,7 @@ import dnd.*;
 import dnd.gameobject.personnage.Personnage;
 import dnd.gameobject.personnage.classe.EnumClasse;
 import dnd.gameobject.personnage.race.EnumRace;
+import dnd.partie.Partie;
 import dnd.partie.donjon.Carte;
 import dnd.affichage.Affichage;
 import dnd.gameobject.Action;
@@ -32,11 +33,17 @@ public class Main
 //        carte.retirerItem( item, 1, 2);
 //        System.out.println();
 //        Affichage.afficherCarte(carte);
+        /*
         Personnage muhammed = new Personnage("muhammed", EnumClasse.GUERRIER, EnumRace.HUMAIN);
         Carte carte = new Carte(10, 10);
 
         Action.equiper(muhammed, 1);
         // Action.equiper(muhammed, 0);
         Affichage.afficherTour(carte, muhammed, 1, 2);
+        */
+
+        Partie partie = new Partie(10, 10);
+        Affichage.fermerScanner();
     }
+
 }

@@ -57,6 +57,6 @@ public class Item implements Asset
     @Override
     public String toString()
     {
-        return "Item()"; // TODO : à compléter
+        return (this.m_nom);
     }
 }

@@ -22,5 +22,9 @@ public class ArmeGuerre extends Arme
         return lancerDe(super.getnbDe(), super.getnbFace()); // quand perso attaque : perso.attaque(case, this.armeEquipee)
     }
 
+    public int getBonusAttaque(int force, int dex)
+    {
+        return force;
+    }
 
 }

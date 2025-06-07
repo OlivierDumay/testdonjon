@@ -12,7 +12,7 @@ public class Case
     // class members
     private final int m_x;
     private final int m_y;
-    private ArrayList<Item> m_item;
+    private Item m_item;
     private GameObject m_gameObject;
     private boolean m_obstacle;
 
@@ -24,22 +24,20 @@ public class Case
             throw new IllegalArgumentException("Erreur : la position ne peut pas être inférieur à zero");
         this.m_x = x;
         this.m_y = y;
-        this.m_item = new ArrayList<>();
+        this.m_item = null;
         this.m_gameObject = null;
         this.m_obstacle = false;
     }
 
 
-    public ArrayList<Item> getItem() { return this.m_item;}
-    public String getNomsItem()
+    public Item getItem() { return this.m_item;}
+    public void setItem(Item item) { this.m_item = item;}
+    public boolean equalsItem (Item item1, Item item2)
     {
-        String ret = "";
-        for (Item item : this.m_item)
-        {
-            ret += item.toString();
-        }
-        return ret;
+        return (item1.getNom().equals(item2.getNom()) &&
+                item1.getType().equals(item2.getType()));
     }
+
     public GameObject getGameObject() { return this.m_gameObject;}
     public void setGameObject(GameObject gameObject) { this.m_gameObject = gameObject;}
     public boolean getObstacle() { return this.m_obstacle;}
@@ -51,7 +49,7 @@ public class Case
         return ("m_x= " + this.m_x +
                 ", m_y= " + this.m_y +
                 ", m_gameObject= " + this.m_gameObject.toString() +
-                ", m_item= " + this.getNomsItem() +
+                ", m_item= " + this.getItem().getNom() +
                 ", m_obstacle = " + (this.m_obstacle ? "oui" : "non"));
     }
 
@@ -88,5 +86,11 @@ public class Case
     public boolean equalsPosition(Case other)
     {
         return ((this.m_x == other.getX()) && (this.m_y == other.getY()));
+    }
+
+
+    public String stringItem()
+    {
+        return this.m_item.toString();
     }
 }
