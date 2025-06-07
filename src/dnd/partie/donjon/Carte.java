@@ -97,9 +97,9 @@ public class Carte
         {throw new IllegalArgumentException("Erreur : le gameObject ne peut pas être null");}
         if (this.m_grille[x][y].getGameObject() == gameObject) // test si l'objet a enlever est bien present
         {
-            this.m_grille[x][y].setGameObject(gameObject); // ajout dans la case
+            this.m_grille[x][y].setGameObject(null); // ajout dans la case
             Case cse = this.m_grille[x][y];
-            this.m_emplacementObjet.remove(gameObject, cse); // ajout dans la hashmap m_emplacementObjet
+            this.m_emplacementObjet.remove(gameObject, cse); // supression dans la hashmap m_emplacementObjet
         }
 
     }
@@ -168,7 +168,8 @@ public class Carte
         Case caseDefenseur = this.getCase(postionDefenseur[0], postionDefenseur[1]);
 
         float distance = caseAttaquant.calculDistance(caseDefenseur);
-        if (distance >= (float)attaquant.getPortee()) // si distance est plus grande que la portée de l'attaquant
+        System.out.println("Carte.attaquer: test: distance: " + distance + ", portée: " +attaquant.getPortee());
+        if (distance > (float)attaquant.getPortee()) // si distance est plus grande que la portée de l'attaquant
         {
             return 3;
         }

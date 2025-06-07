@@ -23,6 +23,7 @@ public class EspeceMonstre {
         if (m_listeMonstre == null) {
             m_listeMonstre = new ArrayList<>();
             m_listeMonstre.add(monstre);
+            return true;
         }
         for (int i = 0; i < m_listeMonstre.size(); i++) {
             if (m_listeMonstre.get(i).getNom() == monstre.getNom()) {
@@ -42,13 +43,14 @@ public class EspeceMonstre {
     {
         Monstre monstre;
         for (int i = 0; i < m_listeMonstre.size(); i++) {
-            if (m_listeMonstre.get(i).getNom() == espece) {
+            //System.out.println("EspeceMonstre.creerMonstreEspeceExistante : test, espece=" + espece + ", monstre=" + m_listeMonstre.get(i).getEspece() );
+            if (m_listeMonstre.get(i).getEspece().equals(espece)) {
                 Monstre type = m_listeMonstre.get(i);
                 monstre = new Monstre(type.getNom(), type.getAttaque1(), type.getAttaque2(), type.getArmure(), type.getPV(), type.getVitesse(), type.getEtiquette(), type.getID() + 1);
                 return monstre;
             }
         }
-        System.out.println("Erreur de creation de monstre : espece incorecte");
+        System.out.println("Erreur: EspeceMonstre.creerMonstreEspeceExistante : espece incorecte, argument= " + espece);
         return null;
     }
 }

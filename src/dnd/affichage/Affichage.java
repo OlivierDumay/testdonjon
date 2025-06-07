@@ -1,6 +1,8 @@
 package dnd.affichage;
 
 
+import dnd.Type;
+import dnd.gameobject.Action;
 import dnd.gameobject.GameObject;
 import dnd.gameobject.ennemi.EspeceMonstre;
 import dnd.gameobject.ennemi.Monstre;
@@ -183,16 +185,16 @@ public class Affichage
 
     public static void afficherCommentaire(String debut)
     {
-        Scanner scanner = new Scanner(System.in);
+        //Scanner scanner = new Scanner(System.in);
         System.out.println("Entrer votre commentaire sans retour à la ligne, et appuyer sur entrer");
         String comment = scanner.nextLine();
         System.out.println(debut + comment);
-        scanner.close();
+        //scanner.close();
     }
 
     public static void afficherObjetSurCase(Carte carte)
     {
-        Scanner scanner = new Scanner(System.in);
+        //Scanner scanner = new Scanner(System.in);
         System.out.println("Sur quelle case est l'objet qui vous interrese?\n x: ");
         int x = scanner.nextInt();
         while (x < 0 || x > carte.getMaxX())
@@ -216,12 +218,12 @@ public class Affichage
         {
             System.out.println("Il n'y as rien dans cette case");
         }
-        scanner.close();
+        //scanner.close();
     }
 
     public static void afficherAttaquer (Carte carte, GameObject gameObject)
     {
-        Scanner scanner = new Scanner(System.in);
+        //Scanner scanner = new Scanner(System.in);
         System.out.println("Sur quelle case se porte votre attaque?\n x: ");
         int x = scanner.nextInt();
         while (x < 0 || x > carte.getMaxX())
@@ -257,6 +259,11 @@ public class Affichage
             cible = carte.getQuelGameObjectEstIci(x, y);
         }
 
+        // retour:
+        //      0 si l'attaque est réussie et le defenseur est encore vivant
+        //      1 si l'attaque est ratée
+        //      2 si le défenseur est mort
+        //      3 si cible hors de portée
         int retour;
         retour = carte.attaquer(gameObject, cible);
         while (retour != -1)
@@ -292,13 +299,13 @@ public class Affichage
 
         }
 
-        scanner.close();
+        //scanner.close();
     }
 
 
     public static void afficherSeDeplacer(Carte carte, GameObject gameObject)
     {
-        Scanner scanner = new Scanner(System.in);
+        //Scanner scanner = new Scanner(System.in);
         System.out.println("Sur quelle case voulez vous vous deplacer?\n x: ");
         int x = scanner.nextInt();
         while (x < 0 || x > carte.getMaxX())
@@ -337,12 +344,12 @@ public class Affichage
         }
 
         System.out.println(gameObject.getNom() + " s'est déplacé à la case " + x + ", " + y);
-        scanner.close();
+        //scanner.close();
     }
 
     public static void afficherSEquiper(Carte carte, Personnage perso)
     {
-        Scanner scanner = new Scanner(System.in);
+        //Scanner scanner = new Scanner(System.in);
         System.out.println("Voici de quoi est équippé "+ perso.getNom());
         String armure;
         try
@@ -384,6 +391,7 @@ public class Affichage
         {
             arme = " aucune";
         }
+        System.out.println("Arme: " + arme + ", armure:  " + armure +"\n");
 
         System.out.println("Voici le contenu de l'inventaire de "+ perso.getNom());
         int nb_items_inventaire = perso.getInventaire().size();
@@ -409,12 +417,18 @@ public class Affichage
 
         System.out.println("Entrer le numero de l'objet à équiper");
         int x = scanner.nextInt();
-        while (x<1 || x>perso.getInventaire().size())
+        while (x<0 || x>perso.getInventaire().size())
         {
-            System.out.println("Indiquer une valeur entre 1 et " + perso.getInventaire().size());
+            System.out.println("Indiquer une valeur entre 0 et " + (perso.getInventaire().size()-1));
             x = scanner.nextInt();
         }
+        Item item = perso.getInventaire().getInventaire().get(x);
 
+        if (armure != "aucune")
+        {
+            Action.desequiper(perso, item.getType());
+        }
+        Action.equiper(perso, x);
         System.out.println(perso.getNom() + " est maintenant équipé de :");
         String armure1;
         try
@@ -456,8 +470,8 @@ public class Affichage
         {
             arme1 = " aucune";
         }
-
-        scanner.close();
+        System.out.println("Arme: " + arme1 + ", armure:  " + armure1 +"\n");
+        //scanner.close();
     }
 
     public static void afficherPrendre(Carte carte, Personnage perso)
@@ -470,10 +484,10 @@ public class Affichage
 
     }
 
-    public static void afficherActionPerso(Carte carte, Personnage perso, int nAction)
+    public static void afficherActionPerso(Carte carte, Personnage perso, int nAction, int nTour, int ndonjon)
     {
         // ajouter action, voir quel est l'object sur cette case
-
+        afficherTour(carte, perso, nTour, ndonjon);
         /*
         "Caelynn il vous reste 2 actions que souhaitez vous faire ?
                 - laisser le maître du jeu commenter l'action précédente (mj <texte>)
@@ -482,14 +496,15 @@ public class Affichage
             - se déplacer (dep <Case>)
             - s'équiper (equ <numero equipement>)"
          */
-        Scanner scanner = new Scanner(System.in);
-        System.out.print(perso.getNom() + " il vous reste " + nAction + " action, que souhaitez vous faire? Entrez le nuemro de l'action que vous volez réaliser\n" +
+        //Scanner scanner = new Scanner(System.in);
+        afficherTour(carte, perso, nTour, ndonjon);
+        System.out.print(" \n" + perso.getNom() + " il vous reste " + nAction + " action, que souhaitez vous faire? Entrez le nuemro de l'action que vous volez réaliser\n" +
                 "\t\t\t 1. laisser le maître du jeu commenter l'action précédente (ne consomme pas d'action)\n" +
                 "\t\t\t 2. commenter action précédente (ne consomme pas d'action)\n" +
                 "\t\t\t 3. Voir les caracteristique d'un objet sur une case (ne consomme pas d'action)\n" +
                 "\t\t\t 4. Attaquer\n" +
                 "\t\t\t 5. Vous déplacer\n" +
-                "\t\t\t 6. S'équiper\n" +
+                "\t\t\t 6. S'équiper \n" +
                 "\t\t\t 7. Prendre un objet par terre");
         int reponse = scanner.nextInt();
         while (reponse < 1 || reponse > 7)
@@ -501,11 +516,11 @@ public class Affichage
         {
             case 1:
                 afficherCommentaire("Maitre du Jeu - ");
-                afficherActionPerso(carte, perso, nAction);
+                afficherActionPerso(carte, perso, nAction, nTour, ndonjon);
                 break;
             case 2:
                 afficherCommentaire(perso.getNom() + " - ");
-                afficherActionPerso(carte, perso, nAction);
+                afficherActionPerso(carte, perso, nAction, nTour, ndonjon);
                 break;
             case 3:
                 afficherObjetSurCase(carte);
@@ -525,14 +540,16 @@ public class Affichage
             default:
                 break;
         }
-        scanner.close();
+        //scanner.close();
     }
 
-    public static void afficherActionMonstre(Carte carte, Monstre monstre, int nAction)
+    public static void afficherActionMonstre(Carte carte, Monstre monstre, int nAction, int nTour, int ndonjon)
     {
-        // ajouter action, voir quel est l'object sur cette case
 
-        Scanner scanner = new Scanner(System.in);
+        // ajouter action, voir quel est l'object sur cette case
+        // trouver une methode pour ajouter        afficherTour(carte, perso, nTour, ndonjon);
+        afficherCarte(carte);
+        // Scanner scanner = new Scanner(System.in);
         System.out.print(monstre.getNom() + " il vous reste " + nAction + " action, que souhaitez vous faire? Entrez le numero de l'action que vous voulez réaliser\n" +
                 "\t\t\t 1. commenter action précédente (ne consomme pas d'action)\n" +
                 "\t\t\t 2. Attaquer\n" +
@@ -548,7 +565,7 @@ public class Affichage
         {
             case 1:
                 afficherCommentaire("Maitre du Jeu - ");
-                afficherActionMonstre(carte, monstre, nAction);
+                afficherActionMonstre(carte, monstre, nAction, nTour, ndonjon);
                 break;
             case 2:
                 afficherAttaquer(carte, monstre);
@@ -559,7 +576,7 @@ public class Affichage
             default:
                 break;
         }
-        scanner.close();
+        //scanner.close();
     }
 
 
@@ -570,13 +587,15 @@ public class Affichage
         //test
         String[] res = new String[3];
 
-        Scanner scanner = new Scanner(System.in);
+        //Scanner scanner = new Scanner(System.in);
         System.out.println("Entrez un nom pour le personnage : \n");
+        // Nettoyer le buffer avant la première vraie lecture
+        if (scanner.hasNextLine()) scanner.nextLine();
         res[0] = scanner.nextLine();
-
         System.out.println("Choisissez sa classe : \n1. Clerc\n2. Guerrier\n3. Magicien\n4. Roublard\n");
         res[1] = scanner.nextLine();
-        while (res[1] != "1" || res[1] != "2" || res[1] != "3" || res[1] != "4")
+        //System.out.println("afficherCreaPerso: test, res[1]: "+ res[1]);
+        while (!res[1].equals("1") && !res[1].equals("2") && !res[1].equals("3") && !res[1].equals("4"))
         {
             System.out.println("Erreur : Entrez 1, 2, 3 ou 4");
             res[1] = scanner.nextLine();
@@ -584,13 +603,13 @@ public class Affichage
 
         System.out.println("Choisissez sa race : \n1. Elfe\n2. Halflin\n3. Humain\n4. Nain\n");
         res[2] = scanner.nextLine();
-        while (res[2] != "1" || res[2] != "2" || res[2] != "3" || res[2] != "4")
+        while (!res[1].equals("1") && !res[1].equals("2") && !res[1].equals("3") && !res[1].equals("4"))
         {
             System.out.println("Erreur : Entrez 1, 2, 3 ou 4");
             res[2] = scanner.nextLine();
         }
 
-        scanner.close();
+        //scanner.close();
         return res;
     }
 
@@ -609,9 +628,11 @@ public class Affichage
         int[] ret = new int[3];
 
         //Scanner scanner = new Scanner(System.in);
-        System.out.println("-Mise en place- \nQue voulez faire ??\n\n1. Creer un monstre, 2. Creer un item, 3. Placer un obstacle, 4. Placer un monstre, 5. Placer un item\n0. Plus rien à placer\n");
+        System.out.println("-Mise en place- \n");
+        afficherCarte(carte);
+        System.out.println("Que voulez faire ??\n\n1. Creer un monstre, 2. Creer un item, 3. Placer un obstacle, 4. Placer un monstre, 5. Placer un item\n0. Plus rien à placer\n");
         ret[0] = (int) scanner.nextInt();
-        while (ret[0] < 1 || ret[0] > 5)
+        while (ret[0] < 0 || ret[0] > 5)
         {
             System.out.println("Erreur : Entrez 1, 2, 3, 4, 5 ou 0");
             ret[0] = (int) scanner.nextInt();
@@ -679,14 +700,14 @@ public class Affichage
        //scanner.close();
     }
 
-    public static void AffichageAjoutMonstreCarte(Carte carte, Ordre ordre)
+    public static void AffichageAjoutMonstreCarte(Carte carte, Ordre ordre,int x, int y)
     {
-        Scanner scanner = new Scanner(System.in);
+        //Scanner scanner = new Scanner(System.in);
         System.out.println("Choississez un monstre à mettre sur carte parmis les espèce crées :\n");
 
         for (int i = 0; i < EspeceMonstre.getListeEspece().size(); i++)
         {
-            System.out.println(i + " - " + EspeceMonstre.getListeEspece().get(i).getNom());
+            System.out.println(i + " - " + EspeceMonstre.getListeEspece().get(i).getEspece());
         }
         int ret = scanner.nextInt();
         while (ret < 0 || ret > EspeceMonstre.getListeEspece().size())
@@ -694,22 +715,10 @@ public class Affichage
             System.out.println("Indiquer une valeur entre 0 et " + EspeceMonstre.getListeEspece().size());
             ret = scanner.nextInt();
         }
-        Monstre monstre = EspeceMonstre.creerMonstreEspeceExistante(EspeceMonstre.getListeEspece().get(ret).getNom());
+        System.out.println("Test affichageAjoutMonstreCarte, EspeceMonstre.getListeEspece().get(ret).getEspece(): "+ EspeceMonstre.getListeEspece().get(ret).getEspece()+ "\n" );
+        Monstre monstre = EspeceMonstre.creerMonstreEspeceExistante(EspeceMonstre.getListeEspece().get(ret).getEspece());
 
-        System.out.println("Sur quelle case voulez vous placer le monstre?\n x: ");
-        int x = scanner.nextInt();
-        while (x < 0 || x > carte.getMaxX())
-        {
-            System.out.println("Indiquer une valeur entre 0 et " + carte.getMaxX());
-            x = scanner.nextInt();
-        }
-        System.out.println("y: ");
-        int y = scanner.nextInt();
-        while (y < 0 || y > carte.getMaxY())
-        {
-            System.out.println("Indiquer une valeur entre 0 et " + carte.getMaxY());
-            y = scanner.nextInt();
-        }
+
         carte.ajouterGameObject(monstre, x, y);
         ordre.ajouterGameObject(monstre);
     }
@@ -722,8 +731,8 @@ public class Affichage
     public static int[] afficheDemandeEmplacement(Carte carte)
     {
         int[] res = new int[2];
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Indiquer une case : \nx:\n");
+        //Scanner scanner = new Scanner(System.in);
+        System.out.println("Indiquer une case : \nx: ");
         int x = scanner.nextInt();
         while (x < 0 || x > carte.getMaxX())
         {
@@ -731,7 +740,7 @@ public class Affichage
             x = scanner.nextInt();
         }
 
-        System.out.println("y:\n");
+        System.out.println("y: ");
         int y = scanner.nextInt();
         while (y < 0 || y > carte.getMaxY())
         {
@@ -739,7 +748,7 @@ public class Affichage
             y = scanner.nextInt();
         }
 
-        scanner.close();
+        //scanner.close();
         res[0] = x;
         res[1] = y;
         return res;
@@ -766,7 +775,7 @@ public class Affichage
         // retourne la taille du prochain donjon
         System.out.print("Bravo! vous êtes venu à bout du donjon n°" + nDonjon +"\n\n\tPréparez vous pour le prochaine donjon!");
 
-        Scanner scanner = new Scanner(System.in);
+        //Scanner scanner = new Scanner(System.in);
         System.out.println("Quelle est la taille du prochain donjon?\n x: ");
         int x = scanner.nextInt();
         while (x < 0)
