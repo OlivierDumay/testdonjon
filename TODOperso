@@ -28,7 +28,7 @@ faire carte.setItem(case, item)
 FINIR LE PROJET
 
 ordre
-	finir les methodes
+	finir triage ( jet d'init) et le mettre dans les crea de donjon
 
 mettre pusieurs perso par donjon
 	pour:
@@ -38,12 +38,13 @@ mettre pusieurs perso par donjon
 	
 finir affichage
 	(voir avance muhammed)
-	faire affichageFinDePartie, quand tout les perso sont mort on arrete la partie
+	x faire affichageFinDePartie, quand tout les perso sont mort on arrete la partie
 	faire afficheCreaMonstre
 	faire afficheCreaItem
 	x faire afficherCommentaire
-	faire afficherActionMonstre
+	x faire afficherActionMonstre
 	faire un affichage des lancé de dés (juste lancer undes appuyer sur une touche)
+	x dans creaMostreObjet, pas besoin de positin pou creer un monstre ou un item
 
 ajouter des action dans afficherActionPerso	
 
@@ -52,8 +53,10 @@ faire des import propre
 
 faire l'uml
 
-ajouter supprimerAsset de ordre la ou l faut (quand ca meurt)s
+x ajouter supprimerAsset de ordre la ou l faut (quand ca meurt)s
+
+jet de degat, dans action attaque, manque le bonus de f ou dex
 	
 
-
+caracteristique ajouter pvMAX
 
