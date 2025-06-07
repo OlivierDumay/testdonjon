@@ -17,7 +17,7 @@ public class TourDeJeu
 {
     private int nbTour;
 
-    public TourDeJeu(Carte carte, List<GameObject> ordre, int n){
+    public TourDeJeu(Carte carte, List<GameObject> ordre, int nTour, int ndonjon){
 
         // deroulement du tour: boucle qui parcours ordre.m_ordre
         //      3 action possible pour perso
@@ -34,14 +34,14 @@ public class TourDeJeu
                     Personnage p = (Personnage) ordre.get(i);
                     for (int nAction = 3; nAction >0; nAction--)
                     {
-                        afficherActionPerso(carte, p, nAction);
+                        afficherActionPerso(carte, p, nAction, nTour, ndonjon);
                     }
                     break;
                 case MONSTRE:
                     Monstre m = (Monstre) ordre.get(i);
                     for (int nAction = 3; nAction >0; nAction--)
                     {
-                        afficherActionMonstre(carte, m, nAction);
+                        afficherActionMonstre(carte, m, nAction, nTour, ndonjon);
                     }
                     break;
             }

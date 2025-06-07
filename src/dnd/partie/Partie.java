@@ -47,7 +47,7 @@ public class Partie {
             {
                 case 0 :
                     break;
-                case 1:
+                case 1: // veut creer monstre
                     Affichage.afficheCreaMonstre();
                     break;
                 case 2:
@@ -57,10 +57,8 @@ public class Partie {
                 case 3:
                     carte.ajouterObstacle(retCreaMJ[1], retCreaMJ[2]);
                     break;
-                case 4:
-                    AffichageAjoutMonstreCarte(carte, ordre);
-
-
+                case 4: // placer un monstre,
+                    AffichageAjoutMonstreCarte(carte, ordre, retCreaMJ[1], retCreaMJ[2]);
                 case 5:
             }
         }
@@ -106,7 +104,7 @@ public class Partie {
                 throw new IllegalArgumentException("Erreur: dnd.partie.Partie constructeur, init du perso, classe");
 
         }
-        this.perso = new Personnage(crperso[1], classe, race);
+        this.perso = new Personnage(crperso[0], classe, race);
         //ajout de perso dans ordre
         ordre.ajouterGameObject(perso);
         int[] emplacement = new int[2];
@@ -127,15 +125,19 @@ public class Partie {
     public void deroulementPartie (Ordre ordre, Carte carte)
     {
         int nbDonjon = 1;
-        int retourDonjon = 0;
+        int retourDonjon= -1;
         boolean continuer = true;
 
         while (continuer)
         {
+            // retourDonjon
+            //  0 tous les monstres sont mort, donjon suivant
+            //  1 tous les perso mort, fin de la partie
             retourDonjon = deroulementDonjon(ordre, carte, nbDonjon);
+            System.out.println("deroulementPartie, test :  retourDonjon : " + retourDonjon);
             switch (retourDonjon)
             {
-                case 0 :
+                case 0 : // tous les monstres sont mort, donjon suivant
                     if (nbDonjon == 3)
                     {
                         affichePartieTerminee();
@@ -147,9 +149,12 @@ public class Partie {
                     ordre = new Ordre();
 
                     break;
-                case 1 :
+                case 1 : // tous les perso mort, fin de la partie
                     afficheFinDePartie();
                     continuer = false;
+                    break;
+                default:
+                    System.out.println("deroulementPartie, erreur :retourDonjon incorecte : " + retourDonjon);
                     break;
             }
         }
@@ -159,9 +164,7 @@ public class Partie {
 
     public int deroulementDonjon (Ordre ordre, Carte carte, int nbDonjon)
         {
-            // retour
-            //  0 tous les monstres sont mort, donjon suivant
-            //  1 tous les perso mort, fin de la partie
+
 
             int nbTour = 0;
             while (true)
@@ -172,14 +175,14 @@ public class Partie {
                     //  0 des monstres et des perso encore en vie, la partie continue
                     //  1 tous les perso mort, fin de la partie
                     //  2 tous les monstres sont mort, donjon suivant
-                    case 0 :
+                    case 0 : //des monstres et des perso encore en vie, la partie continue
                         nbTour++;
-                        TourDeJeu tour = new TourDeJeu(carte, ordre.m_ordre , nbTour);
+                        TourDeJeu tour = new TourDeJeu(carte, ordre.m_ordre , nbTour, nbDonjon);
                         break;
-                    case 1 :
-                        return 0;
-                    case 2 :
+                    case 1 : //tous les perso mort, fin de la partient
                         return 1;
+                    case 2 : // tous les monstres sont mort, donjon suiva
+                        return 0;
                     default:
                         break;
                 }

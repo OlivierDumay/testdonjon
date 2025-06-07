@@ -45,6 +45,59 @@ finir affichage
 	x faire afficherActionMonstre
 	faire un affichage des lancé de dés (juste lancer undes appuyer sur une touche)
 	x dans creaMostreObjet, pas besoin de positin pou creer un monstre ou un item
+	trouver une methode pour ajouter     afficherTour(carte, perso, nTour, ndonjon) dans afficherActionMonstre (prob perso)        
+
+
+ajouter des action dans afficherActionPerso	
+
+
+dnd.affichage.Affichage:
+	faire afficherInfoDonjon
+	faire afficherInfoPerso
+	faire afficherInfiTour
+	faire afficherAttaquer
+	faire afficherPrendre
+	faire afficherSeDeplacer
+
+
+
+deroulement
+	appel tour de jeu
+		parcours m_ordre
+			appel afficheQuelActionTYPE
+				"Caelynn il vous reste 2 actions que souhaitez vous faire ?
+				  - laisser le maître du jeu commenter l'action précédente (mj <texte>)
+				  - commenter action précédente (com <texte>)
+				  - attaquer (att <Case>)
+				  - se déplacer (dep <Case>)
+				  - s'équiper (equ <numero equipement>)"
+
+case gameObject et item a mettre en optional
+
+mettre list<item> de case en item simple
+
+faire carte.setItem(case, item)
+
+FINIR LE PROJET
+
+ordre
+	finir les methodes
+
+mettre pusieurs perso par donjon
+	pour:
+	affichage infoDOnjon
+	affichage infoPerso
+	constructeur de partie
+	
+finir affichage
+	faire afficheCreaMonstreObject
+		faire case 5 palcer item
+	faire affichageFinDePartie, quand tout les perso sont mort on arrete la partie
+	faire afficheCreaMonstre
+	faire afficheCreaItem
+	x faire afficherCommentaire
+	faire afficherActionMonstre
+	faire un affichage des lancé de dés (juste lancer undes appuyer sur une touche)
 
 ajouter des action dans afficherActionPerso	
 
@@ -53,10 +106,18 @@ faire des import propre
 
 faire l'uml
 
-x ajouter supprimerAsset de ordre la ou l faut (quand ca meurt)s
-
-jet de degat, dans action attaque, manque le bonus de f ou dex
+ajouter supprimerAsset de ordre la ou l faut (quand ca meurt)s
 	
+ajouter afficher carte, quand on demande une position
 
-caracteristique ajouter pvMAX
+dans afficher, mettre demandeEmplacment a la place du code pour scan x et y
+	les chiffre qui indique les case sont les index + 1 !!!!!
+	regler ce probleme ici
+
+
+ajouter des --- ou autre truc joli en debut de texte a afficher
+
+
+
+
 

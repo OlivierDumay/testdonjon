@@ -159,6 +159,7 @@ public class Personnage implements GameObject, Asset
         return this.m_equipement;
     }
 
+
     public Caracteristique getCaracteristique()
     {
         return this.m_caracteristique;
@@ -182,6 +183,13 @@ public class Personnage implements GameObject, Asset
     public int[] getAttaque()
     {
         int[] retour = {0,0};
+        if (this.m_equipement.getArme() == null) //degat sans arme = 1d4
+        {
+            retour[0] = 1;
+            retour[1] = 4;
+            return retour;
+        }
+
         retour[0] = this.m_equipement.getArme().getnbDe();
         retour[1] = this.m_equipement.getArme().getnbFace();
         return retour;
@@ -190,11 +198,17 @@ public class Personnage implements GameObject, Asset
 
     public int getArmure()
     {
+        if (this.getEquipement().getArmure() == null) // CA sans armure = 8
+        {return 8;}
         return this.getEquipement().getArmure().getArmure();
     }
 
     public int getBonusAttaque()
     {
+        if (this.getEquipement().getArme() == null) // sans arme retourne la force
+        {
+            return this.m_caracteristique.getForce();
+        }
         return this.m_equipement.getArme().getBonusAttaque(this.m_caracteristique.getForce(), this.m_caracteristique.getDexterite());
     }
 
@@ -216,6 +230,7 @@ public class Personnage implements GameObject, Asset
         {return false;}
         return true;
     }
+
 
     public void getString ()
     {
