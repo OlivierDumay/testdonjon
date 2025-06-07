@@ -27,6 +27,9 @@ faire carte.setItem(case, item)
 
 FINIR LE PROJET
 
+ordre
+	finir les methodes
+
 mettre pusieurs perso par donjon
 	pour:
 	affichage infoDOnjon
@@ -48,6 +51,8 @@ ajouter des action dans afficherActionPerso
 faire des import propre
 
 faire l'uml
+
+ajouter supprimerAsset de ordre la ou l faut (quand ca meurt)s
 	
 
 

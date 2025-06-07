@@ -1,18 +1,25 @@
 package dnd.affichage;
 
 
-import dnd.Asset;
 import dnd.gameobject.GameObject;
+import dnd.gameobject.ennemi.EspeceMonstre;
 import dnd.gameobject.ennemi.Monstre;
 import dnd.gameobject.personnage.Inventaire;
 import dnd.gameobject.personnage.Personnage;
-import dnd.objet.Arme;
 import dnd.objet.Item;
+import dnd.partie.Ordre;
 import dnd.partie.donjon.*;
 import java.util.Scanner;
 
 public class Affichage
 {
+
+    public static final Scanner scanner = new Scanner(System.in);
+
+    public static void fermerScanner()
+    {
+        scanner.close();
+    }
 
     // affichage pendant partie
     public static void afficherTour(Carte carte, Personnage personnage, int n_tour, int n_donjon)
@@ -173,8 +180,6 @@ public class Affichage
                         .getVitesse()
         );
     }
-
-
 
     public static void afficherCommentaire(String debut)
     {
@@ -557,6 +562,7 @@ public class Affichage
         scanner.close();
     }
 
+
     // Methodes d'affichage de la création de la partie
 
     public static String[] afficherCreaPerso()
@@ -594,45 +600,118 @@ public class Affichage
         // renvoie trois int
         // 1er int code:
         //              0 : fin de creation monstre etc
-        //              1: veut creer et placer un monstre, appel de creaMonstre
-        //              2: veut creer et place un equipement
+        //              1: veut creer monstre
+        //              2: veut creer un equipement
         //              3: veut placer un obstacle
+        //              4: placer un monstre,
+        //              5: placer un equipement
         // 2eme et 3eme pour emplacement
         int[] ret = new int[3];
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("-Mise en place- \nQue voulez placer sur la carte?\n\n1. Un monstre, 2. Un equipement, 3. Un obstacle\n0. Plus rien à placer\n");
+        //Scanner scanner = new Scanner(System.in);
+        System.out.println("-Mise en place- \nQue voulez faire ??\n\n1. Creer un monstre, 2. Creer un item, 3. Placer un obstacle, 4. Placer un monstre, 5. Placer un item\n0. Plus rien à placer\n");
         ret[0] = (int) scanner.nextInt();
-        while (ret[0] != 1 || ret[0] != 2 || ret[0] != 3 || ret[0] != 0)
+        while (ret[0] < 1 || ret[0] > 5)
         {
-            System.out.println("Erreur : Entrez 1, 2, 3 ou 0");
+            System.out.println("Erreur : Entrez 1, 2, 3, 4, 5 ou 0");
             ret[0] = (int) scanner.nextInt();
+        }
+        if (ret[0] == 3 || ret[0] == 4 || ret[0] == 5) // si l'utilisateur veut palcer quqchose
+        {
+            System.out.println("A quelle position (x, y)?\n .x : ");
 
-            if (ret[0] == 1 || ret[0] == 2 || ret[0] == 3) // si l'utilisateur veut palcer quqchose
+            ret[1] = (int) scanner.nextInt();
+            if (ret[1] > carte.getMaxX()) // si x hors de la carte
             {
-                System.out.println("A quelle position (x, y)?\n .x : ");
+                throw new Exception("Erreur : x en dehors de la carte");
+            }
 
-                ret[1] = (int) scanner.nextInt();
-                if (ret[1] > carte.getMaxX()) // si x hors de la carte
-                {
-                    throw new Exception("Erreur : x en dehors de la carte");
-                }
-
-                System.out.println(".y : ");
-                ret[2] = (int) scanner.nextInt();
-                if (ret[2] > carte.getMaxY()) // si y hors de la carte
-                {
-                    throw new Exception("Erreur : y en dehors de la carte");
-                }
+            System.out.println(".y : ");
+            ret[2] = (int) scanner.nextInt();
+            if (ret[2] > carte.getMaxY()) // si y hors de la carte
+            {
+                throw new Exception("Erreur : y en dehors de la carte");
             }
         }
-        scanner.close();
+        //scanner.close();
         return ret;
     }
 
-    public static GameObject afficheCreaMonstre()
+    public static void  afficheCreaMonstre()
     {
-        return null;
+        //creer un monstre et le met dans la liste des espece de monstre
+        String[] resS = new String[2];
+        int[] resI = new int[5];
+        boolean reponse = false;
+        //Scanner scanner = new Scanner(System.in);
+
+        while (!reponse)
+        {
+            // Nettoyer le buffer avant la première vraie lecture
+            if (scanner.hasNextLine()) scanner.nextLine();
+
+            System.out.println("Entrez le nom de l'espèce du monstre : \n");
+            resS[0] = scanner.nextLine();
+            System.out.println("Entrez son attaque: nombre de face du dés : \n");
+            resI[0] = scanner.nextInt();
+            System.out.println("Entrez son attaque: nombre de dés lancés : \n");
+            resI[1] = scanner.nextInt();
+            System.out.println("Entrez sa classe d'armure : \n");
+            resI[2] = scanner.nextInt();
+            System.out.println("Entrez son nombre de points de vie: \n");
+            resI[3] = scanner.nextInt();
+            System.out.println("Entrez sa vitesse: \n");
+            resI[4] = scanner.nextInt();
+            if (scanner.hasNextLine()) scanner.nextLine();
+            System.out.println("Entrez les 3 caractere de son affichage sur la carte : \n");
+            resS[1] = scanner.nextLine();
+            while (resS[1].length() != 3) {
+                System.out.println("Erreur : Entrez exactement 3 caractere ");
+                resS[1] = scanner.nextLine();
+            }
+
+            Monstre monstre = new Monstre(resS[0], resI[1], resI[0], resI[2], resI[3], resI[4], resS[1], 0);
+            reponse = EspeceMonstre.ajouterEspeceMonstre(monstre);
+            if (!reponse) {
+                System.out.println("On recommence la création du monstre \n");
+            }
+        }
+       //scanner.close();
+    }
+
+    public static void AffichageAjoutMonstreCarte(Carte carte, Ordre ordre)
+    {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Choississez un monstre à mettre sur carte parmis les espèce crées :\n");
+
+        for (int i = 0; i < EspeceMonstre.getListeEspece().size(); i++)
+        {
+            System.out.println(i + " - " + EspeceMonstre.getListeEspece().get(i).getNom());
+        }
+        int ret = scanner.nextInt();
+        while (ret < 0 || ret > EspeceMonstre.getListeEspece().size())
+        {
+            System.out.println("Indiquer une valeur entre 0 et " + EspeceMonstre.getListeEspece().size());
+            ret = scanner.nextInt();
+        }
+        Monstre monstre = EspeceMonstre.creerMonstreEspeceExistante(EspeceMonstre.getListeEspece().get(ret).getNom());
+
+        System.out.println("Sur quelle case voulez vous placer le monstre?\n x: ");
+        int x = scanner.nextInt();
+        while (x < 0 || x > carte.getMaxX())
+        {
+            System.out.println("Indiquer une valeur entre 0 et " + carte.getMaxX());
+            x = scanner.nextInt();
+        }
+        System.out.println("y: ");
+        int y = scanner.nextInt();
+        while (y < 0 || y > carte.getMaxY())
+        {
+            System.out.println("Indiquer une valeur entre 0 et " + carte.getMaxY());
+            y = scanner.nextInt();
+        }
+        carte.ajouterGameObject(monstre, x, y);
+        ordre.ajouterGameObject(monstre);
     }
 
     public static Item afficheCreaEquipement()
@@ -674,5 +753,42 @@ public class Affichage
             Item current_item = inventaire_perso.getInventaire().get(i);
             System.out.println(i + " - " + current_item.getNom());
         }
+    }
+
+    public static void afficheFinDePartie()
+    {
+        System.out.print("Malédiction! Le maitre du donjon vous a vaincu!!");
+
+    }
+
+    public static int[] afficheDonjonSuivant(int nDonjon)
+    {
+        // retourne la taille du prochain donjon
+        System.out.print("Bravo! vous êtes venu à bout du donjon n°" + nDonjon +"\n\n\tPréparez vous pour le prochaine donjon!");
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Quelle est la taille du prochain donjon?\n x: ");
+        int x = scanner.nextInt();
+        while (x < 0)
+        {
+            System.out.println("Indiquer une valeur supérieur à 0");
+            x = scanner.nextInt();
+        }
+        System.out.println("y: ");
+        int y = scanner.nextInt();
+        while (y < 0 )
+        {
+            System.out.println("Indiquer une valeur supérieur à 0");
+            y = scanner.nextInt();
+        }
+         int[] res = new int[2];
+        res[0] = x;
+        res[1] = y;
+        return res;
+    }
+
+    public static void affichePartieTerminee()
+    {
+        System.out.print("Bravo! vous êtes venu à bout des trois donjon!!!");
     }
 }

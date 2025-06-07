@@ -17,7 +17,7 @@ public class TourDeJeu
 {
     private int nbTour;
 
-    public TourDeJeu(Carte carte, List<Asset> ordre, int n){
+    public TourDeJeu(Carte carte, List<GameObject> ordre, int n){
 
         // deroulement du tour: boucle qui parcours ordre.m_ordre
         //      3 action possible pour perso

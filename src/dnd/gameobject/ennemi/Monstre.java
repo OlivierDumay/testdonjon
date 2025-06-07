@@ -15,7 +15,7 @@ import static dnd.Type.MONSTRE;
 public class Monstre implements GameObject, Asset
 {
     // class members
-    private static int m_current_id = 0;
+    private int m_current_id;
     private int m_id;
     private String m_espece;
     private int[] m_attaque;
@@ -27,7 +27,7 @@ public class Monstre implements GameObject, Asset
 
     // ctor
     // voir TODO.md
-    public Monstre(String espece, int nDe, int nFace, int armure, int pv, int vitesse, String etiquette)
+    public Monstre(String espece, int nDe, int nFace, int armure, int pv, int vitesse, String etiquette,int id)
     {
         if (espece.isEmpty())
             throw new IllegalArgumentException("Erreur : le nom du monstre ne doit pas être vide");
@@ -37,9 +37,9 @@ public class Monstre implements GameObject, Asset
         {
             throw new IllegalArgumentException("Erreur: l'etiquette du monstre doit faire entre 1 et 3 caractères");
         }
-        this.m_id = m_current_id;
-        m_current_id++;
+        this.m_id = id;
         this.m_espece = espece;
+        this.m_attaque = new int[2];
         this.m_attaque[0] = nDe;
         this.m_attaque[1] = nFace;
         this.m_classeArmure = armure;
@@ -114,4 +114,13 @@ public class Monstre implements GameObject, Asset
         {return false;}
         return true;
     }
+
+    public int getAttaque1()
+    {return this.m_attaque[0];}
+
+    public int getAttaque2()
+    {return this.m_attaque[1];}
+
+    public int getID()
+    {return this.m_id;}
 }
