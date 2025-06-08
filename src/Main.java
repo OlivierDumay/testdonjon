@@ -38,7 +38,7 @@ public class Main
         Carte carte = new Carte(10, 10);
 
         Action.equiper(muhammed, 1);
-        // Action.equiper(muhammed, 0);
+        // xAction.equiper(muhammed, 0);
         Affichage.afficherTour(carte, muhammed, 1, 2);
         */
 
