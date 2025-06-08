@@ -43,7 +43,7 @@ public class Monstre implements GameObject, Asset
         this.m_attaque[0] = nDe;
         this.m_attaque[1] = nFace;
         this.m_classeArmure = armure;
-        this.m_caracteristique = new Caracteristique(pv, 1, 1, vitesse, 1);
+        this.m_caracteristique = new Caracteristique(pv, 5, 5, vitesse, 5);
         this.m_etiquette = etiquette;
         //Init position
         this.m_position = new int[2];
@@ -100,6 +100,10 @@ public class Monstre implements GameObject, Asset
     public int getPV()
     {
         return this.m_caracteristique.getPV();
+    }
+    public int getPVMax()
+    {
+        return this.m_caracteristique.getPVMax();
     }
 
     public boolean setPV(int pv)
