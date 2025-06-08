@@ -58,6 +58,8 @@ public class Caracteristique
     public void setPV(int pv)
     {
         if (pv < 0)
-            throw new IllegalArgumentException("Erreur : les points de vie ne peuvent pas être inférieur à 0");
+            this.m_pv = 0;
+        else
+            this.m_pv = pv;
     }
 }

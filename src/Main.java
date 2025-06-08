@@ -41,7 +41,6 @@ public class Main
         // xAction.equiper(muhammed, 0);
         Affichage.afficherTour(carte, muhammed, 1, 2);
         */
-
         Partie partie = new Partie(10, 10);
         Affichage.fermerScanner();
     }
