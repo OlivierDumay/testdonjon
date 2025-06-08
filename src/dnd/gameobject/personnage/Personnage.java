@@ -225,9 +225,7 @@ public class Personnage implements GameObject, Asset
 
     public boolean testEtatVie()
     {
-        if (this.m_caracteristique.getPV()<=0)
-        {return false;}
-        return true;
+        return this.m_caracteristique.getPV() != 0;
     }
 
 

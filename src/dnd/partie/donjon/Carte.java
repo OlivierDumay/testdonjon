@@ -161,6 +161,8 @@ public class Carte
         //      2 si le défenseur est mort
         //      3 si cible hors de portée
 
+        if (defenseur == null)
+            throw new IllegalArgumentException("Erreur : la case attaquée est vide");
 
         // test portée
         int[] postionAttaquant =  attaquant.getPosition();

@@ -43,7 +43,7 @@ public class Affichage
 
         // 1. En-tête des colonnes (1, 2, 3, ...)
         System.out.print("     ");
-        for (int x = 1; x <= maxX; x++)
+        for (int x = 0; x < maxX; x++)
         {
             System.out.printf("%-3d", x);
         }
@@ -60,7 +60,7 @@ public class Affichage
         // 3. Affichage des lignes
         for (int y = 0; y < maxY; y++)
         {
-            System.out.printf("%-3d|", y + 1);
+            System.out.printf("%-3d|", y);
             for (int x = 0; x < maxX; x++)
             {
                 String etiquette = carte.getEtiquetteDeLaCase(x, y);

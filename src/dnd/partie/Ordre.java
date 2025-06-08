@@ -35,18 +35,17 @@ public class Ordre {
 
     public void supprimerGameObject(GameObject gameObject)
     {
+        if (m_ordre.contains(gameObject))
         {
-            if (m_ordre.contains(gameObject))
+            m_ordre.remove(gameObject);
+            System.out.println("ordre.supprimmerObjet: test: affichage de la liste ordre");
+            for (int i = 0 ; i<m_ordre.size(); i++)
             {
-                m_ordre.remove(gameObject);
-                System.out.println("ordre.supprimmerObjet: test: affichage de la liste ordre");
-                for (int i = 0 ; i<m_ordre.size(); i++)
-                {
-                    System.out.println(i + " " + m_ordre.get(i).getNom());
+                System.out.println(i + " " + m_ordre.get(i).getNom());
 
-                }
             }
         }
+
     }
 
     public int testFinDePartie()

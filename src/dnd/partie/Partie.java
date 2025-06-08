@@ -164,6 +164,31 @@ public class Partie {
 
 
     public int deroulementDonjon (Ordre ordre, Carte carte, int nbDonjon)
+    {
+        int nbTour = 0;
+        while (true)
+        {
+            int resultat = ordre.testFinDePartie();
+            switch (resultat)
+            {
+                // retour de testFinDePartie
+                //  0 des monstres et des perso encore en vie, la partie continue
+                //  1 tous les perso mort, fin de la partie
+                //  2 tous les monstres sont mort, donjon suivant
+                case 0 : //des monstres et des perso encore en vie, la partie continue
+                    nbTour++;
+                    TourDeJeu tour = new TourDeJeu(carte, ordre , nbTour, nbDonjon);
+                    break;
+                case 1 : //tous les perso mort, fin de la partie
+                    return 1;
+                case 2 : // tous les monstres sont mort, donjon suivant
+                    return 0;
+                default:
+                    System.out.println("deroulementDonjon, erreur : résultat de testFinDePartie incorrect : " + resultat);
+                    return 1;
+            }
+        }
+    }
         {
 
 
