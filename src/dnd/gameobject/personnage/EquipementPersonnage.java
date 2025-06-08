@@ -3,6 +3,8 @@ package dnd.gameobject.personnage;
 import dnd.objet.Arme;
 import dnd.objet.Armure;
 import dnd.objet.Item;
+import dnd.objet.arme.ArmeCourante;
+import dnd.objet.armure.ArmureLegere;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -10,6 +12,8 @@ import java.util.Optional;
 public class EquipementPersonnage
 {
     // class members
+    private static final Arme m_arme_defaut = new ArmeCourante("Poings", 1, 1, 1);
+    private static final Armure m_armure_defaut = new ArmureLegere("Aucune armure", 1);
     private Optional<Arme> m_arme; // TODO : à changer : fait
     private Optional<Armure> m_armure; // TODO : à changer : fait
 
@@ -39,14 +43,12 @@ public class EquipementPersonnage
 
     public Arme getArme()
     {
-        return this.m_arme.orElseThrow(() ->
-                new NoSuchElementException("Erreur : pas d'arme équipée"));
+        return this.m_arme.orElse(m_arme_defaut);
     }
 
     public Armure getArmure()
     {
-        return this.m_armure.orElseThrow(() ->
-                new NoSuchElementException("Erreur : pas d'armure équipée"));
+        return this.m_armure.orElse(m_armure_defaut);
     }
 
     public void retirerArme()
