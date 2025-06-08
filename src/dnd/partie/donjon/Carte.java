@@ -169,6 +169,7 @@ public class Carte
 
         float distance = caseAttaquant.calculDistance(caseDefenseur);
         System.out.println("Carte.attaquer: test: distance: " + distance + ", portée: " +attaquant.getPortee());
+        System.out.println("Carte.attaquer: test: (distance > (float)attaquant.getPortee()): " + (distance > (float)attaquant.getPortee()));
         if (distance > (float)attaquant.getPortee()) // si distance est plus grande que la portée de l'attaquant
         {
             return 3;

@@ -1,7 +1,6 @@
 package dnd.affichage;
 
 
-import dnd.Type;
 import dnd.gameobject.Action;
 import dnd.gameobject.GameObject;
 import dnd.gameobject.ennemi.EspeceMonstre;
@@ -9,6 +8,11 @@ import dnd.gameobject.ennemi.Monstre;
 import dnd.gameobject.personnage.Inventaire;
 import dnd.gameobject.personnage.Personnage;
 import dnd.objet.Item;
+import dnd.objet.arme.ArmeADistance;
+import dnd.objet.arme.ArmeCourante;
+import dnd.objet.arme.ArmeGuerre;
+import dnd.objet.armure.ArmureLegere;
+import dnd.objet.armure.ArmureLourde;
 import dnd.partie.Ordre;
 import dnd.partie.donjon.*;
 import java.util.Scanner;
@@ -271,11 +275,17 @@ public class Affichage
             switch (retour)
             {
                 case 0 : // attaque est réussie et le defenseur est encore vivant
-
+                    retour = -1;
+                    System.out.println("Attaque réussie : " + gameObject.getNom() + " à toucher " + cible.getNom());
+                    break;
                 case 1 : // attaque est ratée
-
+                    retour = -1;
+                    System.out.println("Attaque raté : " + gameObject.getNom() + " à raté " + cible.getNom());
+                    break;
                 case 2 : // le défenseur est mort
-
+                    retour = -1;
+                    System.out.println("Attaque réussie : " + gameObject.getNom() + " à tuer " + cible.getNom());
+                    break;
                 case 3 : // cible hors de portée
                     System.out.println("Cible hors de portée, choisissez en une case. (Votre portée :  " + gameObject.getPortee() + ")\n x: ");
                     x = scanner.nextInt();
@@ -630,16 +640,17 @@ public class Affichage
         //Scanner scanner = new Scanner(System.in);
         System.out.println("-Mise en place- \n");
         afficherCarte(carte);
-        System.out.println("Que voulez faire ??\n\n1. Creer un monstre, 2. Creer un item, 3. Placer un obstacle, 4. Placer un monstre, 5. Placer un item\n0. Plus rien à placer\n");
+        System.out.println("Que voulez faire ??\n\n1. Creer un monstre, 2. Creer et placer un item, 3. Placer un obstacle, 4. Placer un monstre\n0. Plus rien à placer\n");
         ret[0] = (int) scanner.nextInt();
-        while (ret[0] < 0 || ret[0] > 5)
+        while (ret[0] < 0 || ret[0] > 4)
         {
-            System.out.println("Erreur : Entrez 1, 2, 3, 4, 5 ou 0");
+            System.out.println("Erreur : Entrez 1, 2, 3, 4 ou 0");
             ret[0] = (int) scanner.nextInt();
         }
-        if (ret[0] == 3 || ret[0] == 4 || ret[0] == 5) // si l'utilisateur veut palcer quqchose
+        if (ret[0] == 2 || ret[0] == 3|| ret[0] == 4) // si l'utilisateur veut palcer quqchose
         {
-            System.out.println("A quelle position (x, y)?\n .x : ");
+            Affichage.afficherCarte(carte);
+            System.out.println("A quelle position?\n .x : ");
 
             ret[1] = (int) scanner.nextInt();
             if (ret[1] > carte.getMaxX()) // si x hors de la carte
@@ -723,8 +734,89 @@ public class Affichage
         ordre.ajouterGameObject(monstre);
     }
 
-    public static Item afficheCreaEquipement()
-    {
+    public static Item afficheCreaItem() {
+
+        //creer l'item et le renvoie
+        Item retour;
+        String[] resS = new String[2];
+        int[] resI = new int[5];
+        boolean reponse = false;
+
+        System.out.println("Quel genre d'item voulez vous creer? : \n 0.Arme courante  1. Arme de Guerre  2. Arme a distance  3.Armure legère  4.Armure lourde");
+        resI[0] = scanner.nextInt();
+        while (resI[0] < 0 || resI[0] > 4)
+        {
+            System.out.println("Erreur : Entrez 1, 2, 3, 4 ou 0");
+            resI[0] =  scanner.nextInt();
+        }
+
+        switch (resI[0])
+        {
+            case 0:
+                    // Nettoyer le buffer avant la première vraie lecture
+                    if (scanner.hasNextLine()) scanner.nextLine();
+
+                    System.out.println("Entrez le nom de l'arme courante ");
+                    resS[0] = scanner.nextLine();
+                    System.out.println("Entrez son attaque: nombre de face du dés : ");
+                    resI[1] = scanner.nextInt();
+                    System.out.println("Entrez son attaque: nombre de dés lancés : ");
+                    resI[2] = scanner.nextInt();
+
+                    retour = new ArmeCourante(resS[0], resI[2], resI[1],  1);
+                    return retour;
+            case 1:
+                // Nettoyer le buffer avant la première vraie lecture
+                if (scanner.hasNextLine()) scanner.nextLine();
+
+                System.out.println("Entrez le nom de l'arme de guerre ");
+                resS[0] = scanner.nextLine();
+                System.out.println("Entrez son attaque: nombre de face du dés : ");
+                resI[0] = scanner.nextInt();
+                System.out.println("Entrez son attaque: nombre de dés lancés : ");
+                resI[1] = scanner.nextInt();
+
+                retour = new ArmeGuerre(resS[0], resI[2], resI[1],  1);
+                return retour;
+            case 2:
+                // Nettoyer le buffer avant la première vraie lecture
+                if (scanner.hasNextLine()) scanner.nextLine();
+
+                System.out.println("Entrez le nom de l'arme à distance ");
+                resS[0] = scanner.nextLine();
+                System.out.println("Entrez son attaque: nombre de face du dés : ");
+                resI[1] = scanner.nextInt();
+                System.out.println("Entrez son attaque: nombre de dés lancés : ");
+                resI[2] = scanner.nextInt();
+                System.out.println("Entrez sa portée : ");
+                resI[3] = scanner.nextInt();
+
+                retour = new ArmeADistance(resS[0], resI[2], resI[1],  resI[3]);
+                return retour;
+            case 3:
+                // Nettoyer le buffer avant la première vraie lecture
+                if (scanner.hasNextLine()) scanner.nextLine();
+
+                System.out.println("Entrez le nom de l'armure légère ");
+                resS[0] = scanner.nextLine();
+                System.out.println("Entrez sa classe d'armure : ");
+                resI[1] = scanner.nextInt();
+
+                retour = new ArmureLegere(resS[0], resI[1]);
+                return retour;
+            case 4:
+                // Nettoyer le buffer avant la première vraie lecture
+                if (scanner.hasNextLine()) scanner.nextLine();
+
+                System.out.println("Entrez le nom de l'armure lourde ");
+                resS[0] = scanner.nextLine();
+                System.out.println("Entrez sa classe d'armure : ");
+                resI[1] = scanner.nextInt();
+
+                retour = new ArmureLourde(resS[0], resI[1]);
+                return retour;
+        }
+
         return null;
     }
 
