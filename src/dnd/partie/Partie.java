@@ -4,6 +4,7 @@ import dnd.affichage.Affichage;
 import dnd.gameobject.personnage.*;
 import dnd.gameobject.personnage.race.EnumRace; // ??? ne reconnait pas enumrace sans cet import 
 import dnd.gameobject.personnage.classe.*;
+import dnd.objet.Item;
 import dnd.partie.donjon.*;
 
 
@@ -45,21 +46,20 @@ public class Partie {
             }
             switch (retCreaMJ[0])
             {
-                case 0 :
+                case 0 : //fin de creation monstre etc
                     break;
                 case 1: // veut creer monstre
                     Affichage.afficheCreaMonstre();
                     break;
-                case 2:
-                    carte.ajouterItem(Affichage.afficheCreaEquipement(), retCreaMJ[1], retCreaMJ[2]);
-                    // manque ajouterItem
+                case 2: // veut creer un equipement et placer
+                    Item item = Affichage.afficheCreaItem();
+                    carte.ajouterItem(item, retCreaMJ[1], retCreaMJ[2]);
                     break;
-                case 3:
+                case 3: // veut placer un obstacle
                     carte.ajouterObstacle(retCreaMJ[1], retCreaMJ[2]);
                     break;
                 case 4: // placer un monstre,
                     AffichageAjoutMonstreCarte(carte, ordre, retCreaMJ[1], retCreaMJ[2]);
-                case 5:
             }
         }
 

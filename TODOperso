@@ -97,6 +97,7 @@ finir affichage
 	faire afficheCreaItem
 	x faire afficherCommentaire
 	faire afficherActionMonstre
+		afficher a coté du nom les coordonnée pour le reperer
 	faire un affichage des lancé de dés (juste lancer undes appuyer sur une touche)
 
 ajouter des action dans afficherActionPerso	
@@ -116,6 +117,11 @@ dans afficher, mettre demandeEmplacment a la place du code pour scan x et y
 
 
 ajouter des --- ou autre truc joli en debut de texte a afficher
+
+retour des valeur par defauts sans arme ou armure
+
+choix d'action passer le tour
+
 
 
 
