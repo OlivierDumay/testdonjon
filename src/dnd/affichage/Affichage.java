@@ -90,11 +90,13 @@ public class Affichage
 
         for (int x = 0; x < ordre.getListOrdre().size(); x++)
         {
+            if (ordre.getListOrdre().get(x) == null)
+            {continue;}
             if (ordre.getListOrdre().get(x).getType() == Type.PERSONNAGE)
             {
                 GameObject go = ordre.getListOrdre().get(x);
                 Personnage p = (Personnage) go;
-                System.out.println("\t\t\t\t\t" + p.getNom() + " (" + p.getRace().toString() + " " + p.toString() +")");
+                System.out.println("\t\t\t\t\t" + p.getNom() + " (" + p.getRace().toString() + " " + p.getClasse().toString() +")");
             }
             if (ordre.getListOrdre().get(x).getType() == Type.MONSTRE)
             {
@@ -265,6 +267,7 @@ public class Affichage
             System.out.println("Indiquer une valeur entre 0 et " + carte.getMaxY());
             y = scanner.nextInt();
         }
+        String ligne = scanner.nextLine();
         // recup cible
         GameObject cible = carte.getQuelGameObjectEstIci(x, y);
         while (cible == null)
@@ -536,7 +539,7 @@ public class Affichage
             - s'équiper (equ <numero equipement>)"
          */
         //Scanner scanner = new Scanner(System.in);
-        System.out.print(" \n" + perso.getNom() + " il vous reste " + nAction + " action, que souhaitez vous faire? Entrez le nuemro de l'action que vous volez réaliser\n" +
+        System.out.print(" \n-- " + perso.getNom() + "-- \n\t Il vous reste " + nAction + " action, que souhaitez vous faire? Entrez le nuemro de l'action que vous volez réaliser\n" +
                 "\t\t\t 1. laisser le maître du jeu commenter l'action précédente (ne consomme pas d'action)\n" +
                 "\t\t\t 2. commenter action précédente (ne consomme pas d'action)\n" +
                 "\t\t\t 3. Voir les caracteristique d'un objet sur une case (ne consomme pas d'action)\n" +
@@ -612,8 +615,8 @@ public class Affichage
         // Scanner scanner = new Scanner(System.in);
         int[] mPosition = new int[2];
         mPosition = monstre.getPosition();
-        System.out.print(monstre.getNom() + " (" + mPosition[0] + "," + mPosition[1] + ") - PV:" + monstre.getPV()+ "/" +monstre.getPVMax() + " "+
-                " Il vous reste " + nAction + " action, que souhaitez vous faire? Entrez le numero de l'action que vous voulez réaliser\n" +
+        System.out.print("\n "+ monstre.getNom() + " (" + mPosition[0] + "," + mPosition[1] + ") - PV:" + monstre.getPV()+ "/" +monstre.getPVMax() +
+                "\n\tIl vous reste " + nAction + " action, que souhaitez vous faire? Entrez le numero de l'action que vous voulez réaliser\n" +
                 "\t\t\t 1. commenter action précédente (ne consomme pas d'action)\n" +
                 "\t\t\t 2. Attaquer\n" +
                 "\t\t\t 3. Vous déplacer\n" +
@@ -711,7 +714,7 @@ public class Affichage
         //Scanner scanner = new Scanner(System.in);
         System.out.println("-Mise en place- \n");
         afficherCarte(carte);
-        System.out.println("Que voulez faire ??\n\n1. Creer un monstre, 2. Creer et placer un item, 3. Placer un obstacle, 4. Placer un monstre\n0. Plus rien à placer et creer un personnage\n");
+        System.out.println("Que voulez faire ??\n\n1. Creer un monstre, 2. Creer et placer un item, 3. Placer un obstacle, 4. Placer un monstre\n0. Plus rien à placer et passer au personnage\n");
         ret[0] = (int) scanner.nextInt();
         while (ret[0] < 0 || ret[0] > 4)
         {
@@ -744,7 +747,7 @@ public class Affichage
     {
         //creer un monstre et le met dans la liste des espece de monstre
         String[] resS = new String[2];
-        int[] resI = new int[5];
+        int[] resI = new int[8];
         boolean reponse = false;
         //Scanner scanner = new Scanner(System.in);
 
@@ -765,6 +768,12 @@ public class Affichage
             resI[3] = scanner.nextInt();
             System.out.println("Entrez sa vitesse: ");
             resI[4] = scanner.nextInt();
+            System.out.println("Entrez sa force: ");
+            resI[5] = scanner.nextInt();
+            System.out.println("Entrez sa dextérité: ");
+            resI[6] = scanner.nextInt();
+            System.out.println("Entrez son initiative: ");
+            resI[7] = scanner.nextInt();
             if (scanner.hasNextLine()) scanner.nextLine();
             System.out.println("Entrez les 3 caractere de son affichage sur la carte : ");
             resS[1] = scanner.nextLine();
@@ -773,7 +782,7 @@ public class Affichage
                 resS[1] = scanner.nextLine();
             }
 
-            Monstre monstre = new Monstre(resS[0], resI[1], resI[0], resI[2], resI[3], resI[4], resS[1], 0);
+            Monstre monstre = new Monstre(resS[0], resI[1], resI[0], resI[2], resI[3], resI[4], resI[5], resI[6], resI[7], resS[1], 0);
             reponse = EspeceMonstre.ajouterEspeceMonstre(monstre);
             if (!reponse) {
                 System.out.println("On recommence la création du monstre \n");
@@ -905,6 +914,7 @@ public class Affichage
 
         System.out.println("y: ");
         int y = scanner.nextInt();
+        String ligne= scanner.nextLine();
         while (y < 0 || y > carte.getMaxY())
         {
             System.out.println("Indiquer une valeur entre 0 et " + carte.getMaxY());
@@ -936,17 +946,17 @@ public class Affichage
     public static int[] afficheDonjonSuivant(int nDonjon)
     {
         // retourne la taille du prochain donjon
-        System.out.print("Bravo! vous êtes venu à bout du donjon n°" + nDonjon +"\n\n\tPréparez vous pour le prochaine donjon!");
+        System.out.print("Bravo! vous êtes venu à bout du donjon n°" + nDonjon +"\n\n\tPréparez vous pour le prochain donjon!\n\n");
 
         //Scanner scanner = new Scanner(System.in);
-        System.out.println("Quelle est la taille du prochain donjon?\n x: ");
+        System.out.println("Quelle est la taille du prochain donjon?\n largueur: ");
         int x = scanner.nextInt();
         while (x < 0)
         {
             System.out.println("Indiquer une valeur supérieur à 0");
             x = scanner.nextInt();
         }
-        System.out.println("y: ");
+        System.out.println("longueur: ");
         int y = scanner.nextInt();
         while (y < 0 )
         {
@@ -970,5 +980,18 @@ public class Affichage
         String rien = scanner.nextLine();
         System.out.println("Resultat : " + n);
 
+    }
+
+    public static int afficheChoixCreaPartie()
+    {
+        System.out.println("Voulez vous :\n1. reer votre partie ?\n2. Jouer un partie pré-concue\n");
+        int retour = scanner.nextInt();
+        while (!(retour==1)  && !(retour==2))
+        {
+            System.out.println("Tapez un  1 ou 2");
+            retour = scanner.nextInt();
+        }
+        String ligne = scanner.nextLine();
+        return retour;
     }
 }

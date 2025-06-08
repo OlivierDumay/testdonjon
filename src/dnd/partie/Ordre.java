@@ -76,9 +76,18 @@ public class Ordre {
     }
 
     public void supprimerGameObject(GameObject gameObject)
-    {
+    { // met null a la place de l'object pour conserver un index de deroulement de tour juste
         if (m_ordre.contains(gameObject))
         {
+            for (int i = 0; i < m_ordre.size() ; i++)
+            {
+                if (m_ordre.get(i) == null)
+                {continue;}
+                if (m_ordre.get(i).equals(gameObject))
+                {
+                    m_ordre.set(i, null);
+                }
+            }
             m_ordre.remove(gameObject);
             //System.out.println("ordre.supprimmerObjet: test: affichage de la liste ordre");
             /*for (int i = 0 ; i<m_ordre.size(); i++)
@@ -101,6 +110,9 @@ public class Ordre {
         //System.out.println("Ordre.testFinDePartie(): test: ");
         for (int i = 0; i < m_ordre.size(); i++)
         {
+            if (m_ordre.get(i) == null)
+            {   //System.out.println("ordre.testFinDePartie: test monstre null dans ordre: i :" +i);
+                continue;}
             if (m_ordre.get(i).getType() == Type.PERSONNAGE)
             {
                 //System.out.println("Ordre.testFinDePartie(): test: perso en vie");
@@ -118,5 +130,13 @@ public class Ordre {
         if (!unMonstreEnVie) {return 2;}
         else {return 0;}
 
+    }
+
+    public void viderListe()
+    {
+        for (int i = 0; i < this.m_ordre.size(); i++)
+        {
+            this.m_ordre.clear();
+        }
     }
 }

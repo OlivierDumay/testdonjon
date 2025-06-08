@@ -49,8 +49,8 @@ public class EspeceMonstre {
                 int id = type.getID();
                 id ++;
                 setId(i ,id);
-                System.out.println("creerMonstreEspeceExistante: test: id= "+ id);
-                monstre = new Monstre(type.getNom(), type.getAttaque1(), type.getAttaque2(), type.getArmure(), type.getPV(), type.getVitesse(), type.getEtiquette(), id);
+                //System.out.println("creerMonstreEspeceExistante: test: id= "+ id);
+                monstre = new Monstre(type.getNom(), type.getAttaque1(), type.getAttaque2(), type.getArmure(), type.getPV(), type.getVitesse(), type.getForce(), type.getDex(), type.getInit(),type.getEtiquette(), id);
                 return monstre;
             }
         }
