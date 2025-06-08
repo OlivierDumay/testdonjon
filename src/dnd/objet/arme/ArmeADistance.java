@@ -17,7 +17,7 @@ public class ArmeADistance extends Arme
     }
     public int jetDegat()
     {
-        return lancerDe(super.getnbDe(), super.getnbFace()); // quand perso attaque : perso.attaque(case, this.armeEquipee)
+        return lancerDe(super.getnbDe(), super.getnbFace(), " le jet de dégat à distance"); // quand perso attaque : perso.attaque(case, this.armeEquipee)
     }
 
     public int getBonusAttaque(int force, int dex)

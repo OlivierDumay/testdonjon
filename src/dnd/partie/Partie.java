@@ -111,11 +111,7 @@ public class Partie {
         emplacement = Affichage.afficheDemandeEmplacement(carte);
         carte.ajouterGameObject(perso, emplacement[0],emplacement[1]);
 
-        //// tire les initiative et met les monstres et perso dans l'ordre dans ordre.m_ordre
-        ordre.triage();
-
         //// Déroulement de la partie:
-        ordre.triage();
         deroulementPartie(ordre, carte);
 
 
@@ -166,6 +162,7 @@ public class Partie {
     public int deroulementDonjon (Ordre ordre, Carte carte, int nbDonjon)
     {
         int nbTour = 0;
+        ordre.tirerLesInitiatives(); // on tire les initiative
         while (true)
         {
             int resultat = ordre.testFinDePartie();
@@ -189,42 +186,5 @@ public class Partie {
             }
         }
     }
-        {
-
-
-            int nbTour = 0;
-            while (true)
-            {
-                switch (ordre.testFinDePartie())
-                {
-                    // retour de testFinDePartie
-                    //  0 des monstres et des perso encore en vie, la partie continue
-                    //  1 tous les perso mort, fin de la partie
-                    //  2 tous les monstres sont mort, donjon suivant
-                    case 0 : //des monstres et des perso encore en vie, la partie continue
-                        nbTour++;
-                        TourDeJeu tour = new TourDeJeu(carte, ordre , nbTour, nbDonjon);
-                        break;
-                    case 1 : //tous les perso mort, fin de la partient
-                        return 1;
-                    case 2 : // tous les monstres sont mort, donjon suiva
-                        return 0;
-                    default:
-                        break;
-                }
-            }
-
-        }
-
-
-
-
-/*
-    // pour lancer une partie par défaut
-    public Partie (int maxX, int maxY, EnumPartie defaut)
-    {
-        super(maxX, maxY);
-    }
-    */
 
 }

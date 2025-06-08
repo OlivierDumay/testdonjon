@@ -28,13 +28,14 @@ public class TourDeJeu
         boolean finTour = false;
         for (int i = 0; i < ordre.m_ordre.size(); i++) //parcours ordre.m_ordre
         {
-            System.out.println("tourDeJeu: test avant tour: (vrai si le tour doit se terminer) finTour: " + finTour);
+            //System.out.println("tourDeJeu: test avant tour: (vrai si le tour doit se terminer) finTour: " + finTour);
             if  (!finTour)
             {
                 // test du type
                 switch (ordre.m_ordre.get(i).getType())
                 {
                     case PERSONNAGE:
+                        boolean finTourPerso = false;
                         Personnage p = (Personnage) ordre.m_ordre.get(i);
                         if (p.testEtatVie())
                         {
@@ -42,19 +43,26 @@ public class TourDeJeu
                             for (int nAction = 3; nAction >0; nAction--)
                             {
                                 if  (finTour) {break;}
-                                finTour = afficherActionPerso(carte, ordre, p, nAction, nTour, ndonjon);
+                                boolean[] retourAction = new boolean[2];
+                                retourAction = afficherActionPerso(carte, ordre, p, nAction, nTour, ndonjon);
+                                finTour = retourAction[0];
+                                finTourPerso = retourAction[1];
                             }
                         }
                         break;
                     case MONSTRE:
+                        boolean finTourMonstre = false;
                         Monstre m = (Monstre) ordre.m_ordre.get(i);
                         if (m.testEtatVie())
                         {
                             for (int nAction = 3; nAction >0; nAction--)
                             {
-                                if  (finTour) {break;}
-                                finTour = afficherActionMonstre(carte, ordre, m, nAction, nTour, ndonjon);
-                                System.out.println("tourDeJeu: test dans tour monstre: (vrai si le tour doit se terminer) finTour: " + finTour);
+                                if  (finTourMonstre) {break;}
+                                boolean[] retourAction = new boolean[2];
+                                retourAction = afficherActionMonstre(carte, ordre, m, nAction, nTour, ndonjon);
+                                finTour = retourAction[0];
+                                finTourMonstre = retourAction[1];
+                                //System.out.println("tourDeJeu: test dans tour monstre: nAction " + nAction + " (vrai si le tour doit se terminer) finTour: " + finTour);
 
                             }
                         }

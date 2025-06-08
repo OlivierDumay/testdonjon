@@ -46,11 +46,19 @@ public class EspeceMonstre {
             //System.out.println("EspeceMonstre.creerMonstreEspeceExistante : test, espece=" + espece + ", monstre=" + m_listeMonstre.get(i).getEspece() );
             if (m_listeMonstre.get(i).getEspece().equals(espece)) {
                 Monstre type = m_listeMonstre.get(i);
-                monstre = new Monstre(type.getNom(), type.getAttaque1(), type.getAttaque2(), type.getArmure(), type.getPV(), type.getVitesse(), type.getEtiquette(), type.getID() + 1);
+                int id = type.getID();
+                id ++;
+                setId(i ,id);
+                System.out.println("creerMonstreEspeceExistante: test: id= "+ id);
+                monstre = new Monstre(type.getNom(), type.getAttaque1(), type.getAttaque2(), type.getArmure(), type.getPV(), type.getVitesse(), type.getEtiquette(), id);
                 return monstre;
             }
         }
         System.out.println("Erreur: EspeceMonstre.creerMonstreEspeceExistante : espece incorecte, argument= " + espece);
         return null;
+    }
+
+    public static void setId(int i, int id) {
+        m_listeMonstre.get(i).setId(id);
     }
 }

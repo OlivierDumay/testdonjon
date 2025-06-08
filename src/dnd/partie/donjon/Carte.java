@@ -153,14 +153,14 @@ public class Carte
 
     }
 
-    public int attaquer(GameObject attaquant, GameObject defenseur, Ordre ordre)
+    public int[] attaquer(GameObject attaquant, GameObject defenseur, Ordre ordre)
     {
         // retour:
         //      0 si l'attaque est réussie et le defenseur est encore vivant
         //      1 si l'attaque est ratée
         //      2 si le défenseur est mort
         //      3 si cible hors de portée
-
+    int[] retour = new int[2];
         if (defenseur == null)
             throw new IllegalArgumentException("Erreur : la case attaquée est vide");
 
@@ -171,37 +171,45 @@ public class Carte
         Case caseDefenseur = this.getCase(postionDefenseur[0], postionDefenseur[1]);
 
         float distance = caseAttaquant.calculDistance(caseDefenseur);
-        System.out.println("Carte.attaquer: test: distance: " + distance + ", portée: " +attaquant.getPortee());
-        System.out.println("Carte.attaquer: test: (distance > (float)attaquant.getPortee()): " + (distance > (float)attaquant.getPortee()));
+        //System.out.println("Carte.attaquer: test: distance: " + distance + ", portée: " +attaquant.getPortee());
+        //System.out.println("Carte.attaquer: test: (distance > (float)attaquant.getPortee()): " + (distance > (float)attaquant.getPortee()));
         if (distance > (float)attaquant.getPortee()) // si distance est plus grande que la portée de l'attaquant
         {
-            return 3;
+            retour[0] = 3;
         }
 
         // l'attaque
 
-        int resultatDeAttaque = De.lancerDe(1,20);
+        int resultatDeAttaque = De.lancerDe(1,20, " le jet d'attaque");
         int armureDefenseur = defenseur.getArmure();
         int bonusAttaque = attaquant.getBonusAttaque();
 
         if (resultatDeAttaque + bonusAttaque >= armureDefenseur)
         {
             // attaque réussie, application des dégats
-
+            System.out.println("Resultat: " + resultatDeAttaque + " + bonus d'attaque de " +
+                    bonusAttaque+ " = " + (resultatDeAttaque + bonusAttaque) +
+                    ", supérieur ou égal à la classe d'armure "  + armureDefenseur+ " de " + defenseur.getNom());
             int[] deDegat = attaquant.getAttaque();
-            int resultatDegat = De.lancerDe(deDegat[0],deDegat[1]);
-
+            int resultatDegat = De.lancerDe(deDegat[0],deDegat[1], (" le jet de dégat + bonus d'attaque de "+ attaquant.getBonusAttaque()));
+            int bonusDegat = attaquant.getBonusAttaque();
+            resultatDegat += bonusDegat;
+            retour[1] = resultatDegat;
             if (!defenseur.setPV(defenseur.getPV() - resultatDegat)) // si renvoie faux, le defenseur est mort
             {
 
                 this.retirerGameObject(defenseur, postionDefenseur[0], postionDefenseur[1]);
                 ordre.supprimerGameObject(defenseur);
-                return 2; //le defenseur est mort
+                retour[0] = 2; //le defenseur est mort
             }
-            else {return 0;}  //l'attaque est réussie et le defenseur est encore vivant
+            else {retour[0] = 0;}  //l'attaque est réussie et le defenseur est encore vivant
 
         }
-        else {return 1;} // l'attaque a échoué
+        else {System.out.println("Resultat: " + resultatDeAttaque + " + bonus d'attaque de " +
+                        bonusAttaque+ " = " + (resultatDeAttaque + bonusAttaque) +
+                        ", inférieur à la classe d'armure "  + armureDefenseur+ " de " + defenseur.getNom());
+            retour[0] = 1;} // l'attaque a échoué
+    return retour;
     }
 
     public void prendre (Personnage perso, Item item)
