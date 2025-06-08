@@ -12,7 +12,7 @@ import java.util.Optional;
 public class EquipementPersonnage
 {
     // class members
-    private static final Arme m_arme_defaut = new ArmeCourante("Poings", 1, 1, 1);
+    private static final Arme m_arme_defaut = new ArmeCourante("Poings", 1, 4, 1);
     private static final Armure m_armure_defaut = new ArmureLegere("Aucune armure", 1);
     private Optional<Arme> m_arme; // TODO : à changer : fait
     private Optional<Armure> m_armure; // TODO : à changer : fait

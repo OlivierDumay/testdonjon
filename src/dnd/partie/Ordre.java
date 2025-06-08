@@ -27,11 +27,9 @@ public class Ordre {
 
     public void supprimerGameObject(GameObject gameObject)
     {
+        if (m_ordre.contains(gameObject))
         {
-            if (!m_ordre.contains(gameObject))
-            {
-                m_ordre.remove(gameObject);
-            }
+            m_ordre.remove(gameObject);
         }
     }
 
@@ -45,11 +43,12 @@ public class Ordre {
         boolean unMonstreEnVie = false;
         for (int i = 0; i < m_ordre.size(); i++)
         {
-            if (m_ordre.get(i).getType() == Type.PERSONNAGE)
+            GameObject obj = m_ordre.get(i);
+            if (obj.getType() == Type.PERSONNAGE && obj.testEtatVie())
             {
                 unPersoEnVie = true;
             }
-            if (m_ordre.get(i).getType() == Type.MONSTRE)
+            if (obj.getType() == Type.MONSTRE && obj.testEtatVie())
             {
                 unMonstreEnVie = true;
             }
@@ -57,6 +56,5 @@ public class Ordre {
         if(!unPersoEnVie) {return 1;}
         if (!unMonstreEnVie) {return 2;}
         else {return 0;}
-
     }
 }
