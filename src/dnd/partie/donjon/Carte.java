@@ -5,6 +5,7 @@ import dnd.des.De;
 import dnd.gameobject.*;
 import dnd.gameobject.personnage.Personnage;
 import dnd.objet.Item;
+import dnd.partie.Ordre;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -152,7 +153,7 @@ public class Carte
 
     }
 
-    public int attaquer(GameObject attaquant, GameObject defenseur)
+    public int attaquer(GameObject attaquant, GameObject defenseur, Ordre ordre)
     {
         // retour:
         //      0 si l'attaque est réussie et le defenseur est encore vivant
@@ -192,6 +193,9 @@ public class Carte
 
             if (!defenseur.setPV(defenseur.getPV() - resultatDegat)) // si renvoie faux, le defenseur est mort
             {
+
+                this.retirerGameObject(defenseur, postionDefenseur[0], postionDefenseur[1]);
+                ordre.supprimerGameObject(defenseur);
                 return 2; //le defenseur est mort
             }
             else {return 0;}  //l'attaque est réussie et le defenseur est encore vivant

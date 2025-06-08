@@ -221,7 +221,6 @@ public class Personnage implements GameObject, Asset
     {
         this.m_caracteristique.setPV(pv);
         return this.testEtatVie();
-
     }
 
     public boolean testEtatVie()

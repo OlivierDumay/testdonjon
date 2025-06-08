@@ -106,11 +106,11 @@ public class Monstre implements GameObject, Asset
     {
         this.m_caracteristique.setPV(pv);
         return this.testEtatVie();
-
     }
 
     public boolean testEtatVie()
     {
+        // renvoie true si pv > 0 (oui il est en vie)
         if (this.m_caracteristique.getPV()<=0)
         {return false;}
         return true;
