@@ -11,6 +11,8 @@ public interface GameObject extends Asset
 
     public int getVitesse();
 
+    public int getInitiative();
+
     public String getNom();
 
     public int getPortee();

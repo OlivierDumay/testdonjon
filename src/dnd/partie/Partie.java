@@ -111,11 +111,7 @@ public class Partie {
         emplacement = Affichage.afficheDemandeEmplacement(carte);
         carte.ajouterGameObject(perso, emplacement[0],emplacement[1]);
 
-        //// tire les initiative et met les monstres et perso dans l'ordre dans ordre.m_ordre
-        ordre.triage();
-
         //// Déroulement de la partie:
-        ordre.triage();
         deroulementPartie(ordre, carte);
 
 
@@ -166,6 +162,7 @@ public class Partie {
     public int deroulementDonjon (Ordre ordre, Carte carte, int nbDonjon)
     {
         int nbTour = 0;
+        ordre.tirerLesInitiatives(); // on tire les initiative
         while (true)
         {
             int resultat = ordre.testFinDePartie();

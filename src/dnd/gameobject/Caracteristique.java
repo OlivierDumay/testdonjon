@@ -49,6 +49,11 @@ public class Caracteristique
         return this.m_pvmax;
     }
 
+    public int getInitiative()
+    {
+        return this.m_initiative;
+    }
+
     public void setPV(int pv)
     {
         this.m_pv = pv;

@@ -142,6 +142,9 @@ public class Personnage implements GameObject, Asset
         return this.m_caracteristique.getVitesse();
     }
 
+    public int getInitiative()
+    { return this.m_caracteristique.getInitiative();}
+
     public Inventaire getInventaire()
     {
         return this.m_inventaire;

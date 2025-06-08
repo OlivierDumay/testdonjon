@@ -1,6 +1,7 @@
 package dnd.affichage;
 
 
+import dnd.Type;
 import dnd.gameobject.Action;
 import dnd.gameobject.GameObject;
 import dnd.gameobject.ennemi.EspeceMonstre;
@@ -28,9 +29,9 @@ public class Affichage
     }
 
     // affichage pendant partie
-    public static void afficherTour(Carte carte, Personnage personnage, int n_tour, int n_donjon)
+    public static void afficherTour(Ordre ordre, Carte carte, Personnage personnage, int n_tour, int n_donjon)
     {
-        afficherInfoDonjon(carte, personnage, n_tour, n_donjon);
+        afficherInfoDonjon(ordre, carte, personnage, n_tour, n_donjon);
         afficherCarte(carte);
         afficherInfoPersos(personnage);
 
@@ -81,13 +82,28 @@ public class Affichage
         System.out.println("    * Equipement   |   [ ] Obstacle  |");
     }
 
-    public static void afficherInfoDonjon(Carte carte, Personnage personnage, int n_tour, int n_donjon)
+    public static void afficherInfoDonjon(Ordre ordre, Carte carte, Personnage personnage, int n_tour, int n_donjon)
     {
-        System.out.println("********************************************************************************\nDonjon " + n_donjon + ":");
+        System.out.println("********************************************************************************\n" +
+                "Donjon " + n_donjon + ":");
 
 
-        System.out.println("                                    " +
-                personnage.getNom() + " (" + personnage.getRace().toString() + " " + personnage.getClasse().toString() +")");
+        for (int x = 0; x < ordre.getListOrdre().size(); x++)
+        {
+            if (ordre.getListOrdre().get(x).getType() == Type.PERSONNAGE)
+            {
+                GameObject go = ordre.getListOrdre().get(x);
+                Personnage p = (Personnage) go;
+                System.out.println("\t\t\t\t\t" + p.getNom() + " (" + p.getRace().toString() + " " + p.toString() +")");
+            }
+            if (ordre.getListOrdre().get(x).getType() == Type.MONSTRE)
+            {
+                GameObject go = ordre.getListOrdre().get(x);
+                Monstre m = (Monstre) go;
+                System.out.println("\t\t\t\t\t" + m.getNom() );
+            }
+
+        }
 
         System.out.println("\n********************************************************************************");
 
@@ -510,7 +526,7 @@ public class Affichage
         retour[0] = false;
         retour[1] = false;
         // ajouter action, voir quel est l'object sur cette case
-        afficherTour(carte, perso, nTour, ndonjon);
+        afficherTour(ordre, carte, perso, nTour, ndonjon);
         /*
         "Caelynn il vous reste 2 actions que souhaitez vous faire ?
                 - laisser le maître du jeu commenter l'action précédente (mj <texte>)

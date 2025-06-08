@@ -67,7 +67,10 @@ public class Monstre implements GameObject, Asset
         this.m_position[1] = y;
     }
 
-    public String getNom() {return (m_espece+m_id);}
+    public String getNom()
+    {
+        String str = m_espece + m_id;
+        return str;}
     public String getEspece() { return m_espece; }
 
     public int[] getPosition()
@@ -79,6 +82,8 @@ public class Monstre implements GameObject, Asset
     {
         return this.m_caracteristique.getVitesse();
     }
+
+    public int getInitiative()  { return this.m_caracteristique.getInitiative();}
 
     public int getArmure()
     {
@@ -128,4 +133,10 @@ public class Monstre implements GameObject, Asset
 
     public int getID()
     {return this.m_id;}
+
+    public void setId(int id)
+    {
+        this.m_id = id;
+    }
+
 }
