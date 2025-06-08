@@ -115,6 +115,7 @@ public class Partie {
         ordre.triage();
 
         //// Déroulement de la partie:
+        ordre.triage();
         deroulementPartie(ordre, carte);
 
 
@@ -177,7 +178,7 @@ public class Partie {
                     //  2 tous les monstres sont mort, donjon suivant
                     case 0 : //des monstres et des perso encore en vie, la partie continue
                         nbTour++;
-                        TourDeJeu tour = new TourDeJeu(carte, ordre.m_ordre , nbTour, nbDonjon);
+                        TourDeJeu tour = new TourDeJeu(carte, ordre , nbTour, nbDonjon);
                         break;
                     case 1 : //tous les perso mort, fin de la partient
                         return 1;

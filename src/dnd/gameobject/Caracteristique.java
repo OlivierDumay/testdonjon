@@ -48,16 +48,9 @@ public class Caracteristique
     {
         return this.m_pvmax;
     }
-    public void subPV(int pv)
-    {
-        if (pv < 0 || pv > getPV())
-            throw new IllegalArgumentException("Erreur : impossible de retirer un nombre de points de vie nul ou supérieur aux points de vie actuels");
-        setPV(getPV()-pv);
-    }
 
     public void setPV(int pv)
     {
-        if (pv < 0)
-            throw new IllegalArgumentException("Erreur : les points de vie ne peuvent pas être inférieur à 0");
+        this.m_pv = pv;
     }
 }

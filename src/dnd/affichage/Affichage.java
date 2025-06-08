@@ -225,16 +225,23 @@ public class Affichage
         //scanner.close();
     }
 
-    public static void afficherAttaquer (Carte carte, GameObject gameObject)
+    public static boolean afficherAttaquer (Carte carte, GameObject gameObject, Ordre ordre)
     {
+        // renvoie true si defenseur tué, pour faire un testFinPartie
+        boolean retourbool = false;
         //Scanner scanner = new Scanner(System.in);
-        System.out.println("Sur quelle case se porte votre attaque?\n x: ");
+        System.out.println("Sur quelle case se porte votre attaque?\t\t\t\t\t\t\tTapez -1 pour annuler l'attaque\n x: ");
         int x = scanner.nextInt();
-        while (x < 0 || x > carte.getMaxX())
+        while (x < -1 || x > carte.getMaxX())
         {
-            System.out.println("Indiquer une valeur entre 0 et " + carte.getMaxX());
+            System.out.println("Indiquer une valeur entre 0 et " + carte.getMaxX() + " ou -1 (pour annuler)");
             x = scanner.nextInt();
         }
+
+        if (x==-1)
+        { System.out.println("Attaque annulée");
+            return false;}
+
         System.out.println("y: ");
         int y = scanner.nextInt();
         while (y < 0 || y > carte.getMaxY())
@@ -269,7 +276,7 @@ public class Affichage
         //      2 si le défenseur est mort
         //      3 si cible hors de portée
         int retour;
-        retour = carte.attaquer(gameObject, cible);
+        retour = carte.attaquer(gameObject, cible, ordre);
         while (retour != -1)
         {
             switch (retour)
@@ -285,6 +292,7 @@ public class Affichage
                 case 2 : // le défenseur est mort
                     retour = -1;
                     System.out.println("Attaque réussie : " + gameObject.getNom() + " à tuer " + cible.getNom());
+                    retourbool = true;
                     break;
                 case 3 : // cible hors de portée
                     System.out.println("Cible hors de portée, choisissez en une case. (Votre portée :  " + gameObject.getPortee() + ")\n x: ");
@@ -302,13 +310,12 @@ public class Affichage
                         y = scanner.nextInt();
                     }
                     cible = carte.getQuelGameObjectEstIci(x, y);
-                    retour = carte.attaquer(gameObject, cible);
+                    retour = carte.attaquer(gameObject, cible, ordre);
                     break;
             }
-
-
         }
-
+        System.out.println("afficherAttaquer: test: (0 si defenseur tué) retourbool: " + retourbool);
+        return retourbool;
         //scanner.close();
     }
 
@@ -494,8 +501,11 @@ public class Affichage
 
     }
 
-    public static void afficherActionPerso(Carte carte, Personnage perso, int nAction, int nTour, int ndonjon)
+    public static boolean afficherActionPerso(Carte carte, Ordre ordre, Personnage perso, int nAction, int nTour, int ndonjon)
     {
+        // retourne true pour arreter le tour en cours dans l'appel par TourDeJeu
+        boolean retour = false;
+
         // ajouter action, voir quel est l'object sur cette case
         afficherTour(carte, perso, nTour, ndonjon);
         /*
@@ -526,17 +536,30 @@ public class Affichage
         {
             case 1:
                 afficherCommentaire("Maitre du Jeu - ");
-                afficherActionPerso(carte, perso, nAction, nTour, ndonjon);
+                afficherActionPerso(carte, ordre, perso, nAction, nTour, ndonjon);
                 break;
             case 2:
                 afficherCommentaire(perso.getNom() + " - ");
-                afficherActionPerso(carte, perso, nAction, nTour, ndonjon);
+                afficherActionPerso(carte, ordre, perso, nAction, nTour, ndonjon);
                 break;
             case 3:
                 afficherObjetSurCase(carte);
                 break;
             case 4:
-                afficherAttaquer(carte, perso);
+                if (afficherAttaquer(carte, perso, ordre))
+                {
+                    switch (ordre.testFinDePartie())
+                    {
+                        case 0:
+                            break;
+                        case 1:
+                            retour = true;
+                            break;
+                        case 2:
+                            retour = true;
+                            break;
+                    }
+                }
                 break;
             case 5:
                 afficherSeDeplacer(carte, perso);
@@ -550,14 +573,17 @@ public class Affichage
             default:
                 break;
         }
+        return retour;
         //scanner.close();
     }
 
-    public static void afficherActionMonstre(Carte carte, Monstre monstre, int nAction, int nTour, int ndonjon)
+    public static boolean afficherActionMonstre(Carte carte, Ordre ordre, Monstre monstre, int nAction, int nTour, int ndonjon)
     {
 
         // ajouter action, voir quel est l'object sur cette case
         // trouver une methode pour ajouter        afficherTour(carte, perso, nTour, ndonjon);
+
+        boolean retour = false;
         afficherCarte(carte);
         // Scanner scanner = new Scanner(System.in);
         System.out.print(monstre.getNom() + " il vous reste " + nAction + " action, que souhaitez vous faire? Entrez le numero de l'action que vous voulez réaliser\n" +
@@ -575,10 +601,23 @@ public class Affichage
         {
             case 1:
                 afficherCommentaire("Maitre du Jeu - ");
-                afficherActionMonstre(carte, monstre, nAction, nTour, ndonjon);
+                afficherActionMonstre(carte, ordre, monstre, nAction, nTour, ndonjon);
                 break;
             case 2:
-                afficherAttaquer(carte, monstre);
+                if (afficherAttaquer(carte, monstre, ordre))
+                {
+                    switch (ordre.testFinDePartie())
+                    {
+                        case 0:
+                            break;
+                        case 1:
+                            retour = true;
+                            break;
+                        case 2:
+                            retour = true;
+                            break;
+                    }
+                }
                 break;
             case 3:
                 afficherSeDeplacer(carte, monstre);
@@ -586,6 +625,7 @@ public class Affichage
             default:
                 break;
         }
+        return retour;
         //scanner.close();
     }
 
