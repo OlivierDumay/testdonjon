@@ -28,6 +28,9 @@ public class TourDeJeu
         boolean finTour = false;
         for (int i = 0; i < ordre.m_ordre.size(); i++) //parcours ordre.m_ordre
         {
+            if (ordre.m_ordre.get(i) == null)
+            {   //System.out.println("tourDeJeu: test monstre null dans ordre: i :" +i);
+                continue;}
             //System.out.println("tourDeJeu: test avant tour: (vrai si le tour doit se terminer) finTour: " + finTour);
             if  (!finTour)
             {

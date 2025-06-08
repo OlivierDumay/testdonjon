@@ -13,6 +13,8 @@ public class Main
     {
         System.out.println("Bienvenue dans DOOnjon et Dragons\n");
 
+        Partie partie = new Partie(10, 10);
+
 //        Personnage perso1 = new Personnage("Albert", EnumClasse.CLERC, EnumRace.HUMAIN);
 //        Carte carte = new Carte(15,20);
 //        carte.ajouterGameObject(perso1, 2, 2);
@@ -41,7 +43,7 @@ public class Main
         // xAction.equiper(muhammed, 0);
         Affichage.afficherTour(carte, muhammed, 1, 2);
         */
-        Partie partie = new Partie(10, 10);
+
         Affichage.fermerScanner();
     }
 

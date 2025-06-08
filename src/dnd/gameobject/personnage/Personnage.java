@@ -105,10 +105,11 @@ public class Personnage implements GameObject, Asset
                 throw new IllegalArgumentException("Erreur : race invalide !");
         }
 
-        this.m_caracteristique = new Caracteristique(this.m_classe.bonusCreation(), lancerDe(4, 4, "la caractéristique de Force") + 3 + this.m_race.bonusForce(),
-                lancerDe(4, 4, "la caractéristique de Dextérité") + 3 + this.m_race.bonusDexterite(),
-                lancerDe(4, 4, "la caractéristique de Vitesse") + 3 + this.m_race.bonusVitesse(),
-                lancerDe(4, 4, "la caractéristique d'Initiative") + 3 + this.m_race.bonusInitiative());
+        this.m_caracteristique = new Caracteristique(this.m_classe.bonusCreation(),
+                    lancerDe(4, 4, ("la caractéristique de Force, bonus de race:"+ this.m_race.bonusForce())+ "+3") + 3 + this.m_race.bonusForce(),
+                lancerDe(4, 4, ("la caractéristique de Dextérité, bonus de race:"+this.m_race.bonusDexterite())+ "+3") + 3 + this.m_race.bonusDexterite(),
+                    lancerDe(4, 4, ("la caractéristique de Vitesse, bonus de race:"+this.m_race.bonusVitesse())+ "+3") + 3 + this.m_race.bonusVitesse(),
+                    lancerDe(4, 4, ("la caractéristique d'Initiative, bonus de race:"+this.m_race.bonusInitiative())+ "+3") + 3 + this.m_race.bonusInitiative());
 
         //Init position
         this.m_position = new int[2];

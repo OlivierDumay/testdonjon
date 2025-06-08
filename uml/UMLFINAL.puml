@@ -1,0 +1,100 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam style strictuml hide empty members
+
+class Main{}
+
+package dnd
+{
+    package affichage
+    {
+    }
+    package des
+    {
+        class De
+        {
+            +staticlancerDe(nbDe : integer, nbFace : integer, pourquoi : String)
+        }
+    }
+    package gameobject
+    {
+        package ennemi
+        {
+        }
+        package personnage
+        {
+        }
+        class Action
+        {
+            +staticvoidequiper(Personnage personnage, int n_equipement)
+            +staticvoiddesequiper(Personnage personnage, Type type)
+        }
+
+        class Caracteristique
+        {
+            -m_privatepvMax : int
+            -m_privatepvpv : int
+            -m_privatepvforce : int
+            -m_privatepvdexterite : int
+            -m_privatepvvitesse : int
+            -m_privatepvinitiative : int
+            +Caracteristique (int pv, int force, int dexterite, int vitesse, int initiative)
+            +getPV(): int
+            +getForce(): int
+            +getDexterite(): int
+            +getVitesse(): int
+            +getPVmax(): int
+            +getInitiative(): int
+            +voidsetPV(int pv)
+        }
+        interface GameObject <<interface>> implements dnd.Asset
+        {
+            +void setPosition(int x , int y);
+            +getPosition(): int[]
+            +getVitesse():int
+            +getInitiative():int
+            +getNom():String
+            +getPortee():String
+            +getAttaque(): int[]
+            +getArmure():int
+            +getBonusAttaque():int
+            +getPV():int
+            +setPV(int pv):boolean
+            +testEtatVie():boolean
+        }
+    }
+    package objet
+    {
+    }
+    package partie
+    {
+    }
+
+    interface Asset <<interface>>
+    {
+        + getType(): Type
+        + getEtiquette() : String
+    }
+
+    class Obstacle implements dnd.Asset
+    {
+         - m_type : Type
+         +<<create>> Obstacle
+         + getEtiquette :  String
+    }
+
+    enum Type <<enumerate>>
+    {
+        ARME
+        ARMURE
+        MONSTRE
+        PERSONNAGE
+        OBSTACLE
+    }
+
+
+
+
+@enduml

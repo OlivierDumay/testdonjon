@@ -219,5 +219,15 @@ public class Carte
         this.retirerItem(this.getQuelItemEstIci(oxy[0], oxy[1]), oxy[0], oxy[1]);
     }
 
+    public void viderGrille ()
+    {
 
+        for (int i = 0; i < getMaxX(); i++)
+        {
+            for (int j = 0; j < getMaxY(); j++)
+            {
+                this.m_grille[i][j] = null;
+            }
+        }
+    }
 }
