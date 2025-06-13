@@ -1,9 +1,8 @@
 package dnd.gameobject.personnage;
-import dnd.objet.Arme;
-import dnd.objet.Armure;
+
 import dnd.objet.Item;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 
 public class Inventaire

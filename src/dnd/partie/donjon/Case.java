@@ -1,11 +1,7 @@
 package dnd.partie.donjon;
 
-import dnd.Asset;
 import dnd.objet.Item;
 import dnd.gameobject.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Case
 {

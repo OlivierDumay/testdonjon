@@ -1,6 +1,6 @@
 package dnd.gameobject;
 
-import dnd.Asset;
+
 import dnd.Type;
 import dnd.gameobject.personnage.EquipementPersonnage;
 import dnd.gameobject.personnage.Inventaire;

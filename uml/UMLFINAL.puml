@@ -3,33 +3,304 @@
 skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
 skinparam style strictuml hide empty members
+'skinparam linetype ortho
 
-class Main{}
+
 
 package dnd
 {
-    package affichage
+    package dnd.affichage
     {
+        class Affichage
+        {
+        + scanner: Scanner {static}
+        + fermerScanner(): void
+        + afficherTour(ordre: Ordre, carte: Carte, personnage: Personnage, n_tour: int, n_donjon: int): void
+        + afficherCarte(carte: Carte): void
+        + afficherInfoDonjon(ordre: Ordre, carte: Carte, personnage: Personnage, n_tour: int, n_donjon: int): void
+        + afficherInfoPersos(personnage: Personnage): void
+        + afficherCommentaire(debut: String): void
+        + afficherObjetSurCase(carte: Carte): void
+        + afficherAttaquer(carte: Carte, gameObject: GameObject, ordre: Ordre): boolean
+        + afficherSeDeplacer(carte: Carte, gameObject: GameObject): void
+        + afficherSEquiper(carte: Carte, perso: Personnage): void
+        + afficherPrendre(carte: Carte, perso: Personnage): void
+        +boolean[] afficherActionPerso(Carte, Ordre, Personnage, int, int, int)
+        +boolean[] afficherActionMonstre(Carte, Ordre, Monstre, int, int, int)
+        +String[] afficherCreaPerso()
+        +int[] afficherCreaMonstreObjet(Carte) throws Exception
+        +void afficheCreaMonstre()
+        +void AffichageAjoutMonstreCarte(Carte, Ordre, int, int)
+        +Item afficheCreaItem()
+        +int[] afficheDemandeEmplacement(Carte)
+        +void afficherEquipement(Personnage)
+        +void afficheFinDePartie()
+        +int[] afficheDonjonSuivant(int)
+        +void affichePartieTerminee()
+        +void afficheLancerDeDe(int, int, int, String)
+        +int afficheChoixCreaPartie()
     }
-    package des
+    'dnd.affichage.Affichage ..> dnd.Type : utilise
+    'dnd.affichage.Affichage ..> dnd.gameObject.GameObject : utilise
+    'dnd.affichage.Affichage ..> dnd.gameObject.ennemi.Monstre : utilise
+    'dnd.affichage.Affichage ..> dnd.gameObject.personnage.Personnage : utilise
+    'dnd.affichage.Affichage ..> dnd.objet.Item : utilise
+    'dnd.affichage.Affichage ..> dnd.partie.Ordre : utilise
+    'dnd.affichage.Affichage ..> dnd.partie.donjon.Carte : utilise
+
+    package dnd.des
     {
         class De
         {
-            +staticlancerDe(nbDe : integer, nbFace : integer, pourquoi : String)
+            + {static} lancerDe(nbDe : integer, nbFace : integer, pourquoi : String): integer
         }
     }
-    package gameobject
+
+    package dnd.gameObject
     {
-        package ennemi
+        package dnd.gameObject.ennemi
         {
+            class Monstre implements dnd.gameObject.GameObject
+            {
+                - m_current_id : int
+                - m_id : int
+                - m_espece : String
+                - m_attaque : int[]
+                - m_classeArmure : int
+                - m_caracteristique : Caracteristique
+                - m_etiquette : String
+                - m_position : int[]
+                - m_type : Type
+                + Monstre(espece: String, nDe: int, nFace: int, armure: int, pv: int, vitesse: int, force: int, dexterite: int, initiative: int, etiquette: String, id: int)
+                + getEtiquette(): String
+                + getType(): Type
+                + setPosition(x: int, y: int): void
+                + getNom(): String
+                + getEspece(): String
+                + getPosition(): int[]
+                + getVitesse(): int
+                + getInitiative(): int
+                + getArmure(): int
+                + getPortee(): int
+                + getAttaque(): int[]
+                + getBonusAttaque(): int
+                + getPV(): int
+                + getPVMax(): int
+                + setPV(pv: int): boolean
+                + testEtatVie(): boolean
+                + getAttaque1(): int
+                + getAttaque2(): int
+                + getID(): int
+                + setId(id: int): void
+                + getForce(): int
+                + getDex(): int
+                + getInit(): int
+            }
+            'dnd.gameObject.ennemi.Monstre ..> dnd.Type: utilise
+            dnd.gameObject.ennemi.Monstre --> dnd.gameObject.Caracteristique: contient
+
+            class EspeceMonstre
+            {
+                - {static} m_listeMonstre : List<Monstre>
+                + {static} ajouterEspeceMonstre(monstre: Monstre): boolean
+                + {static} getListeEspece(): List<Monstre>
+                + {static} creerMonstreEspeceExistante(espece: String): Monstre
+                + {static} setId(i: int, id: int): void
+            }
+            dnd.gameObject.ennemi.EspeceMonstre o..> dnd.gameObject.ennemi.Monstre: possèdes des
+
         }
-        package personnage
+
+        package dnd.gameObject.personnage
         {
+            package dnd.gameObject.personnage.classe
+            {
+                enum EnumClasse
+                {
+                    CLERC
+                    GUERRIER
+                    MAGICIEN
+                    ROUBLARD
+                }
+
+                 abstract class Classe
+                 {
+                     +abstract int bonusCreation()
+                     +abstract String toString()
+                 }
+
+                 class Clerc
+                 {
+                     +int bonusCreation()
+                     +String toString()
+                 }
+
+                 class Guerrier
+                 {
+                     +int bonusCreation()
+                     +String toString()
+                 }
+
+                 class Magicien
+                 {
+                     +int bonusCreation()
+                     +String toString()
+                 }
+
+                 class Roublard
+                 {
+                     +int bonusCreation()
+                     +String toString()
+                 }
+
+                 Clerc --|> Classe
+                 Guerrier --|> Classe
+                 Magicien --|> Classe
+                 Roublard --|> Classe
+
+            }
+
+
+            package dnd.gameObject.personnage.race
+            {
+                abstract class Race
+                {
+                    + {abstract} int bonusVie()
+                    + {abstract} int bonusForce()
+                    + {abstract} int bonusDexterite()
+                    + {abstract} int bonusVitesse()
+                    + {abstract} int bonusInitiative()
+                    + {abstract} String toString()
+                }
+
+                enum EnumClasse
+                {
+                        CLERC
+                        GUERRIER
+                        MAGICIEN
+                        ROUBLARD
+                    }
+
+                class Humain
+                {
+                    +int bonusVie()
+                    +int bonusForce()
+                    +int bonusDexterite()
+                    +int bonusVitesse()
+                    +int bonusInitiative()
+                    +String toString()
+                }
+
+                class Nain
+                {
+                    +int bonusVie()
+                    +int bonusForce()
+                    +int bonusDexterite()
+                    +int bonusVitesse()
+                    +int bonusInitiative()
+                    +String toString()
+                }
+
+                class Elfe
+                {
+                    +int bonusVie()
+                    +int bonusForce()
+                    +int bonusDexterite()
+                    +int bonusVitesse()
+                    +int bonusInitiative()
+                    +String toString()
+                }
+
+                class Halflin
+                {
+                    +int bonusVie()
+                    +int bonusForce()
+                    +int bonusDexterite()
+                    +int bonusVitesse()
+                    +int bonusInitiative()
+                    +String toString()
+                }
+
+                Humain --|> Race
+                Nain --|> Race
+                Elfe --|> Race
+                Halflin --|> Race
+            }
+
+            class Personnage implements dnd.gameObject.GameObject
+            {
+                - m_nom : String
+                - m_etat : boolean
+                - m_caracteristique : Caracteristique
+                - m_inventaire : Inventaire
+                - m_equipement : EquipementPersonnage
+                - m_classe : Classe
+                - m_race : Race
+                - m_position : int[]
+                - {static} m_type : Type
+                + Personnage(nom: String, classe: EnumClasse, race: EnumRace)
+                + setPosition(x: int, y: int): void
+                + getPosition(): int[]
+                + getEtiquette(): String
+                + getType(): Type
+                + getVitesse(): int
+                + getInitiative(): int
+                + getInventaire(): Inventaire
+                + getNom(): String
+                + getPVMax(): int
+                + getEquipement(): EquipementPersonnage
+                + getCaracteristique(): Caracteristique
+                + getRace(): Race
+                + getClasse(): Classe
+                + getPortee(): int
+                + getAttaque(): int[]
+                + getArmure(): int
+                + getBonusAttaque(): int
+                + getPV(): int
+                + setPV(pv: int): boolean
+                + testEtatVie(): boolean
+                + getString(): void
+            }
+            dnd.gameObject.personnage.Personnage --> dnd.gameObject.Caracteristique: contient
+            dnd.gameObject.personnage.Personnage --> dnd.gameObject.personnage.Inventaire : possède
+            dnd.gameObject.personnage.Personnage --> dnd.gameObject.personnage.EquipementPersonnage : possède
+            dnd.gameObject.personnage.Personnage --> dnd.gameObject.personnage.classe.Classe : possède une
+            dnd.gameObject.personnage.Personnage --> dnd.gameObject.personnage.race.Race : possède une
+
+
+
+
+            class Inventaire
+            {
+                - m_items : ArrayList<Item>
+                + Inventaire()
+                + getInventaire(): ArrayList<Item>
+                + addItem(item: Item): void
+                + removeItem(index: int): Item
+                + size(): int
+            }
+            dnd.gameObject.personnage.Inventaire --> dnd.objet.Item : contient
+
+            class EquipementPersonnage {
+                - {static} m_arme_defaut : Arme
+                - {static} m_armure_defaut : Armure
+                - m_arme : Optional<Arme>
+                - m_armure : Optional<Armure>
+                + EquipementPersonnage()
+                + equiperArme(arme: Arme): void
+                + equiperArmure(armure: Armure): void
+                + getArme(): Arme
+                + getArmure(): Armure
+                + retirerArme(): void
+                + retirerArmure(): void
+            }
+            dnd.gameObject.personnage.EquipementPersonnage --> dnd.objet.Item : contient
+
         }
         class Action
         {
-            +staticvoidequiper(Personnage personnage, int n_equipement)
-            +staticvoiddesequiper(Personnage personnage, Type type)
+            + {static} equiper(Personnage personnage, int n_equipement): void
+            + {static} desequiper(Personnage personnage, Type type): void
         }
 
         class Caracteristique
@@ -47,29 +318,208 @@ package dnd
             +getVitesse(): int
             +getPVmax(): int
             +getInitiative(): int
-            +voidsetPV(int pv)
+            +setPV(int pv): void
         }
         interface GameObject <<interface>> implements dnd.Asset
         {
-            +void setPosition(int x , int y);
-            +getPosition(): int[]
-            +getVitesse():int
-            +getInitiative():int
-            +getNom():String
-            +getPortee():String
-            +getAttaque(): int[]
-            +getArmure():int
-            +getBonusAttaque():int
-            +getPV():int
-            +setPV(int pv):boolean
-            +testEtatVie():boolean
+            + setPosition(int x , int y);
+            + getPosition(): int[]
+            + getVitesse():int
+            + getInitiative():int
+            + getNom():String
+            + getPortee():String
+            + getAttaque(): int[]
+            + getArmure():int
+            + getBonusAttaque():int
+            + getPV():int
+            + setPV(int pv):boolean
+            + testEtatVie():boolean
         }
     }
-    package objet
+    package dnd.objet
     {
+        package dnd.objet.arme
+        {
+            class ArmeGuerre extends dnd.objet.Arme
+            {
+                +ArmeGuerre(name: String, nb_de: int, nb_face: int, m_portee: int)
+                +appliqueBonusArme(): void
+                +jetDegat(): int
+                +getBonusAttaque(force: int, dex: int): int
+            }
+
+            class ArmeCourante extends dnd.objet.Arme {
+                +ArmeCourante(name: String, nb_de: int, nb_face: int, m_portee: int)
+                +appliqueBonusArme(): void
+                +jetDegat(): int
+                +getBonusAttaque(force: int, dex: int): int
+            }
+
+            class ArmeADistance extends dnd.objet.Arme {
+                +ArmeADistance(name: String, nb_de: int, nb_face: int, m_portee: int)
+                +appliqueBonusArme(): void
+                +jetDegat(): int
+                +getBonusAttaque(force: int, dex: int): int
+            }
+        }
+
+        package dnd.objet.armure
+        {
+            class ArmureLegere extends dnd.objet.Armure
+            {
+                +ArmureLegere(name: String, armure: int)
+                +appliqueBonusArmure(): void
+            }
+
+            class ArmureLourde extends dnd.objet.Armure
+            {
+                +ArmureLourde(name: String, armure: int)
+                +appliqueBonusArmure(): void
+            }
+        }
+
+        class Item implements dnd.Asset
+        {
+            -m_nom: String
+            -m_type: Type
+            +Item(nom: String, type: Type)
+            +getNom(): String
+            +getType(): Type
+            +equals(obj: Object): boolean
+            +getEtiquette(): String
+            +toString(): String
+        }
+
+        abstract class Arme extends dnd.objet.Item
+        {
+            -m_nb_de: int
+            -m_nb_face: int
+            -m_portee: int
+            +Arme(name: String, nb_de: int, nb_face: int, portee: int)
+            +getnbDe(): int
+            +getnbFace(): int
+            +getPortee(): int
+            +{abstract} appliqueBonusArme(): void
+            +{abstract} jetDegat(): int
+            +{abstract} getBonusAttaque(force: int, dex: int): int
+            +toString(): String
+        }
+
+        abstract class Armure extends dnd.objet.Item {
+            -m_armure: int
+            +Armure(name: String, armure: int)
+            +getArmure(): int
+            +{abstract} appliqueBonusArmure(): void
+            +toString(): String
+        }
     }
-    package partie
+
+
+
+    }
+    package dnd.partie
     {
+        package dnd.partie.donjon
+        {
+            class Carte
+             {
+                - int m_max_x
+                - int m_max_y
+                - Case[][] m_grille
+                - HashMap<GameObject, Case> m_emplacementObjet
+                - List<Asset> m_asset
+
+                + Carte(x: int, y: int)
+                + getQuelGameObjectEstIci(x: int, y: int): GameObject
+                + getQuelItemEstIci(x: int, y: int): Item
+                + OuEstGameObjet(quoi: GameObject): Case
+                + ajouterItem(item: Item, x: int, y: int): void
+                + ajouterGameObject(gameObject: GameObject, x: int, y: int): void
+                + ajouterObstacle(x: int, y: int): void
+                + retirerItem(item: Item, x: int, y: int): void
+                + retirerGameObject(gameObject: GameObject, x: int, y: int): void
+                + getEtiquetteDeLaCase(x: int, y: int): String
+                + getCase(x: int, y: int): Case
+                + getMaxX(): int
+                + getMaxY(): int
+                + seDeplacer(x: int, y: int, gameObject: GameObject): int
+                + attaquer(attaquant: GameObject, defenseur: GameObject, ordre: Ordre): int[]
+                + prendre(perso: Personnage, item: Item): void
+                + viderGrille(): void
+            }
+
+            dnd.partie.donjon.Carte --> dnd.partie.donjon.Case : contient les
+            dnd.partie.donjon.Carte ..> dnd.des.De : utilise
+
+
+            class Case
+            {
+                - m_x: int
+                - m_y: int
+                - m_item: Item
+                - m_gameObject: GameObject
+                - m_obstacle: boolean
+                + Case(x: int, y: int)
+                + getItem(): Item
+                + setItem(item: Item): void
+                + equalsItem(item1: Item, item2: Item): boolean
+                + getGameObject(): GameObject
+                + setGameObject(gameObject: GameObject): void
+                + getObstacle(): boolean
+                + setObstacle(val: boolean): void
+                + toString(): String
+                # getX(): int
+                # getY(): int
+                + calculDistance(other: Case): float
+                + equalsPosition(other: Case): boolean
+                + stringItem(): String
+            }
+            dnd.partie.donjon.Case ..> dnd.objet.Item : utilise
+            dnd.partie.donjon.Case ..> dnd.gameObject.GameObject : utilise
+
+
+        }
+
+         class Ordre
+         {
+            - m_ordre: List<GameObject>
+            +Ordre()
+            +getListOrdre(): List<GameObject>
+            +tirerLesInitiatives(): void
+            +ajouterGameObject(gameObject: GameObject): void
+            +supprimerGameObject(gameObject: GameObject): void
+            +testFinDePartie(): int
+            +viderListe(): void
+        }
+        dnd.partie.Ordre ..> dnd.gameObject.GameObject : utilise
+
+
+        class Partie
+        {
+            +perso : Personnage
+            +Partie(maxX: int, maxY: int)
+            +deroulementPartie(ordre: Ordre, carte: Carte) : void
+            +deroulementDonjon(ordre: Ordre, carte: Carte, nbDonjon: int) : int
+            +initMonstreItem(carte: Carte, ordre: Ordre) : void
+            +partiePreconcue() : void
+        }
+
+        dnd.partie.Partie --> dnd.gameObject.personnage.Personnage : possède
+        dnd.partie.Partie --> dnd.partie.Ordre : contient
+        dnd.partie.Partie --> dnd.partie.donjon.Carte : contient
+        dnd.partie.Partie ..> dnd.affichage.Affichage : utilise
+        dnd.partie.Partie ..> dnd.gameObject.ennemi.Monstre : utilise
+        dnd.partie.Partie ..> dnd.partie.TourDeJeu: utilise
+
+
+        class TourDeJeu
+        {
+            - int nbTour
+            + TourDeJeu(Carte carte, Ordre ordre, int nTour, int ndonjon)
+        }
+        dnd.partie.TourDeJeu ..> dnd.affichage.Affichage : utilise
+
+
     }
 
     interface Asset <<interface>>
@@ -77,6 +527,7 @@ package dnd
         + getType(): Type
         + getEtiquette() : String
     }
+    dnd.Asset ..> dnd.Type : utilise
 
     class Obstacle implements dnd.Asset
     {
@@ -94,7 +545,9 @@ package dnd
         OBSTACLE
     }
 
-
+    class Main{}
+    dnd.Main ..> dnd.partie.Partie : utilise
+}
 
 
 @enduml

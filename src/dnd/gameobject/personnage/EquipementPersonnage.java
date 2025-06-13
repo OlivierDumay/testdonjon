@@ -2,7 +2,6 @@ package dnd.gameobject.personnage;
 
 import dnd.objet.Arme;
 import dnd.objet.Armure;
-import dnd.objet.Item;
 import dnd.objet.arme.ArmeCourante;
 import dnd.objet.armure.ArmureLegere;
 

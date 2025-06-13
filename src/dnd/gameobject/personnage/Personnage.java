@@ -3,12 +3,8 @@ import dnd.Asset;
 import dnd.Type;
 import dnd.gameobject.Caracteristique;
 import dnd.gameobject.GameObject;
-import dnd.gameobject.ennemi.Monstre;
 import dnd.gameobject.personnage.classe.*;
 import dnd.gameobject.personnage.race.*;
-import dnd.objet.Arme;
-import dnd.objet.Armure;
-import dnd.objet.Item;
 import dnd.objet.arme.ArmeADistance;
 import dnd.objet.arme.ArmeCourante;
 import dnd.objet.arme.ArmeGuerre;
@@ -19,7 +15,7 @@ import java.util.NoSuchElementException;
 
 import static dnd.Type.PERSONNAGE;
 import static dnd.des.De.lancerDe;
-// import dnd.partie.Position;
+
 
 public class Personnage implements GameObject, Asset
 {

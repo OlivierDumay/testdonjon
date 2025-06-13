@@ -2,20 +2,24 @@ package dnd.affichage;
 
 
 import dnd.Type;
+
 import dnd.gameobject.Action;
 import dnd.gameobject.GameObject;
 import dnd.gameobject.ennemi.EspeceMonstre;
 import dnd.gameobject.ennemi.Monstre;
 import dnd.gameobject.personnage.Inventaire;
 import dnd.gameobject.personnage.Personnage;
+
 import dnd.objet.Item;
 import dnd.objet.arme.ArmeADistance;
 import dnd.objet.arme.ArmeCourante;
 import dnd.objet.arme.ArmeGuerre;
 import dnd.objet.armure.ArmureLegere;
 import dnd.objet.armure.ArmureLourde;
+
 import dnd.partie.Ordre;
 import dnd.partie.donjon.*;
+
 import java.util.Scanner;
 
 public class Affichage
