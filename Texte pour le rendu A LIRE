@@ -1,8 +1,0 @@
-Le projet donjon n'est pas terminé.
-
-Nous avons essayé de finir au mieux la phase 1
-
-Nous n'avons pas eu le temps de faire l'uml, mais si l'ancien uml DOOnjon-and-dragons.puml
-est une bonne base pour comprendre le fonctionnement de notre code.
-
-Pour lancer une partie, il suffit de creer un objet Partie avec en argument la taille du premier donjon
